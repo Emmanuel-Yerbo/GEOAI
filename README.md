@@ -147,17 +147,20 @@ jupyter notebook notebooks/VegHealthCNN_Pipeline.ipynb
 
 ---
 
-## 📢 Conference Presentations & Academic Citations
+## 📢 Conference Presentation & Paper Citation
 
-Portions of this repository have been presented at international academic conferences:
+This research was accepted and presented as an oral presentation at the **GeoAI for Sustainable Development Conference (GeoAI4SD 2026)**:
 
 ```bibtex
-@inproceedings{yerbo2026geoai4sd,
-  title={GeoAI-Driven Precision Agriculture: A Self-Trained 1D-CNN for Spectral-Temporal Vegetation Mapping and Variable-Rate Nitrogen Prescription in the Prestea Huni-Valley Municipality, Ghana},
-  author={Yerbo, Emmanuel},
-  booktitle={Proceedings of the GeoAI for Sustainable Development Conference (GeoAI4SD)},
-  year={2026},
-  organization={University of Cape Coast}
+@inproceedings{yerbo2026geoai,
+  title     = {GeoAI-Driven Precision Health Classification and Variable-Rate 
+               Nitrogen Prescribing in Ghana Using a 1D-CNN and Spatial Block 
+               Cross-Validation},
+  author    = {Yerbo, Emmanuel},
+  booktitle = {Proceedings of the GeoAI for Sustainable Development Conference (GeoAI4SD)},
+  year      = {2026},
+  address   = {Cape Coast, Ghana},
+  institution = {Department of Geography and Regional Planning, University of Cape Coast}
 }
 ```
 

@@ -6,6 +6,8 @@
 ## 📌 Overview
 A cloud-native multi-criteria weighted overlay framework engineered in **Google Earth Engine (GEE JavaScript API)** to map regional flood susceptibility across the lower Volta Basin.
 
+![Multi-Criteria Flood Mapping](results/multicriteria_flood_mapping.jpg)
+
 ### Data Synthesis:
 - **Terrain:** SRTM 30m Digital Elevation Model & derived slope gradients.
 - **Hydrology:** MERIT Hydro Height Above Nearest Drainage (HAND).

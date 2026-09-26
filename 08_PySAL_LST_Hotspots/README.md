@@ -7,6 +7,10 @@
 ## 📌 Overview
 An automated Python spatial data science pipeline combining multi-temporal **Landsat Thermal Infrared (TIR)** split-window Land Surface Temperature (LST) retrieval with spatial autocorrelation modeling in **PySAL**.
 
+![Getis-Ord Gi* Hotspot Maps](results/hotspot_maps_2000_2024.png)
+
+![LST Temporal Trends](results/lst_temporal_trends.png)
+
 ### Methodological Framework:
 1. **Split-Window LST Retrieval:** Converts Landsat 7/8/9 Collection 2 Level-2 Thermal Infrared bands into absolute surface temperature ($^\circ	ext{C}$) corrected for atmospheric transmission and fractional vegetation cover (FVC).
 2. **Spatial Autocorrelation Statistics:**
