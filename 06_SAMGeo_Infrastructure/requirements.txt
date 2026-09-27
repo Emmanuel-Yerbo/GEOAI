@@ -1,0 +1,6 @@
+torch>=2.0.0
+segment-geospatial>=0.8.0
+leafmap>=0.20.0
+lang-sam>=0.1.0
+groundino>=0.1.0
+opencv-python>=4.7.0

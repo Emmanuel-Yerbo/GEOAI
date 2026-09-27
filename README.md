@@ -33,6 +33,7 @@ Every pipeline prioritizes **spatial validation rigor** (anti-leakage spatial bl
 | **06** | **SAMGeo Foundation Models** | Meta SAM (Segment Anything) + ViT Backbones | High-resolution Aerial Orthomosaics | Zero-shot and prompt-based structural building footprint extraction | [`06_SAMGeo_Infrastructure/`](./06_SAMGeo_Infrastructure) |
 | **07** | **GEE Flood Susceptibility** | Multi-Criteria Weighted Overlay Pipeline | SRTM 30m, MERIT Hydro, JRC Water, WorldCover 10m | **37.5% High Flood Risk Zonation**; validated against NADMO records | [`07_GEE_Flood_Susceptibility/`](./07_GEE_Flood_Susceptibility) |
 | **08** | **PySAL LST Hotspot Modeling** | Getis-Ord $G_i^*$, Anselin LISA, Rasterio | Landsat 7/8/9 Thermal Infrared (TIR) Collection 2 | 20-year UHI hotspot trajectory ($p < 0.01$) across Accra Metro | [`08_PySAL_LST_Hotspots/`](./08_PySAL_LST_Hotspots) |
+| **09** | **Pedestrian Accessibility (15-Min City)** | OSMnx, NetworkX Dijkstra, Convex Hulls, PyDeck | OpenStreetMap Walk Network (`G_walk`), Healthcare POIs | Isochrone catchments, Healthcare Desert isolation, 3D WebGL | [`09_Network_Accessibility_15MinCity/`](./09_Network_Accessibility_15MinCity) | | Getis-Ord $G_i^*$, Anselin LISA, Rasterio | Landsat 7/8/9 Thermal Infrared (TIR) Collection 2 | 20-year UHI hotspot trajectory ($p < 0.01$) across Accra Metro | [`08_PySAL_LST_Hotspots/`](./08_PySAL_LST_Hotspots) |
 
 ---
 
@@ -105,7 +106,13 @@ GEOAI/
 │   ├── README.md                          <-- Multi-criteria ranking matrix & zonation map
 │   └── scripts/                           <-- gee_flood_model.js
 │
-└── 08_PySAL_LST_Hotspots/                 <-- Spatial Autocorrelation & Urban Heat Island
+├── 08_PySAL_LST_Hotspots/                 <-- Spatial Autocorrelation & Urban Heat Island
+│   ├── README.md                          <-- Landsat split-window LST & Getis-Ord Gi* analysis
+│   └── scripts/                           <-- pysal_hotspot_pipeline.py
+│
+└── 09_Network_Accessibility_15MinCity/    <-- Pedestrian Accessibility & 15-Minute City
+    ├── README.md                          <-- 6-Scenario Accessibility Case Study & WebGL Pydeck
+    └── src/                               <-- isochrone_walk_engine.py                 <-- Spatial Autocorrelation & Urban Heat Island
     ├── README.md                          <-- Landsat split-window LST & Getis-Ord Gi* analysis
     └── scripts/                           <-- pysal_hotspot_pipeline.py
 ```
