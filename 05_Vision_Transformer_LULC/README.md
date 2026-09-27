@@ -71,9 +71,33 @@ This project implements an **Explainable GeoAI pipeline** combining **Vision Tra
   <em>Figure 4: Distinct marginal feature response curves for Built-up, Bare Soil, and Surface Water.</em>
 </p>
 
-- **Insight**: Confirms that the classifier adheres to established radiative transfer physics across all three critical non-vegetated classes without overfitting to noise.
+#### Scenario 5: Multi-Model Accuracy Benchmark (Radar Analysis)
+- **Purpose**: Compare per-class Producer's Accuracy (Recall) and User's Accuracy (Precision) across Random Forest (RF), Support Vector Machine (SVM), and Extreme Gradient Boosting (XGBoost).
+
+<p align="center">
+  <img src="results/radar_producer_user_accuracies.png" width="750" alt="Producer and User Accuracy Radar Map">
+  <br>
+  <em>Figure 5: Radar evaluation showing Producer's Recall (left) and User's Precision (right) across Water, Bare Soil, Built-Up, and Vegetation.</em>
+</p>
+
+- **Insight**: XGBoost achieves superior accuracy balance across all 4 land cover targets ($> 98.3\%$ Overall Accuracy, $\kappa = 0.978$), completely eliminating the commission errors observed in Random Forest along the bare soil-to-built-up boundary.
+
+#### Scenario 6: Global Feature Contribution Scores Across 4 Land Cover Classes
+- **Purpose**: Decompose exact feature contributions across raw Sentinel-2 bands, derived spectral indices, terrain topography, and GLCM spatial textures for each distinct land cover class.
+
+<p align="center">
+  <img src="results/shap_global_feature_importance.jpg" width="850" alt="SHAP Global Feature Importance">
+  <br>
+  <em>Figure 6: Per-class SHAP contribution scores across Sentinel-2 (red), Indices (green), Topography (brown), and GLCM Textures (black).</em>
+</p>
+
+- **Insight**:
+  - *Vegetation*: Overwhelmingly governed by NDVI ($> 0.50$ contribution score) and BSI ($0.19$).
+  - *Water & Bare Soil*: Governed decisively by SWIR Band 11 ($> 0.48$ contribution score for water, $0.35$ for bare soil), proving moisture absorption physics.
+  - *Built-Up*: Driven by a harmonious combination of NDBI ($0.19$), BSI ($0.12$), and GLCM spatial texture correlation.
 
 ---
 
 ### 4. Planning & Ecological Implications
 This explainable framework serves as a reliable evidentiary foundation for regional land management in Ghana's Savannah zone. Providing transparent feature attributions ensures that government forestry officers and agricultural planners can trust AI predictions when enforcing land degradation and anti-deforestation policies.
+
