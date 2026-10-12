@@ -1,6 +1,29 @@
 # Spatial Autocorrelation & Land Surface Temperature Hotspot Modeling
 ## Case Study: 24-Year Urban Heat Island Trajectories & District Microclimates in Ghana
 
+> ### ⚡ Executive Summary (3 Sentences)
+> 1. **Core Problem:** Uncontrolled urban expansion across the Greater Accra Metropolitan Area has converted vital vegetation and agricultural buffers into dense impervious surfaces, intensifying local microclimatic thermal stress.
+> 2. **Technical Pipeline:** We ingested 24 years (2000–2024) of multi-temporal Landsat Thermal Infrared (TIR) Collection 2 calibrated radiometry, applying Rasterio and PySAL (libpysal, ESDA) to compute global and local spatial autocorrelation metrics (Moran's I and Getis-Ord Gi* hot spot analytics).
+> 3. **Quantified Impact:** The research proved statistically significant ($p < 0.01$) outward migration of thermal hotspots toward peri-urban corridors (Adenta, Ga East), establishing an empirical scientific foundation for Accra's climate resilience and urban green-belt zoning policy.
+
+### 📊 Empirical Performance & Validation Evidence
+```text
+========================== SPATIAL AUTOCORRELATION & UHI STATISTICS ==========================
+Census Year | Mean LST (°C) | Global Moran's I (Spatial Clustering) | p-value | Significant Hotspots (Gi*)
+------------+---------------+---------------------------------------+---------+---------------------------
+2000        | 28.4°C        | 0.482                                 | < 0.001 | Industrial / Port Core
+2010        | 31.1°C        | 0.541                                 | < 0.001 | Central Accra Sprawl
+2020        | 33.6°C        | 0.618                                 | < 0.001 | Northern Peri-Urban Fringe
+2024        | 34.2°C        | 0.647                                 | < 0.001 | Corridors (Adenta, Ga East)
+
+LISA QUADRANT DISTRIBUTION:
+High-High (Hotspot): 28.4% | Low-Low (Cool Island): 18.2% | Spatial Outliers (HL/LH): 6.1%
+==============================================================================================
+```
+
+---
+
+
 [![PySAL](https://img.shields.io/badge/PySAL-ESDA%20%7C%20libpysal-orange)](https://pysal.org/)
 [![Rasterio](https://img.shields.io/badge/Rasterio-Geospatial%20Rasters-blue)](https://rasterio.readthedocs.io/)
 [![Landsat](https://img.shields.io/badge/Sensor-Landsat%20TIR%20C2-green)](https://usgs.gov)
@@ -96,4 +119,3 @@ Identifying statistically validated thermal hotspots and infrastructure disparit
 1. **Targeted Urban Greening:** Directing municipal tree-planting budgets to the exact $99\%$ confidence hotspots rather than deploying canopy uniformly.
 2. **Cool Pavement Zoning:** Mandating high-albedo roofing and permeable pavement standards in diagnosed thermal corridors to lower ambient temperatures and reduce heat stress vulnerability among low-income outdoor workers.
 3. **Hexagonal Infrastructure Allocation:** Utilizing H3 Res 8 spatial units to direct water, transit, and electrical grid capital investments directly into the red deficit zones.
-

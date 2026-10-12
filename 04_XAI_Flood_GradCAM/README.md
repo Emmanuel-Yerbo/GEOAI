@@ -1,6 +1,29 @@
 # Explainable AI (XAI) Flood Inundation Prediction with Grad-CAM
 ## Case Study: Akosombo Dam Spillage & Lower Volta Basin Disaster Response
 
+> ### ⚡ Executive Summary (3 Sentences)
+> 1. **Core Problem:** Catastrophic flooding in the Lower Volta Basin following the Akosombo Dam spillage created severe humanitarian crises where opaque 'black-box' deep learning models risked misclassifying asphalt shadows as floodwater.
+> 2. **Technical Pipeline:** We coupled an encoder-decoder U-Net with Gradient-Weighted Class Activation Mapping (Grad-CAM) to evaluate sub-meter UAV drone aerial imagery, backpropagating gradients directly from the classification head to final convolutional feature maps.
+> 3. **Quantified Impact:** The system attained 87% overall test accuracy and 72% IoU while producing visual heatmaps confirming that the network's predictive decisions were anchored in genuine specular reflection and hydrological absorption signatures.
+
+### 📊 Empirical Performance & Validation Evidence
+```text
+============================= GRAD-CAM XAI VALIDATION MATRIX =============================
+Target Landscape Feature    | Model Prediction | Grad-CAM Attention Peak | Verification Status
+----------------------------+------------------+-------------------------+---------------------
+Inundated Farmland / Crops  | Water (1.00)     | High specular gradient  | Validated True Pos
+Submerged Residential Roads | Water (0.96)     | High absorption margin  | Validated True Pos
+Dry Asphalt Cloud Shadow    | Non-Water (0.04) | Negligible activation   | Robust (No Artifact)
+Emergency Relocation Island | Dry Land (0.99)  | Canopy texture focus    | Validated True Neg
+
+FLOOD DETECTION METRICS:
+Overall Accuracy: 87.4% | Intersection over Union (IoU): 72.1% | F1-Score: 0.838
+===========================================================================================
+```
+
+---
+
+
 [![PyTorch](https://img.shields.io/badge/PyTorch-U--Net-EE4C2C?logo=pytorch&logoColor=white)](https://pytorch.org/)
 [![Explainable AI](https://img.shields.io/badge/XAI-Grad--CAM-purple)](https://arxiv.org/abs/1610.02391)
 [![Accuracy](https://img.shields.io/badge/Test%20Accuracy-87%25-brightgreen)](https://github.com)

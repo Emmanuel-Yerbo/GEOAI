@@ -1,10 +1,11 @@
 # 🌍 GeoAI: Geospatial Artificial Intelligence & Deep Learning
 
-[![PyTorch](https://img.shields.io/badge/PyTorch-2.x-EE4C2C?logo=pytorch&logoColor=white)](https://pytorch.org/)
-[![TorchGeo](https://img.shields.io/badge/TorchGeo-0.5+-green?logo=python&logoColor=white)](https://github.com/microsoft/torchgeo)
+[![Python 3.12](https://img.shields.io/badge/Python-3.12-3776AB?logo=python&logoColor=white)](https://python.org)
+[![PyTorch](https://img.shields.io/badge/PyTorch-2.4-EE4C2C?logo=pytorch&logoColor=white)](https://pytorch.org/)
 [![Google Earth Engine](https://img.shields.io/badge/Google%20Earth%20Engine-API-34A853?logo=google-earth&logoColor=white)](https://earthengine.google.com/)
-[![Kaggle Leaderboard](https://img.shields.io/badge/Kaggle-Rank%20%231%20(16.24%20AP)-20BEFF?logo=kaggle&logoColor=white)](https://kaggle.com)
-[![Python](https://img.shields.io/badge/Python-3.10%20%7C%203.11%20%7C%203.12-3776AB?logo=python&logoColor=white)](https://python.org)
+[![TorchGeo](https://img.shields.io/badge/TorchGeo-0.5+-green?logo=python&logoColor=white)](https://github.com/microsoft/torchgeo)
+[![Cyber2A Arctic](https://img.shields.io/badge/Cyber2A%20Challenge-Rank%20%235%20Global%20(16.45%20AP)-20BEFF?logo=kaggle&logoColor=white)](https://huggingface.co/spaces/cyber2a/2026GeoAIArcticChallenge)
+[![Status: Maintained](https://img.shields.io/badge/Status-Maintained-brightgreen?logo=git&logoColor=white)](https://github.com/Emmanuel-Yerbo/GEOAI)
 [![License: MIT](https://img.shields.io/badge/License-MIT-yellow.svg)](https://opensource.org/licenses/MIT)
 
 > **Author:** **Emmanuel Yerbo**  
@@ -33,7 +34,7 @@ Every pipeline prioritizes **spatial validation rigor** (anti-leakage spatial bl
 | **06** | **SAMGeo Foundation Models** | Meta SAM (Segment Anything) + ViT Backbones | High-resolution Aerial Orthomosaics | Zero-shot and prompt-based structural building footprint extraction | [`06_SAMGeo_Infrastructure/`](./06_SAMGeo_Infrastructure) |
 | **07** | **GEE Flood Susceptibility** | Multi-Criteria Weighted Overlay Pipeline | SRTM 30m, MERIT Hydro, JRC Water, WorldCover 10m | **37.5% High Flood Risk Zonation**; validated against NADMO records | [`07_GEE_Flood_Susceptibility/`](./07_GEE_Flood_Susceptibility) |
 | **08** | **PySAL LST Hotspot Modeling** | Getis-Ord $G_i^*$, Anselin LISA, Rasterio | Landsat 7/8/9 Thermal Infrared (TIR) Collection 2 | 20-year UHI hotspot trajectory ($p < 0.01$) across Accra Metro | [`08_PySAL_LST_Hotspots/`](./08_PySAL_LST_Hotspots) |
-| **09** | **Pedestrian Accessibility (15-Min City)** | OSMnx, NetworkX Dijkstra, Convex Hulls, PyDeck | OpenStreetMap Walk Network (`G_walk`), Healthcare POIs | Isochrone catchments, Healthcare Desert isolation, 3D WebGL | [`09_Network_Accessibility_15MinCity/`](./09_Network_Accessibility_15MinCity) | | Getis-Ord $G_i^*$, Anselin LISA, Rasterio | Landsat 7/8/9 Thermal Infrared (TIR) Collection 2 | 20-year UHI hotspot trajectory ($p < 0.01$) across Accra Metro | [`08_PySAL_LST_Hotspots/`](./08_PySAL_LST_Hotspots) |
+| **09** | **Pedestrian Accessibility (15-Min City)** | OSMnx, NetworkX Dijkstra, Convex Hulls, PyDeck | OpenStreetMap Walk Network (`G_walk`), Healthcare POIs | Isochrone catchments, Healthcare Desert isolation, 3D WebGL | [`09_Network_Accessibility_15MinCity/`](./09_Network_Accessibility_15MinCity) |
 
 ---
 
