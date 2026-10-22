@@ -27,7 +27,7 @@ Every pipeline prioritizes **spatial validation rigor** (anti-leakage spatial bl
 | # | Project | Backbones & Architectures | Data Modalities & Sensors | Primary Metrics / Results | Folder |
 |---|---|---|---|---|---|
 | **01** | **VegHealthCNN** | Custom 1D-CNN (57k params), Cosine Annealing, AdamW | Sentinel-2 L2A (14-band spectral index tensor) | **98.7% Test Acc** (Spatial Block CV), saved 19.5% N fertilizer | [`01_VegHealthCNN/`](./01_VegHealthCNN) |
-| **02** | **FrostWatch Arctic** | 3-Arm Ensemble: UNet++ (SE-ResNeXt50) + DeepLabV3+ (EffNet-B5) + MAnet (MiT-B5) | Arctic VHR Multispectral (13-ch geomorphometric tensor) | **Rank #1 Globally (16.24 AP)** on Kaggle GeoAI Challenge | [`02_FrostWatch_Arctic/`](./02_FrostWatch_Arctic) |
+| **02** | **FrostWatch Arctic** | 3-Arm Ensemble: UNet++ (SE-ResNeXt50) + DeepLabV3+ (EffNet-B5) + MAnet (MiT-B5) | Arctic VHR Multispectral (13-ch geomorphometric tensor) | **Top 5 Internationally (16.45 AP)** on Cyber2A Challenge | [`02_FrostWatch_Arctic/`](./02_FrostWatch_Arctic) |
 | **03** | **Building Footprint Extraction** | SegFormer-B3, DINOv3, U-Net, TorchGeo | 30cm Very High Resolution (VHR) Aerial / Satellite | Multi-region extraction across Ghana; ONNX runtime inference | [`03_Building_Extraction/`](./03_Building_Extraction) |
 | **04** | **XAI Flood Inundation** | Custom U-Net + Grad-CAM Interpretability | Sub-meter UAV Aerial Drone Imagery | **87% Acc / 72% IoU**; validated on Akosombo Dam spillage | [`04_XAI_Flood_GradCAM/`](./04_XAI_Flood_GradCAM) |
 | **05** | **Vision Transformer LULC** | SegFormer & Swin Transformer | Sentinel-2 Multi-temporal (2020–2026) | Shifted-window attention resolving mixed agro-pastoral mosaics | [`05_Vision_Transformer_LULC/`](./05_Vision_Transformer_LULC) |
@@ -35,6 +35,7 @@ Every pipeline prioritizes **spatial validation rigor** (anti-leakage spatial bl
 | **07** | **GEE Flood Susceptibility** | Multi-Criteria Weighted Overlay Pipeline | SRTM 30m, MERIT Hydro, JRC Water, WorldCover 10m | **37.5% High Flood Risk Zonation**; validated against NADMO records | [`07_GEE_Flood_Susceptibility/`](./07_GEE_Flood_Susceptibility) |
 | **08** | **PySAL LST Hotspot Modeling** | Getis-Ord $G_i^*$, Anselin LISA, Rasterio | Landsat 7/8/9 Thermal Infrared (TIR) Collection 2 | 20-year UHI hotspot trajectory ($p < 0.01$) across Accra Metro | [`08_PySAL_LST_Hotspots/`](./08_PySAL_LST_Hotspots) |
 | **09** | **Pedestrian Accessibility (15-Min City)** | OSMnx, NetworkX Dijkstra, Convex Hulls, PyDeck | OpenStreetMap Walk Network (`G_walk`), Healthcare POIs | Isochrone catchments, Healthcare Desert isolation, 3D WebGL | [`09_Network_Accessibility_15MinCity/`](./09_Network_Accessibility_15MinCity) |
+| **10** | **Harmattan Bushfire Forecasting (CMPF)** | VideoMAEv2 (3D Tubelet Transformer), MViTv2, Cross-Modal Progressive Fine-Tuning | VIIRS 375m, Sentinel-2 L2A, ERA5-Land Wind/Temp, SRTM Slope | Spatiotemporal fire spread forecasting ($t+24\text{h}$) across Northern Ghana savannah | [`10_Spatiotemporal_Bushfire_VideoMAE/`](./10_Spatiotemporal_Bushfire_VideoMAE) |
 
 ---
 
@@ -68,6 +69,9 @@ where $\omega(A)$ dynamically scales gradients up to $8\times$ on small instance
 ### 4. Explainable GeoAI (XAI)
 To prevent "black-box" shortcut learning, models are coupled with **Grad-CAM** and **DeepSHAP** backpropagation hooks. This verifies that neural activations correspond to hydrological, geomorphological, or vegetative boundaries rather than sensor artifacts or cloud edges.
 
+### 5. Cross-Modal Progressive Fine-Tuning (CMPF)
+Adapting pre-trained **Video Foundation Models (VideoMAEv2 & MViTv2)** to multi-modal spatiotemporal Earth Observation tasks (Li et al., IEEE TGRS 2026). Leverages 3D tubelet tokenization over continuous 5-day observation cubes ($T \times C \times H \times W$), bypassing domain gaps via modified patch projection ($E'_{patch}$) and intermediate geospatial adaptation.
+
 ---
 
 ## 📂 Repository Structure
@@ -81,7 +85,7 @@ GEOAI/
 │   ├── notebooks/                         <-- VegHealthCNN_Pipeline.ipynb
 │   └── results/                           <-- 2024 vs 2025 maps, Spatial Block CV, VRA prescription
 │
-├── 02_FrostWatch_Arctic/                  <-- Kaggle Rank #1 Permafrost Thaw Slump Segmentation
+├── 02_FrostWatch_Arctic/                  <-- Top 5 Cyber2A Permafrost Thaw Slump Segmentation
 │   ├── README.md                          <-- 3-arm ensemble design, loss formulation, AP tables
 │   ├── src/                               <-- Dataset loader, 13-channel tensor builder, losses
 │   └── results/                           <-- Leaderboard proof, segmentation mask visualizer
@@ -111,11 +115,14 @@ GEOAI/
 │   ├── README.md                          <-- Landsat split-window LST & Getis-Ord Gi* analysis
 │   └── scripts/                           <-- pysal_hotspot_pipeline.py
 │
-└── 09_Network_Accessibility_15MinCity/    <-- Pedestrian Accessibility & 15-Minute City
-    ├── README.md                          <-- 6-Scenario Accessibility Case Study & WebGL Pydeck
-    └── src/                               <-- isochrone_walk_engine.py                 <-- Spatial Autocorrelation & Urban Heat Island
-    ├── README.md                          <-- Landsat split-window LST & Getis-Ord Gi* analysis
-    └── scripts/                           <-- pysal_hotspot_pipeline.py
+├── 09_Network_Accessibility_15MinCity/    <-- Pedestrian Accessibility & 15-Minute City
+│   ├── README.md                          <-- 6-Scenario Accessibility Case Study & WebGL Pydeck
+│   └── src/                               <-- isochrone_walk_engine.py
+│
+└── 10_Spatiotemporal_Bushfire_VideoMAE/   <-- Video Foundation Model & CMPF (Li et al., 2026)
+    ├── README.md                          <-- VideoMAEv2 / MViTv2 Spatiotemporal Bushfire Forecasting
+    ├── scripts/                           <-- gee_export_bushfire_tensors.js (Cloud data pipeline)
+    └── src/                               <-- model_videomae.py, losses.py
 ```
 
 ---
@@ -123,8 +130,8 @@ GEOAI/
 ## 🛠️ Geospatial & AI Tech Stack
 
 - **Deep Learning Frameworks:** `PyTorch`, `PyTorch Lightning`, `TorchGeo`, `segmentation_models_pytorch` (SMP), `timm`, `Hugging Face Transformers`, `TensorFlow/Keras`, `Ultralytics (YOLO)`.
-- **Architectures:** 1D-CNN, SegFormer (MiT), Swin Transformer, Segment Anything Model (SAMGeo), DINOv3, U-Net, UNet++, DeepLabV3+, MAnet, ResNet, EfficientNet.
-- **Explainability & Validation:** `Grad-CAM`, `DeepSHAP`, `Spatial Block Cross-Validation` (GroupKFold), `Size-Weighted Focal+Dice Loss`.
+- **Architectures:** 1D-CNN, VideoMAEv2 (3D Tubelet Transformer), MViTv2, SegFormer (MiT), Swin Transformer, Segment Anything Model (SAMGeo), DINOv3, U-Net, UNet++, DeepLabV3+, MAnet, ResNet, EfficientNet.
+- **Explainability & Validation:** `Grad-CAM`, `DeepSHAP`, `Spatial Block Cross-Validation` (GroupKFold), `Size-Weighted Focal+Dice Loss`, `Class-Balanced Focal Loss`, `LoRA (PEFT)`.
 - **Geospatial & Cloud Platforms:** `Google Earth Engine` (JavaScript & Python API), `Digital Earth Africa`, `ArcGIS Pro`, `QGIS`, `PostGIS`, `Kaggle` (2×T4 GPUs).
 - **Spatial Data Science Libraries:** `GeoPandas`, `Rasterio`, `RioXarray`, `xarray`, `PySAL` (`libpysal`, `esda`, `spreg`), `OSMnx`, `Leafmap`, `Geemap`, `Shapely`, `PySTAC`, `rasterstats`.
 - **Languages:** `Python` (Primary), `JavaScript` (GEE), `R`, `SQL` (PostGIS).
