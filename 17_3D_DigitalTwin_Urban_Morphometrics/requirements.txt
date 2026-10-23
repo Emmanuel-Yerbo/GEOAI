@@ -1,0 +1,8 @@
+pydeck>=0.8.0
+momepy>=0.7.0
+geopandas>=0.14.0
+shapely>=2.0.0
+matplotlib>=3.8.0
+pandas>=2.1.0
+numpy>=1.26.0
+contextily>=1.5.0
