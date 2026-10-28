@@ -6,9 +6,9 @@
 [![Status: Complete](https://img.shields.io/badge/Status-Complete-brightgreen)](https://github.com/Emmanuel-Yerbo/GEOAI)
 [![License: MIT](https://img.shields.io/badge/License-MIT-yellow.svg)](../LICENSE)
 
-> **Author:** **Emmanuel Yerbo**  
-> *BSc Geography & Regional Planning (First Class Honours) — University of Cape Coast, Ghana*  
-> 🔗 [LinkedIn](https://www.linkedin.com/in/emmanuelyerbo) | 💻 [GitHub Profile](https://github.com/Emmanuel-Yerbo) | 🌐 [Interactive Portfolio](https://emmanuelyerbo.github.io/emmanuelyerbo)
+> **Lead Researcher & Engineer:** **Emmanuel Yerbo**  
+> *BSc Geography & Regional Planning (First Class Honours, GPA: 3.82/4.00, Three-Time Dean's Award Recipient) — University of Cape Coast, Ghana*  
+> 🆔 [ORCID: 0009-0008-8968-6999](https://orcid.org/0009-0008-8968-6999) | 💼 [LinkedIn](https://www.linkedin.com/in/emmanuelyerbo) | 💻 [GitHub Profile](https://github.com/Emmanuel-Yerbo) | 🌐 [Interactive Portfolio](https://emmanuelyerbo.github.io/emmanuelyerbo)
 
 ---
 
@@ -20,19 +20,33 @@ This project implements a complete spatial pipeline in **R** and **Google Earth 
 
 ---
 
-## 🔬 Radiance Calibration & Transformation
+## 🔬 Radiance Calibration & Transformation Pipeline
 
-```
-  RAW VIIRS DNB SATELLITE RADIANCE (nW / cm² / sr)
-                         │
-                         ▼
-  Atmospheric & Lunar BRDF Correction + Stray Light Clamping
-                         │
-                         ▼
-  Logarithmic Luminosity Compression:  L = ln(Radiance + 1)
-                         │
-                         ▼
-  Multi-Threshold Economic Segmentation & Hexbin Cartography
+```mermaid
+flowchart TD
+    subgraph INP["1. Raw Radiance Ingestion (NASA Black Marble VIIRS)"]
+        A["🛰️ Raw Day/Night Band (DNB) Radiance [nW / cm² / sr]<br/>(VNP46A4 Annual / NOAA VCMSLCFG Composites)"]
+    end
+
+    subgraph CALIB["2. Calibration & Radiative Transfer Correction"]
+        A --> B["🌙 Lunar BRDF & Ephemeris Correction"]
+        B --> C["⚡ Stray Light Clamping & Gas Flare Masking"]
+        C --> D["📐 High-Dynamic-Range Compression: L = ln(Radiance + 1)"]
+    end
+
+    subgraph SPATIAL["3. Spatial Hexbin Tessellation & Econometrics"]
+        D --> E["🔷 Hexagonal Spatial Binning (terra / sf in R)<br/>(Extracts Regional Sum of Lights & Electrification Gini)"]
+        E --> F["🌐 Interactive Leaflet / CartoDB Dark-Sky Dashboard"]
+    end
+
+    subgraph POLICY["4. National Development & Electrification Verification"]
+        F --> G["🏛️ National Electrification Scheme (NES) Gap Analysis<br/>(Golden Triangle Axis vs. Afram Plains Rural Enclaves)"]
+    end
+
+    style INP fill:#0f172a,stroke:#38bdf8,stroke-width:2px,color:#f8fafc
+    style CALIB fill:#1e1b4b,stroke:#a855f7,stroke-width:2px,color:#f8fafc
+    style SPATIAL fill:#022c22,stroke:#10b981,stroke-width:2px,color:#f8fafc
+    style POLICY fill:#064e3b,stroke:#22c55e,stroke-width:2px,color:#f8fafc
 ```
 
 ### 1. High Dynamic Range Compression

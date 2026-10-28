@@ -6,9 +6,9 @@
 [![DBSCAN](https://img.shields.io/badge/Spatial%20Clustering-DBSCAN-orange)](https://scikit-learn.org)
 [![License: MIT](https://img.shields.io/badge/License-MIT-yellow.svg)](../LICENSE)
 
-> **Author:** **Emmanuel Yerbo**  
-> *BSc Geography & Regional Planning (First Class Honours) — University of Cape Coast, Ghana*  
-> 🔗 [LinkedIn](https://www.linkedin.com/in/emmanuelyerbo) | 💻 [GitHub Profile](https://github.com/Emmanuel-Yerbo) | 🌐 [Interactive Portfolio](https://emmanuelyerbo.github.io/emmanuelyerbo)
+> **Lead Researcher & Engineer:** **Emmanuel Yerbo**  
+> *BSc Geography & Regional Planning (First Class Honours, GPA: 3.82/4.00, Three-Time Dean's Award Recipient) — University of Cape Coast, Ghana*  
+> 🆔 [ORCID: 0009-0008-8968-6999](https://orcid.org/0009-0008-8968-6999) | 💼 [LinkedIn](https://www.linkedin.com/in/emmanuelyerbo) | 💻 [GitHub Profile](https://github.com/Emmanuel-Yerbo) | 🌐 [Interactive Portfolio](https://emmanuelyerbo.github.io/emmanuelyerbo)
 
 ---
 
@@ -24,38 +24,33 @@ This repository contains a full 6-stage end-to-end Python pipeline designed to s
 
 ## 🏗️ Architecture & Pipeline Stages
 
-```
- ┌─────────────────────────────────────────────────────────┐
- │ Stage 1: News Scraper (CitiNewsroom, MyJoyOnline, etc.) │
- └────────────────────────────┬────────────────────────────┘
-                              │
- ┌────────────────────────────▼────────────────────────────┐
- │ Stage 2: Google News RSS Monitor                        │
- └────────────────────────────┬────────────────────────────┘
-                              │
- ┌────────────────────────────▼────────────────────────────┐
- │ Stage 3: NLP Location Extractor (spaCy + Gazetteer)     │
- └────────────────────────────┬────────────────────────────┘
-                              │
- ┌────────────────────────────▼────────────────────────────┐
- │ Stage 3.5: Sentiment Engine & Blame Classifier          │
- └────────────────────────────┬────────────────────────────┘
-                              │
- ┌────────────────────────────▼────────────────────────────┐
- │ Stage 4: Nominatim Geocoder (with Negative Cache)       │
- └────────────────────────────┬────────────────────────────┘
-                              │
- ┌────────────────────────────▼────────────────────────────┐
- │ Stage 4.5: Spatial Blackspot (DBSCAN) & PRGI Analysis   │
- └────────────────────────────┬────────────────────────────┘
-                              │
- ┌────────────────────────────▼────────────────────────────┐
- │ Stage 5: Interactive GeoSentiment Dashboard Map         │
- └────────────────────────────┬────────────────────────────┘
-                              │
- ┌────────────────────────────▼────────────────────────────┐
- │ Stage 6: Categorized Word Cloud Generator               │
- └─────────────────────────────────────────────────────────┘
+```mermaid
+flowchart TD
+    subgraph S1["1. Scraping & Ingestion Engine"]
+        A["📰 Online News Scraper<br/>(CitiNewsroom, MyJoyOnline, GhanaWeb)"]
+        B["📡 Google News RSS Monitor<br/>(Real-Time Traffic Query Stream)"]
+    end
+
+    subgraph S2["2. Spatial NLP & Sentiment Mining"]
+        A & B --> C["🏷️ Spacy NER + Custom Ghana Gazetteer<br/>(Disambiguates junctions, towns, and highway landmarks)"]
+        C --> D["🧠 VADER Sentiment & Blame Classifier<br/>(Institutional failure vs. reckless driving vs. road condition)"]
+    end
+
+    subgraph S3["3. Geocoding & Spatial Clustering"]
+        D --> E["📍 Nominatim OpenStreetMap Geocoder<br/>(Negative caching & coordinate bounding box verification)"]
+        E --> F["🔥 DBSCAN Density Clustering & Getis-Ord Gi*<br/>(Isolates empirical road traffic accident blackspots)"]
+    end
+
+    subgraph S4["4. Policy Analytics & Visual Delivery"]
+        F --> G["📊 Perception-Reality Gap Index (PRGI)<br/>(News coverage intensity vs. NRSA official fatalities)"]
+        G --> H["🗺️ Interactive Leaflet GeoSentiment Dashboard (MAP.jpg)"]
+        G --> I["☁️ Categorized Driver Blame Word Clouds"]
+    end
+
+    style S1 fill:#0f172a,stroke:#38bdf8,stroke-width:2px,color:#f8fafc
+    style S2 fill:#1e1b4b,stroke:#a855f7,stroke-width:2px,color:#f8fafc
+    style S3 fill:#022c22,stroke:#10b981,stroke-width:2px,color:#f8fafc
+    style S4 fill:#064e3b,stroke:#22c55e,stroke-width:2px,color:#f8fafc
 ```
 
 ---

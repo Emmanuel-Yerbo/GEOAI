@@ -1,30 +1,32 @@
 # Nationwide Building Footprint Extraction with SegFormer & Foundation Models
 ## Case Study: 30cm Very High Resolution (VHR) Aerial Extraction Across Ghana
 
-> ### ⚡ Executive Summary (3 Sentences)
-> 1. **Core Problem:** Rapid informal urbanization across West African cities results in severe spatial omissions and structural boundary inaccuracies in global building catalogs, impeding equitable municipal service planning.
-> 2. **Technical Pipeline:** We fine-tuned SegFormer-B3 and U-Net backbones using TorchGeo spatial samplers over 30cm very high-resolution (VHR) aerial imagery, comparing model inference against Google Open Buildings, Overture Maps, and OpenStreetMap.
-> 3. **Quantified Impact:** Our pipeline achieved 57.9% IoU in dense informal metropolitan cores (Accra and Kumasi) where global foundation models frequently merge contiguous corrugated zinc roofs, exporting optimized ONNX runtime weights for municipal edge deployment.
-
-### 📊 Empirical Performance & Validation Evidence
-```text
-========================== BUILDING FOOTPRINT BENCHMARK COMPARISON ==========================
-Data Source / Model                | Precision | Recall  | Intersection-over-Union (IoU) | Inference Engine
------------------------------------+-----------+---------+-------------------------------+-----------------
-SegFormer-B3 Fine-Tuned (Ours)     | 84.6%     | 79.2%   | 57.9%                         | ONNX Runtime Q8
-Google Open Buildings (V3)         | 76.1%     | 68.4%   | 48.2%                         | Static Vector
-OpenStreetMap (OSM Crowdsourced)   | 91.2%     | 41.5%   | 39.8% (Severe omissions)      | Vector Cadastre
-Microsoft Global ML Buildings      | 71.8%     | 62.0%   | 42.5%                         | Static Vector
-=============================================================================================
-```
-
----
-
-
 [![TorchGeo](https://img.shields.io/badge/TorchGeo-Spatial%20Samplers-green?logo=python&logoColor=white)](https://github.com/microsoft/torchgeo)
 [![SegFormer](https://img.shields.io/badge/Model-SegFormer--B3%20(57.9%25%20IoU)-yellow?logo=huggingface&logoColor=white)](https://huggingface.co/)
 [![ONNX](https://img.shields.io/badge/Inference-ONNX%20Runtime%20Quantized-blue?logo=onnx&logoColor=white)](https://onnxruntime.ai/)
 [![Cadastral Vector](https://img.shields.io/badge/Output-Vector%20Polygons%20(GeoJSON)-orange)](https://geojson.org/)
+[![License: MIT](https://img.shields.io/badge/License-MIT-yellow.svg)](../LICENSE)
+
+> **Lead Researcher & Engineer:** **Emmanuel Yerbo**  
+> *BSc Geography & Regional Planning (First Class Honours, GPA: 3.82/4.00, Three-Time Dean's Award Recipient) — University of Cape Coast, Ghana*  
+> 🆔 [ORCID: 0009-0008-8968-6999](https://orcid.org/0009-0008-8968-6999) | 💼 [LinkedIn](https://www.linkedin.com/in/emmanuelyerbo) | 💻 [GitHub Profile](https://github.com/Emmanuel-Yerbo) | 🌐 [Interactive Portfolio](https://emmanuelyerbo.github.io/emmanuelyerbo)
+
+---
+
+### ⚡ Executive Summary
+
+1. **The Core Spatial Problem:** Rapid informal urbanization across West African cities results in severe spatial omissions and structural boundary inaccuracies in global building catalogs, impeding equitable municipal service planning.
+2. **The Technical Pipeline:** We fine-tuned SegFormer-B3 and U-Net backbones using TorchGeo spatial samplers over 30cm very high-resolution (VHR) aerial imagery, comparing model inference against Google Open Buildings, Overture Maps, and OpenStreetMap.
+3. **Quantified Impact:** Our pipeline achieved **57.9% validation IoU** in dense informal metropolitan cores (Accra and Kumasi) where global foundation models frequently merge contiguous corrugated zinc roofs, exporting optimized ONNX runtime weights for municipal edge deployment.
+
+### 📊 Empirical Performance & Validation Evidence
+
+| Data Source / Model | Precision | Recall | Intersection-over-Union (IoU) | Inference Engine |
+|---|:---:|:---:|:---:|:---:|
+| **SegFormer-B3 Fine-Tuned (Ours)** | **84.6%** | **79.2%** | **57.9%** | **ONNX Runtime Q8** |
+| Google Open Buildings (V3) | 76.1% | 68.4% | 48.2% | Static Vector Catalog |
+| Microsoft Global ML Buildings | 71.8% | 62.0% | 42.5% | Static Vector Catalog |
+| OpenStreetMap (OSM Crowdsourced) | 91.2% | 41.5% | 39.8% *(Severe omissions)* | Vector Cadastre |
 
 ---
 

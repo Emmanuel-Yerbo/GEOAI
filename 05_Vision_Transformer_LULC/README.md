@@ -1,32 +1,38 @@
 # Explainable Machine Learning & Vision Transformers for Land Use Land Cover (LULC)
 ## Case Study: Multi-Temporal Agro-Pastoral Dynamics & Feature Attribution in the Ghanaian Savannah
 
-> ### ⚡ Executive Summary (3 Sentences)
-> 1. **Core Problem:** Semi-arid and transitional agro-pastoral savannah ecotones in northern Ghana suffer from severe spectral overlap between bare soil, degraded shrubs, and seasonal rainfed subsistence farming.
-> 2. **Technical Pipeline:** We implemented an explainable GeoAI architecture integrating Vision Transformers (SegFormer and Swin Transformer) with Tree SHAP (SHapley Additive exPlanations) game-theoretic feature attribution over multi-temporal Sentinel-2 optical and SAR time-series.
-> 3. **Quantified Impact:** The shifted-window attention mechanism achieved 91.3% overall classification accuracy across heterogeneous landscapes while SHAP force plots proved that Red-Edge Band 5 and NDRE contributed 42% of marginal predictive gain for agricultural classes.
-
-### 📊 Empirical Performance & Validation Evidence
-```text
-======================= MULTI-TEMPORAL LULC CONFUSION MATRIX =======================
-Class Name        | Cropland | Dense Forest | Shrubland | Bare Soil | Water | User Accuracy
-------------------+----------+--------------+-----------+-----------+-------+--------------
-Cropland (Rainfed)|   412    |      8       |    15     |    11     |   0   |    92.3%
-Dense Forest      |    11    |     389      |    14     |     0     |   2   |    93.5%
-Open Shrubland    |    22    |      19      |    341    |    18     |   0   |    85.3%
-Bare / Degraded   |     9    |       0      |    12     |   298     |   0   |    93.4%
-Water Bodies      |     0    |       1      |     0     |     0     |  150  |    99.3%
-------------------+----------+--------------+-----------+-----------+-------+--------------
-Producer Accuracy |  90.7%   |    93.3%     |   89.3%   |   91.1%   | 98.7% | OA = 91.3%
-====================================================================================
-```
-
----
-
-
 [![PyTorch](https://img.shields.io/badge/PyTorch-Vision%20Transformers-EE4C2C?logo=pytorch&logoColor=white)](https://pytorch.org/)
 [![SHAP](https://img.shields.io/badge/SHAP-Explainable%20AI-blue)](https://shap.readthedocs.io/)
 [![Google Earth Engine](https://img.shields.io/badge/GEE-Multi--Temporal-34A853?logo=google-earth&logoColor=white)](https://earthengine.google.com/)
+[![Accuracy](https://img.shields.io/badge/Overall%20Accuracy-91.3%25-brightgreen)](https://github.com)
+[![License: MIT](https://img.shields.io/badge/License-MIT-yellow.svg)](../LICENSE)
+
+> **Lead Researcher & Engineer:** **Emmanuel Yerbo**  
+> *BSc Geography & Regional Planning (First Class Honours, GPA: 3.82/4.00, Three-Time Dean's Award Recipient) — University of Cape Coast, Ghana*  
+> 🆔 [ORCID: 0009-0008-8968-6999](https://orcid.org/0009-0008-8968-6999) | 💼 [LinkedIn](https://www.linkedin.com/in/emmanuelyerbo) | 💻 [GitHub Profile](https://github.com/Emmanuel-Yerbo) | 🌐 [Interactive Portfolio](https://emmanuelyerbo.github.io/emmanuelyerbo)
+
+---
+
+### ⚡ Executive Summary
+
+1. **The Core Spatial Problem:** Semi-arid and transitional agro-pastoral savannah ecotones in northern Ghana suffer from severe spectral overlap between bare soil, degraded shrubs, and seasonal rainfed subsistence farming.
+2. **The Technical Pipeline:** We implemented an explainable GeoAI architecture integrating Vision Transformers (SegFormer and Swin Transformer) with Tree SHAP (SHapley Additive exPlanations) game-theoretic feature attribution over multi-temporal Sentinel-2 optical and SAR time-series.
+3. **Quantified Impact:** The shifted-window attention mechanism achieved **91.3% overall classification accuracy** across heterogeneous landscapes while SHAP force plots proved that Red-Edge Band 5 and NDRE contributed **42% of marginal predictive gain** for agricultural classes.
+
+### 📊 Empirical Performance & Validation Evidence
+
+#### Multi-Temporal LULC Confusion Matrix (Test Set)
+
+| Ground Truth Class | Cropland | Dense Forest | Shrubland | Bare Soil | Water | User Accuracy |
+|---|:---:|:---:|:---:|:---:|:---:|:---:|
+| **Cropland (Rainfed)** | **412** | 8 | 15 | 11 | 0 | **92.3%** |
+| **Dense Forest** | 11 | **389** | 14 | 0 | 2 | **93.5%** |
+| **Open Shrubland** | 22 | 19 | **341** | 18 | 0 | **85.3%** |
+| **Bare / Degraded** | 9 | 0 | 12 | **298** | 0 | **93.4%** |
+| **Water Bodies** | 0 | 1 | 0 | 0 | **150** | **99.3%** |
+| **Producer Accuracy** | **90.7%** | **93.3%** | **89.3%** | **91.1%** | **98.7%** | **Overall Accuracy: 91.3%** |
+
+---
 
 ### 1. Introduction: The Spatial Logic of Complex Agro-Pastoral Mosaics
 Classifying Land Use and Land Cover (LULC) in semi-arid and transition savannah ecotones is notoriously challenging due to spectral mixing: rainfed subsistence crop fields, degraded open savannah woodlands, and bare soils frequently share overlapping spectral signatures.
@@ -35,7 +41,26 @@ This project implements an **Explainable GeoAI pipeline** combining **Vision Tra
 
 ---
 
-### 2. Methodological Pipeline
+### 2. Methodological Pipeline & Game-Theoretic Explainability
+
+```mermaid
+flowchart TD
+    A["🛰️ Multi-Temporal Sentinel-2 & SAR Composites<br/>(14 Spectral Bands: RGB, NIR, Red-Edge, SWIR, VV/VH)"] --> B["🧩 Phenological Temporal Stacking (2020–2026)<br/>(Captures greening, maturity, & senescence curves)"]
+    B --> C["🤖 Hierarchical Vision Transformer (Swin / SegFormer)<br/>(Shifted Window Self-Attention across Multi-Scale Tokens)"]
+    C --> D["🗺️ LULC Segmentation Map (91.3% Overall Accuracy)<br/>[Cropland, Forest, Shrubland, Bare Soil, Water]"]
+    
+    C -.->|"Model Inference Path"| E["🎲 Tree SHAP Cooperative Game Attribution<br/>φ_i = Σ (|S|!(|F|-|S|-1)! / |F|!) · [f(S ∪ {i}) - f(S)]"]
+    E --> F["📊 Feature Contribution Ranking<br/>(Red-Edge Band 5 & NDRE = 42% Marginal Gain)"]
+    E --> G["🔍 Spatial SHAP Force Plots & Reliability Heatmaps"]
+
+    style A fill:#0f172a,stroke:#38bdf8,stroke-width:2px,color:#f8fafc
+    style B fill:#1e1b4b,stroke:#a855f7,stroke-width:2px,color:#f8fafc
+    style C fill:#022c22,stroke:#10b981,stroke-width:2px,color:#f8fafc
+    style D fill:#064e3b,stroke:#22c55e,stroke-width:2px,color:#f8fafc
+    style E fill:#1c1917,stroke:#f59e0b,stroke-width:2px,color:#f8fafc
+    style F fill:#2e1065,stroke:#ec4899,stroke-width:2px,color:#f8fafc
+    style G fill:#064e3b,stroke:#10b981,stroke-width:2px,color:#f8fafc
+```
 
 #### 2.1 Multi-Temporal Earth Observation Harmonization
 - **The Process**: Multi-spectral imagery from Sentinel-2 MSI and Landsat is atmospherically corrected and harmonized into multi-temporal composites spanning 2020 to 2026.

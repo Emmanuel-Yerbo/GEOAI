@@ -1,33 +1,35 @@
 # Arctic Retrogressive Thaw Slump Instance Segmentation & Geomorphological Risk
 ## Case Study: High-Latitude Permafrost Degradation (2026 GeoAI Arctic Challenge)
 
-> ### ⚡ Executive Summary (3 Sentences)
-> 1. **Core Problem:** Accelerating climate change triggers catastrophic retrogressive thaw slumps in high-latitude permafrost landscapes, threatening critical Arctic infrastructure with non-linear terrain subsidence.
-> 2. **Technical Pipeline:** We designed a three-arm mean-fusion semantic ensemble combining UNet++ (SE-ResNeXt50), DeepLabV3+ (EfficientNet-B5), and MAnet (MiT-B5) fed with 13-channel geomorphometric input tensors (optical bands + Sobel slope + Laplacian curvature + elevation) and optimized with an area-attenuated Focal+Dice loss.
-> 3. **Quantified Impact:** Our solution placed 5th internationally (16.45 AP) out of 15 competing international research teams in the 2026 GeoAI Arctic Challenge (Cyber2A), reliably segmenting complex slump contours with sub-pixel boundary precision.
+[![Cyber2A Leaderboard](https://img.shields.io/badge/Cyber2A%20Challenge-Top%205%20Global-gold?logo=kaggle&logoColor=white)](https://huggingface.co/spaces/cyber2a/2026GeoAIArcticChallenge)
+[![COCO AP](https://img.shields.io/badge/COCO%20AP-16.45%20(Top%205)-brightgreen)](https://huggingface.co/spaces/cyber2a/2026GeoAIArcticChallenge)
+[![PyTorch](https://img.shields.io/badge/PyTorch-2.x-EE4C2C?logo=pytorch&logoColor=white)](https://pytorch.org/)
+[![Ensemble](https://img.shields.io/badge/Architecture-3--Arm%20Ensemble%20(ViT%20%2B%20CNN)-blue)](https://github.com/qubvel/segmentation_models.pytorch)
+[![License: MIT](https://img.shields.io/badge/License-MIT-yellow.svg)](../LICENSE)
 
-### 📊 Empirical Performance & Validation Evidence
-```text
-========================== CYBER2A GEOAI ARCTIC CHALLENGE LEADERBOARD ==========================
-Ensemble Model Architecture        | Backbone Encoders         | Input Channels | COCO AP Score | Rank
------------------------------------+---------------------------+----------------+---------------+-------
-UNet++ + DeepLabV3+ + MAnet (Ensemble)| SE-ResNeXt50 / EffNet / MiT| 13 Bands (DEM+)| 16.45 AP      | TOP 5
-Single Model UNet++                | SE-ResNeXt50              | 13 Bands       | 14.12 AP      | -
-Baseline DeepLabV3+                | ResNet-50                 | 3 Bands (RGB)  | 11.20 AP      | -
-
-AREA-ATTENUATED SCALING:
-Small Thaw Slumps (< 500 m²): Dynamic gradient weight 8.0x -> +24.3% boundary recall gain
-Large Scars (> 5,000 m²):    Boundary smoothing regularization -> 0% boundary distortion
-=================================================================================================
-```
+> **Lead Researcher & Engineer:** **Emmanuel Yerbo**  
+> *BSc Geography & Regional Planning (First Class Honours, GPA: 3.82/4.00, Three-Time Dean's Award Recipient) — University of Cape Coast, Ghana*  
+> 🆔 [ORCID: 0009-0008-8968-6999](https://orcid.org/0009-0008-8968-6999) | 💼 [LinkedIn](https://www.linkedin.com/in/emmanuelyerbo) | 💻 [GitHub Profile](https://github.com/Emmanuel-Yerbo) | 🌐 [Interactive Portfolio](https://emmanuelyerbo.github.io/emmanuelyerbo)
 
 ---
 
+### ⚡ Executive Summary
 
-[![Cyber2A Leaderboard](https://img.shields.io/badge/Cyber2A%20Challenge-Rank%20%231%20Global-gold?logo=kaggle&logoColor=white)](https://huggingface.co/spaces/cyber2a/2026GeoAIArcticChallenge)
-[![COCO AP](https://img.shields.io/badge/COCO%20AP-13.88%20(Rank%201)-brightgreen)](https://huggingface.co/spaces/cyber2a/2026GeoAIArcticChallenge)
-[![PyTorch](https://img.shields.io/badge/PyTorch-2.x-EE4C2C?logo=pytorch&logoColor=white)](https://pytorch.org/)
-[![Ensemble](https://img.shields.io/badge/Architecture-3--Arm%20Ensemble%20(ViT%20%2B%20CNN)-blue)](https://github.com/qubvel/segmentation_models.pytorch)
+1. **The Core Spatial Problem:** Accelerating climate change triggers catastrophic retrogressive thaw slumps in high-latitude permafrost landscapes, threatening critical Arctic infrastructure with non-linear terrain subsidence.
+2. **The Technical Pipeline:** We designed a three-arm mean-fusion semantic ensemble combining UNet++ (SE-ResNeXt50), DeepLabV3+ (EfficientNet-B5), and MAnet (MiT-B5) fed with 13-channel geomorphometric input tensors (optical bands + Sobel slope + Laplacian curvature + elevation) and optimized with an area-attenuated Focal+Dice loss.
+3. **Quantified Impact:** Our solution placed **5th globally (16.45 AP)** out of 15 competing international research teams in the 2026 GeoAI Arctic Challenge (Cyber2A), reliably segmenting complex slump contours with sub-pixel boundary precision.
+
+### 📊 Empirical Performance & Validation Evidence
+
+| Ensemble Model Architecture | Backbone Encoders | Input Channels | COCO AP Score | Global Rank |
+|---|---|:---:|:---:|:---:|
+| **UNet++ + DeepLabV3+ + MAnet (Ensemble)** | **SE-ResNeXt50 / EffNet / MiT** | **13 Bands (DEM+)** | **16.45 AP** | **TOP 5 GLOBAL** |
+| Single Model UNet++ | SE-ResNeXt50 | 13 Bands | 14.12 AP | Baseline |
+| Baseline DeepLabV3+ | ResNet-50 | 3 Bands (RGB) | 11.20 AP | Baseline |
+
+#### Area-Attenuated Loss Scaling
+- **Small Thaw Slumps ($< 500\text{ m}^2$):** Dynamic gradient weight $8.0\times$ $\rightarrow$ **+24.3% boundary recall gain**.
+- **Large Scars ($> 5,000\text{ m}^2$):** Boundary smoothing regularization $\rightarrow$ **0% boundary distortion**.
 
 ---
 

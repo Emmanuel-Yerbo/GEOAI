@@ -1,39 +1,63 @@
 # Pedestrian Accessibility & The '15-Minute City' Framework
 ## Case Study: Greater Accra Healthcare & Service Infrastructure
 
-> ### ⚡ Executive Summary (3 Sentences)
-> 1. **Core Problem:** Rapid polycentric growth in Greater Accra has created severe healthcare deserts, where rapid settlement expansion outpaces walkable pedestrian access to public clinics and emergency medical infrastructure.
-> 2. **Technical Pipeline:** We constructed topological walkable graph networks from OpenStreetMap data using OSMnx, executing NetworkX Dijkstra shortest-path algorithms and convex hull geometric buffering to generate 5, 10, and 15-minute walking isochrones rendered in PyDeck 3D WebGL.
-> 3. **Quantified Impact:** The analysis revealed that 41.8% of peri-urban residents live outside the 15-minute pedestrian healthcare catchment, providing Ghana's Land Use and Spatial Planning Authority (LUSPA) with quantifiable spatial evidence for transit-oriented health post placement.
-
-### 📊 Empirical Performance & Validation Evidence
-```text
-===================== 15-MINUTE PEDESTRIAN HEALTHCARE ACCESSIBILITY =====================
-Walking Time Threshold | Catchment Radius (Mean) | Urban Core Coverage | Peri-Urban Fringe Coverage
------------------------+------------------------+---------------------+---------------------------
-5-Minute Walk (400 m)  | 380 m                  | 62.4%               | 14.1%
-10-Minute Walk (800 m) | 760 m                  | 84.1%               | 36.5%
-15-Minute Walk (1200 m)| 1,140 m                | 93.8%               | 58.2% (41.8% Underserved!)
-
-NETWORK TOPOLOGY METRICS:
-Total Street Nodes: 18,420 | Total Graph Edges: 42,110 | Mean Circuity Factor: 1.14
-Healthcare Desert Isolation Index: High Vulnerability in Ga South, Kpone Katamanso
-=========================================================================================
-```
-
----
-
-
 [![OSMnx](https://img.shields.io/badge/OSMnx-Pedestrian%20Graph-blue)](https://osmnx.readthedocs.io/)
 [![NetworkX](https://img.shields.io/badge/NetworkX-Dijkstra%20Isochrones-orange)](https://networkx.org/)
 [![Pydeck](https://img.shields.io/badge/Pydeck-WebGL%203D-green)](https://deckgl.readthedocs.io/)
+[![License: MIT](https://img.shields.io/badge/License-MIT-yellow.svg)](../LICENSE)
+
+> **Lead Researcher & Engineer:** **Emmanuel Yerbo**  
+> *BSc Geography & Regional Planning (First Class Honours, GPA: 3.82/4.00, Three-Time Dean's Award Recipient) — University of Cape Coast, Ghana*  
+> 🆔 [ORCID: 0009-0008-8968-6999](https://orcid.org/0009-0008-8968-6999) | 💼 [LinkedIn](https://www.linkedin.com/in/emmanuelyerbo) | 💻 [GitHub Profile](https://github.com/Emmanuel-Yerbo) | 🌐 [Interactive Portfolio](https://emmanuelyerbo.github.io/emmanuelyerbo)
+
+---
+
+### ⚡ Executive Summary
+
+1. **The Core Spatial Problem:** Rapid polycentric growth in Greater Accra has created severe healthcare deserts, where rapid settlement expansion outpaces walkable pedestrian access to public clinics and emergency medical infrastructure.
+2. **The Technical Pipeline:** We constructed topological walkable graph networks from OpenStreetMap data using OSMnx, executing NetworkX Dijkstra shortest-path algorithms and convex hull geometric buffering to generate 5, 10, and 15-minute walking isochrones rendered in PyDeck 3D WebGL.
+3. **Quantified Impact:** The analysis revealed that **41.8% of peri-urban residents live outside the 15-minute pedestrian healthcare catchment**, providing Ghana's Land Use and Spatial Planning Authority (LUSPA) with quantifiable spatial evidence for transit-oriented health post placement.
+
+### 📊 Empirical Performance & Validation Evidence
+
+| Walking Time Threshold | Catchment Radius (Mean) | Urban Core Coverage | Peri-Urban Fringe Coverage | Service Equity Status |
+|---|:---:|:---:|:---:|---|
+| **5-Minute Walk (400 m)** | 380 m | 62.4% | 14.1% | High core concentration |
+| **10-Minute Walk (800 m)** | 760 m | 84.1% | 36.5% | Moderate transitional access |
+| **15-Minute Walk (1200 m)** | 1,140 m | **93.8%** | **58.2%** | **41.8% Underserved Healthcare Desert** |
+
+#### Network Topology Metrics
+- **Total Street Nodes:** **18,420** | **Total Graph Edges:** **42,110** | **Mean Circuity Factor:** **1.14**
+- **Healthcare Desert Isolation Index:** High vulnerability concentrated across Ga South, Kpone Katamanso, and Amasaman.
+
+---
 
 ### 1. Introduction: The Spatial Logic of Accessibility
 In urban studies, **accessibility** is the primary metric of equity. This repository implements an **Isochrone-based analysis** to evaluate the '15-Minute City' model within Accra, Ghana. An isochrone (a line of equal travel time) allows us to move beyond simplistic 'as-the-crow-flies' Euclidean buffers and instead model the realistic urban fabric—accounting for street connectivity, physical barriers, topology, and human walking speeds.
 
 ---
 
-### 2. Methodological Pipeline
+### 2. Methodological Pipeline & Network Flow
+
+```mermaid
+flowchart TD
+    OSM["🗺️ OpenStreetMap Pedestrian Topology (OSMnx)<br/>(18,420 Nodes, 42,110 Edges, Walk Speed = 4.5 km/h)"] --> GRAPH["🕸️ NetworkX Directed Graph Construction<br/>(Impedance: Edge Length / Human Walking Velocity 1.25 m/s)"]
+    
+    POI["🏥 Healthcare Facilities & Public Clinics (POIs)<br/>(Geocoded Spatial Origins)"] --> DIJK["⚡ Dijkstra Shortest-Path Subgraph Traversal<br/>d(v) = min_{u ∈ Pred(v)} [d(u) + w(u, v)]"]
+    
+    GRAPH & POI --> DIJK
+    DIJK --> CHULL["📐 Per-Facility Topological Convex Hull Buffering<br/>(Generates 5, 10, and 15-minute reachable node bounds)"]
+    CHULL --> UNION["🧩 Spatial Multi-Polygon Union & Deficit Masking<br/>(Identifies 41.8% peri-urban underserved desert zones)"]
+    UNION --> PYDECK["🌐 PyDeck 3D WebGL Interactive Isochrone Visualizer"]
+
+    style OSM fill:#0f172a,stroke:#38bdf8,stroke-width:2px,color:#f8fafc
+    style GRAPH fill:#1e1b4b,stroke:#a855f7,stroke-width:2px,color:#f8fafc
+    style POI fill:#1c1917,stroke:#f59e0b,stroke-width:2px,color:#f8fafc
+    style DIJK fill:#2e1065,stroke:#ec4899,stroke-width:2px,color:#f8fafc
+    style CHULL fill:#022c22,stroke:#10b981,stroke-width:2px,color:#f8fafc
+    style UNION fill:#450a0a,stroke:#ef4444,stroke-width:2px,color:#f8fafc
+    style PYDECK fill:#064e3b,stroke:#22c55e,stroke-width:2px,color:#f8fafc
+```
 
 #### 2.1 Network Modeling (OSMnx & NetworkX)
 - **The Process**: We extract the OpenStreetMap (OSM) pedestrian topology graph (`G_walk`) across the study bounds.

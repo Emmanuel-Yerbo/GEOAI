@@ -1,29 +1,33 @@
 # Automated Feature Extraction with Foundation Models: SAMGeo & LangSAM
 ## Case Study: Zero-Shot Campus Infrastructure & Aviation Intelligence in Ghana
 
-> ### ⚡ Executive Summary (3 Sentences)
-> 1. **Core Problem:** Traditional spatial asset auditing requires weeks of manual digitizing or hundreds of thousands of labeled training polygons that municipal assemblies in developing countries cannot afford to produce.
-> 2. **Technical Pipeline:** We operationalized Meta AI's Segment Anything Model (SAM) and LangSAM with Vision Transformer (ViT) backbones, applying text-prompted zero-shot semantic segmentation over sub-meter drone and aerial orthomosaics across campus and aviation facilities in Ghana.
-> 3. **Quantified Impact:** The zero-shot pipeline extracted 1,420 building boundaries and paved assets with sub-meter geometric delineation in minutes with zero task-specific model retraining, generating ready-to-use GeoJSON layers for local land administration.
-
-### 📊 Empirical Performance & Validation Evidence
-```text
-=========================== SAMGEO ZERO-SHOT INFERENCE BENCHMARK ===========================
-Prompt / Target Class    | Backbone Architecture | Retraining Needed | Boundary IoU | Latency / Tile
--------------------------+-----------------------+-------------------+--------------+---------------
-'building' (Footprint)   | ViT-Huge (SAM)        | NONE (Zero-Shot)  | 74.8%        | 1.84 sec
-'runway' / 'taxiway'     | Grounding DINO + SAM  | NONE (Zero-Shot)  | 82.1%        | 2.15 sec
-'tree canopy'            | ViT-Large (SAMGeo)    | NONE (Zero-Shot)  | 69.4%        | 1.42 sec
-'aircraft'               | LangSAM (Text Prompt) | NONE (Zero-Shot)  | 86.5%        | 1.95 sec
-============================================================================================
-```
-
----
-
-
 [![Segment Anything](https://img.shields.io/badge/Meta%20AI-Segment%20Anything-blue?logo=meta)](https://segment-anything.com/)
 [![SAMGeo](https://img.shields.io/badge/SAMGeo-Segment%20Geospatial-green)](https://samgeo.gishub.org/)
 [![LangSAM](https://img.shields.io/badge/LangSAM-Grounding%20DINO%20%2B%20SAM-orange)](https://github.com/luca-medeiros/lang-segment-anything)
+[![License: MIT](https://img.shields.io/badge/License-MIT-yellow.svg)](../LICENSE)
+
+> **Lead Researcher & Engineer:** **Emmanuel Yerbo**  
+> *BSc Geography & Regional Planning (First Class Honours, GPA: 3.82/4.00, Three-Time Dean's Award Recipient) — University of Cape Coast, Ghana*  
+> 🆔 [ORCID: 0009-0008-8968-6999](https://orcid.org/0009-0008-8968-6999) | 💼 [LinkedIn](https://www.linkedin.com/in/emmanuelyerbo) | 💻 [GitHub Profile](https://github.com/Emmanuel-Yerbo) | 🌐 [Interactive Portfolio](https://emmanuelyerbo.github.io/emmanuelyerbo)
+
+---
+
+### ⚡ Executive Summary
+
+1. **The Core Spatial Problem:** Traditional spatial asset auditing requires weeks of manual digitizing or hundreds of thousands of labeled training polygons that municipal assemblies in developing countries cannot afford to produce.
+2. **The Technical Pipeline:** We operationalized Meta AI's Segment Anything Model (SAM) and LangSAM with Vision Transformer (ViT) backbones, applying text-prompted zero-shot semantic segmentation over sub-meter drone and aerial orthomosaics across campus and aviation facilities in Ghana.
+3. **Quantified Impact:** The zero-shot pipeline extracted **1,420 building boundaries and paved assets** with sub-meter geometric delineation in minutes with **zero task-specific model retraining**, generating ready-to-use GeoJSON layers for local land administration.
+
+### 📊 Empirical Performance & Validation Evidence
+
+| Prompt / Target Class | Backbone Architecture | Retraining Needed | Boundary IoU | Latency / Tile |
+|---|---|:---:|:---:|:---:|
+| `'building'` (Footprint) | ViT-Huge (SAM) | **NONE (Zero-Shot)** | **74.8%** | 1.84 sec |
+| `'runway'` / `'taxiway'` | Grounding DINO + SAM | **NONE (Zero-Shot)** | **82.1%** | 2.15 sec |
+| `'tree canopy'` | ViT-Large (SAMGeo) | **NONE (Zero-Shot)** | **69.4%** | 1.42 sec |
+| `'aircraft'` | LangSAM (Text Prompt) | **NONE (Zero-Shot)** | **86.5%** | 1.95 sec |
+
+---
 
 ### 1. Introduction: The Spatial Logic of Foundation Models in Remote Sensing
 In classical Earth Observation, extracting structural built features requires laborious manual polygon digitization or supervised training of CNNs on thousands of manually annotated tiles. This project implements **Geospatial Foundation Models (SAMGeo & LangSAM)**, adapting Meta AI's **Segment Anything Model (SAM)** and Vision Transformer (ViT) backbones to remote sensing imagery.
@@ -32,7 +36,26 @@ By utilizing **zero-shot learning** and **natural language prompt engineering**,
 
 ---
 
-### 2. Methodological Pipeline
+### 2. Methodological Pipeline & Promptable Vision Architecture
+
+```mermaid
+flowchart TD
+    IMG["🛰️ Sub-Meter Aerial Orthomosaic<br/>(UAV / High-Res Optical RGB)"] --> VITE["Vision Transformer (ViT-H / ViT-L)<br/>(Extracts 1024-dim Patch Embeddings)"]
+    
+    TXT["💬 Natural Language Prompt<br/>(e.g., 'building', 'aircraft', 'runway')"] --> GDINO["🦖 Grounding DINO Open-Vocabulary Detector<br/>(Generates High-Confidence Bounding Boxes)"]
+    
+    VITE & GDINO --> MDEC["🎯 SAM Lightweight Mask Decoder<br/>(Prompt-Guided Cross-Attention & Edge Snapping)"]
+    MDEC --> MASK["🗺️ Instance Segmentation Masks<br/>(Sub-meter pixel accuracy, zero retraining)"]
+    MASK --> VEC["📦 Polygon Vectorization Engine<br/>(Exports Cadastral GeoJSON / Shapefile)"]
+
+    style IMG fill:#0f172a,stroke:#38bdf8,stroke-width:2px,color:#f8fafc
+    style VITE fill:#1e1b4b,stroke:#a855f7,stroke-width:2px,color:#f8fafc
+    style TXT fill:#1c1917,stroke:#f59e0b,stroke-width:2px,color:#f8fafc
+    style GDINO fill:#2e1065,stroke:#ec4899,stroke-width:2px,color:#f8fafc
+    style MDEC fill:#022c22,stroke:#10b981,stroke-width:2px,color:#f8fafc
+    style MASK fill:#064e3b,stroke:#22c55e,stroke-width:2px,color:#f8fafc
+    style VEC fill:#0f172a,stroke:#38bdf8,stroke-width:2px,color:#f8fafc
+```
 
 #### 2.1 Promptable Vision Transformer Inference (SAMGeo)
 - **The Process**: We ingest sub-meter satellite/aerial imagery into pre-trained Vision Transformer backbones (`vit_h`, `vit_l`, `vit_b`). Image embeddings are computed once, and spatial masks are decoded in real-time.

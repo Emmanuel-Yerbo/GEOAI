@@ -6,9 +6,9 @@
 [![Status: Complete](https://img.shields.io/badge/Status-Complete-brightgreen)](https://github.com/Emmanuel-Yerbo/GEOAI)
 [![License: MIT](https://img.shields.io/badge/License-MIT-yellow.svg)](../LICENSE)
 
-> **Author:** **Emmanuel Yerbo**  
-> *BSc Geography & Regional Planning (First Class Honours) — University of Cape Coast, Ghana*  
-> 🔗 [LinkedIn](https://www.linkedin.com/in/emmanuelyerbo) | 💻 [GitHub Profile](https://github.com/Emmanuel-Yerbo) | 🌐 [Interactive Portfolio](https://emmanuelyerbo.github.io/emmanuelyerbo)
+> **Lead Researcher & Engineer:** **Emmanuel Yerbo**  
+> *BSc Geography & Regional Planning (First Class Honours, GPA: 3.82/4.00, Three-Time Dean's Award Recipient) — University of Cape Coast, Ghana*  
+> 🆔 [ORCID: 0009-0008-8968-6999](https://orcid.org/0009-0008-8968-6999) | 💼 [LinkedIn](https://www.linkedin.com/in/emmanuelyerbo) | 💻 [GitHub Profile](https://github.com/Emmanuel-Yerbo) | 🌐 [Interactive Portfolio](https://emmanuelyerbo.github.io/emmanuelyerbo)
 
 ---
 
@@ -22,14 +22,23 @@ This research project conducts an end-to-end hydrological and geomorphometric an
 
 ---
 
-## 🔬 Hydrological Principles & Mathematical Formulations
+## 🔬 Hydrological Principles & Stream Ordering Topology
 
-```
-  1 (Headwater) ───────┐
-                       ├─── 2 (Higher Order Tributary)
-  1 (Headwater) ───────┘           │
-                                   ├─── 3 (Main River Stem)
-  2 (Tributary) ───────────────────┘
+```mermaid
+flowchart LR
+    H1["Order 1 (Headwater)"] & H2["Order 1 (Headwater)"] -->|Confluence: 1 + 1| T1["Order 2 (Tributary)"]
+    H3["Order 1 (Headwater)"] -->|1 converges with 2: max(1,2)| T1
+    T1 & T2["Order 2 (Tributary)"] -->|Confluence: 2 + 2| M1["Order 3 (Major River)"]
+    M1 & M2["Order 3 (Major River)"] -->|Confluence: 3 + 3| S1["Order 4 (Main Drainage Stem)"]
+
+    style H1 fill:#0f172a,stroke:#38bdf8,stroke-width:2px,color:#f8fafc
+    style H2 fill:#0f172a,stroke:#38bdf8,stroke-width:2px,color:#f8fafc
+    style H3 fill:#0f172a,stroke:#38bdf8,stroke-width:2px,color:#f8fafc
+    style T1 fill:#1e1b4b,stroke:#a855f7,stroke-width:2px,color:#f8fafc
+    style T2 fill:#1e1b4b,stroke:#a855f7,stroke-width:2px,color:#f8fafc
+    style M1 fill:#022c22,stroke:#10b981,stroke-width:2px,color:#f8fafc
+    style M2 fill:#022c22,stroke:#10b981,stroke-width:2px,color:#f8fafc
+    style S1 fill:#064e3b,stroke:#22c55e,stroke-width:2px,color:#f8fafc
 ```
 
 ### 1. The Strahler Stream Ordering Logic

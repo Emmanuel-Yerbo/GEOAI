@@ -6,9 +6,9 @@
 [![Status: Complete](https://img.shields.io/badge/Status-Complete-brightgreen)](https://github.com/Emmanuel-Yerbo/GEOAI)
 [![License: MIT](https://img.shields.io/badge/License-MIT-yellow.svg)](../LICENSE)
 
-> **Author:** **Emmanuel Yerbo**  
-> *BSc Geography & Regional Planning (First Class Honours) — University of Cape Coast, Ghana*  
-> 🔗 [LinkedIn](https://www.linkedin.com/in/emmanuelyerbo) | 💻 [GitHub Profile](https://github.com/Emmanuel-Yerbo) | 🌐 [Interactive Portfolio](https://emmanuelyerbo.github.io/emmanuelyerbo)
+> **Lead Researcher & Engineer:** **Emmanuel Yerbo**  
+> *BSc Geography & Regional Planning (First Class Honours, GPA: 3.82/4.00, Three-Time Dean's Award Recipient) — University of Cape Coast, Ghana*  
+> 🆔 [ORCID: 0009-0008-8968-6999](https://orcid.org/0009-0008-8968-6999) | 💼 [LinkedIn](https://www.linkedin.com/in/emmanuelyerbo) | 💻 [GitHub Profile](https://github.com/Emmanuel-Yerbo) | 🌐 [Interactive Portfolio](https://emmanuelyerbo.github.io/emmanuelyerbo)
 
 ---
 
@@ -22,22 +22,30 @@ This project serves as the primary scientific **ablation baseline** for the repo
 
 ---
 
-## 🔬 Model Architectures
+## 🔬 Model Architectures & Benchmark Flow
 
-```
-  Sentinel-2 Pixel Vector: x = [B2 (Blue), B3 (Green), B4 (Red), B8 (NIR)]
-                                │
-        ┌───────────────────────┴───────────────────────┐
-        ▼                                               ▼
-  Multilayer Perceptron (MLP)                  Random Forest Ensemble
-  - Input: 4 Spectral Dimensions               - 200 Decision Trees
-  - Dense Layer 1: 64 Neurons (ReLU + BN)      - Gini Impurity Splitting
-  - Dense Layer 2: 32 Neurons (ReLU + Dropout) - Out-of-Bag (OOB) Error
-  - Output: Softmax (4 Class Probabilities)    - Feature Importance Ranking
-        │                                               │
-        └───────────────────────┬───────────────────────┘
-                                ▼
-         Evaluation: Confusion Matrix, Producer's & User's Accuracy
+```mermaid
+flowchart TD
+    INP["🛰️ Sentinel-2 MSI Pixel Vector<br/>x = [B2 (Blue), B3 (Green), B4 (Red), B8 (NIR)]"] --> SPLIT{"Classifier Architecture"}
+    
+    subgraph MLP["1. Deep Multilayer Perceptron (PyTorch MLP)"]
+        SPLIT --> M1["Linear Layer 1: 4 ➔ 64 (BatchNorm1d + ReLU)"]
+        M1 --> M2["Linear Layer 2: 64 ➔ 32 (Dropout 0.2 + ReLU)"]
+        M2 --> M3["Linear Layer 3: 32 ➔ 4 Classes + Softmax"]
+    end
+
+    subgraph RF["2. Classical Ensemble (Scikit-Learn Random Forest)"]
+        SPLIT --> R1["200 Decision Trees (Max Depth = 15)"]
+        R1 --> R2["Gini Impurity Splitting & OOB Optimization"]
+        R2 --> R3["Majority Voting across Decision Forest"]
+    end
+
+    MLP & RF --> EVAL["📊 Baseline Ablation Evaluation<br/>(Demonstrates 89–91% pixel limit vs 96.8% SegFormer spatial patch)"]
+
+    style INP fill:#0f172a,stroke:#38bdf8,stroke-width:2px,color:#f8fafc
+    style MLP fill:#1e1b4b,stroke:#a855f7,stroke-width:2px,color:#f8fafc
+    style RF fill:#022c22,stroke:#10b981,stroke-width:2px,color:#f8fafc
+    style EVAL fill:#064e3b,stroke:#22c55e,stroke-width:2px,color:#f8fafc
 ```
 
 ---

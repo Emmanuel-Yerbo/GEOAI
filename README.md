@@ -5,12 +5,13 @@
 [![Google Earth Engine](https://img.shields.io/badge/Google%20Earth%20Engine-API-34A853?logo=google-earth&logoColor=white)](https://earthengine.google.com/)
 [![TorchGeo](https://img.shields.io/badge/TorchGeo-0.5+-green?logo=python&logoColor=white)](https://github.com/microsoft/torchgeo)
 [![Cyber2A Arctic](https://img.shields.io/badge/Cyber2A%20Challenge-Rank%20%235%20Global%20(16.45%20AP)-20BEFF?logo=kaggle&logoColor=white)](https://huggingface.co/spaces/cyber2a/2026GeoAIArcticChallenge)
+[![ORCID](https://img.shields.io/badge/ORCID-0009--0008--8968--6999-A6CE39?logo=orcid&logoColor=white)](https://orcid.org/0009-0008-8968-6999)
 [![Status: Production Suite](https://img.shields.io/badge/Status-20%20Projects%20Live-brightgreen?logo=git&logoColor=white)](https://github.com/Emmanuel-Yerbo/GEOAI)
 [![License: MIT](https://img.shields.io/badge/License-MIT-yellow.svg)](LICENSE)
 
-> **Author:** **Emmanuel Yerbo**  
-> *BSc Geography & Regional Planning (First Class Honours, CGPA 3.82/4.00) — University of Cape Coast, Ghana*  
-> 🔗 [LinkedIn](https://www.linkedin.com/in/emmanuelyerbo) | 💻 [GitHub Profile](https://github.com/Emmanuel-Yerbo) | 🌐 [Interactive Portfolio Web App](https://emmanuelyerbo.github.io/GEOAI) | ✉️ [Email](mailto:emmanuelyerbo@gmail.com)
+> **Lead Researcher & Engineer:** **Emmanuel Yerbo**  
+> *BSc Geography & Regional Planning (First Class Honours, GPA: 3.82/4.00, Three-Time Dean's Award Recipient) — University of Cape Coast, Ghana*  
+> 🆔 [ORCID: 0009-0008-8968-6999](https://orcid.org/0009-0008-8968-6999) | 💼 [LinkedIn](https://www.linkedin.com/in/emmanuelyerbo) | 💻 [GitHub Profile](https://github.com/Emmanuel-Yerbo) | 🌐 [Interactive Portfolio Web App](https://emmanuelyerbo.github.io/GEOAI) | ✉️ [Email](mailto:emmanuelyerbo@gmail.com)
 
 ---
 

@@ -6,9 +6,9 @@
 [![GeoPandas](https://img.shields.io/badge/GeoPandas-0.14-green?logo=python&logoColor=white)](https://geopandas.org/)
 [![License: MIT](https://img.shields.io/badge/License-MIT-yellow.svg)](../LICENSE)
 
-> **Author:** **Emmanuel Yerbo**  
-> *BSc Geography & Regional Planning (First Class Honours) — University of Cape Coast, Ghana*  
-> 🔗 [LinkedIn](https://www.linkedin.com/in/emmanuelyerbo) | 💻 [GitHub Profile](https://github.com/Emmanuel-Yerbo) | 🌐 [Interactive Portfolio](https://emmanuelyerbo.github.io/emmanuelyerbo)
+> **Lead Researcher & Engineer:** **Emmanuel Yerbo**  
+> *BSc Geography & Regional Planning (First Class Honours, GPA: 3.82/4.00, Three-Time Dean's Award Recipient) — University of Cape Coast, Ghana*  
+> 🆔 [ORCID: 0009-0008-8968-6999](https://orcid.org/0009-0008-8968-6999) | 💼 [LinkedIn](https://www.linkedin.com/in/emmanuelyerbo) | 💻 [GitHub Profile](https://github.com/Emmanuel-Yerbo) | 🌐 [Interactive Portfolio](https://emmanuelyerbo.github.io/emmanuelyerbo)
 
 ---
 
@@ -20,21 +20,29 @@ This project constructs an interactive **3D Urban Digital Twin** and quantitativ
 
 ---
 
-## 🔬 Computational Methodology
+## 🔬 Computational Methodology & Architecture
 
-```
-  2D Vector Building Footprints (OSM / AI Derived)
-                         │
-        ┌────────────────┴────────────────┐
-        ▼                                 ▼
-  Volumetric 3D Extrusion          Morphological Tessellation
-  - Height & Floor Estimation      - Voronoi Spatial Cells
-  - WebGL Pitch/Bearing Camera     - Building Circularity & Elongation
-  - PyDeck 3D Rendering            - Street Orientation Polar Roses
-        │                                 │
-        └────────────────┬────────────────┘
-                         ▼
-        Quantitative Urban Typology & Microclimate Input
+```mermaid
+flowchart TD
+    INP["🗺️ 2D Cadastral & OSM Building Polygons<br/>(OpenStreetMap / SegFormer Foundation Vectors)"] --> SPLIT{"Fork Morphological Engine"}
+    
+    subgraph VOL["1. 3D Volumetric Digital Twin (PyDeck / WebGL)"]
+        SPLIT --> V1["Floor Level Extraction & Stochastic Allometric Height<br/>Height = β0 + β1 · sqrt(Area) + ε"]
+        V1 --> V2["🏙️ 3D Column Extrusion with GPU Lighting<br/>(Pitch, bearing, and altitude camera dynamics)"]
+    end
+
+    subgraph MORPH["2. Quantitative Spatial Morphometrics (Momepy)"]
+        SPLIT --> M1["Voronoi Morphological Tessellation Cells<br/>(Partitions virtual plot domain around each dwelling)"]
+        M1 --> M2["Form Compactness: Circularity = 4π·Area / Perimeter²"]
+        M2 --> M3["🧭 Road Network Directional Polar Rose Diagrams"]
+    end
+
+    VOL & MORPH --> OUT["📊 Integrated Urban Density & Microclimate Intelligence<br/>(Provides geometric inputs for urban canyon airflow & heat modeling)"]
+
+    style INP fill:#0f172a,stroke:#38bdf8,stroke-width:2px,color:#f8fafc
+    style VOL fill:#1e1b4b,stroke:#a855f7,stroke-width:2px,color:#f8fafc
+    style MORPH fill:#022c22,stroke:#10b981,stroke-width:2px,color:#f8fafc
+    style OUT fill:#064e3b,stroke:#22c55e,stroke-width:2px,color:#f8fafc
 ```
 
 ### 1. Volumetric Height Modeling (`Chapter_09_3D_Buildings`)

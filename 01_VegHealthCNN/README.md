@@ -1,48 +1,38 @@
 # 🌱 VegHealthCNN: 1D-CNN for Spectral-Temporal Crop Health Mapping & Precision Agriculture
 
-> ### ⚡ Executive Summary (3 Sentences)
-> 1. **Core Problem:** Smallholder crop mosaics in sub-Saharan Africa suffer from extreme spatial heterogeneity and nutrient volatility, leading to inefficient blanket fertilizer application and high agricultural runoff.
-> 2. **Technical Pipeline:** We engineered a custom 57,091-parameter 1D-Convolutional Neural Network in PyTorch trained on multi-temporal Sentinel-2 spectral-temporal signatures, strictly evaluated using spatial block cross-validation (GroupKFold across 0.01° spatial blocks) to eliminate spatial autocorrelation data leakage.
-> 3. **Quantified Impact:** The model achieved 98.7% test accuracy across 301 spatially independent field samples and generated variable-rate nitrogen prescriptions that project a 19.5% reduction in synthetic fertilizer demand (~4.02 million kg N).
-
-### 📊 Empirical Performance & Validation Evidence
-```text
-======================= EMPIRICAL MODEL PERFORMANCE & SPATIAL VALIDATION =======================
-Cross-Validation Strategy   | Test Accuracy | Cohen's Kappa | Spatial Autocorrelation Bias (Moran's I)
-----------------------------+---------------+---------------+------------------------------------------
-Naive Random K-Fold Split   | 99.4%         | 0.991         | HIGH (Severe Data Leakage Across Neighbors)
-Spatial Block CV (0.01° Grid)| 98.7%         | 0.982         | ZERO LEAKAGE (Enforced Spatial Independence)
-
-CONFUSION MATRIX (301 Spatially Isolated Test Samples):
-                 Predicted Stressed  Predicted Moderate  Predicted Healthy  Total  Producer Accuracy
-Actual Stressed:        78                   2                   0           80         97.5%
-Actual Moderate:         1                  118                  1          120         98.3%
-Actual Healthy:          0                   0                  101         101        100.0%
-=================================================================================================
-```
-
----
-
-
 [![PyTorch](https://img.shields.io/badge/PyTorch-2.x-EE4C2C?logo=pytorch&logoColor=white)](https://pytorch.org/)
 [![Google Earth Engine](https://img.shields.io/badge/Google%20Earth%20Engine-Sentinel--2%20L2A-34A853?logo=google-earth&logoColor=white)](https://earthengine.google.com/)
 [![Spatial CV](https://img.shields.io/badge/Spatial%20Validation-0.01%C2%B0%20Blocks-blue)](https://scikit-learn.org/)
 [![Conference](https://img.shields.io/badge/Presented-GeoAI4SD%202026-orange)](https://ucc.edu.gh/)
+[![License: MIT](https://img.shields.io/badge/License-MIT-yellow.svg)](../LICENSE)
 
-> **Official Paper Title:**  
-> *GeoAI-Driven Precision Health Classification and Variable-Rate Nitrogen Prescribing in Ghana Using a 1D-CNN and Spatial Block Cross-Validation*  
-> **Author:** Emmanuel Yerbo (Department of Geography and Regional Planning, University of Cape Coast, Ghana)  
-> **Presented at:** GeoAI for Sustainable Development Conference (GeoAI4SD 2026)
+> **Lead Researcher & Engineer:** **Emmanuel Yerbo**  
+> *BSc Geography & Regional Planning (First Class Honours, GPA: 3.82/4.00, Three-Time Dean's Award Recipient) — University of Cape Coast, Ghana*  
+> 🆔 [ORCID: 0009-0008-8968-6999](https://orcid.org/0009-0008-8968-6999) | 💼 [LinkedIn](https://www.linkedin.com/in/emmanuelyerbo) | 💻 [GitHub Profile](https://github.com/Emmanuel-Yerbo) | 🌐 [Interactive Portfolio](https://emmanuelyerbo.github.io/emmanuelyerbo)  
+> 📄 *Official Paper: GeoAI-Driven Precision Health Classification and Variable-Rate Nitrogen Prescribing in Ghana Using a 1D-CNN and Spatial Block Cross-Validation (Presented at GeoAI4SD 2026)*
 
 ---
 
-## 📌 Executive Summary
-VegHealthCNN is a lightweight **1D-Convolutional Neural Network (57,091 parameters)** designed for pixel-level crop health classification from Sentinel-2 Level-2A 14-band spectral-index stacks. 
+### ⚡ Executive Summary
 
-### Key Innovations & Milestones:
-1. **Spatial Block Cross-Validation ($0.01^\circ$ geographic blocks, ~1.1 km):** Prevents spatial autocorrelation data leakage, achieving **98.7% test accuracy** on 301 spatially independent ground-truth samples.
-2. **Dual-Axis Transferability:** Demonstrates zero-retraining generalization across space (Akaakuma training domain $	o$ Prestea Huni-Valley Municipality) and time (2024 $	o$ 2025).
-3. **Environmental & Economic Impact:** Detected **370.31 km² of galamsey-induced vegetation loss** and formulated an NDRE-modulated Variable-Rate Application (VRA) nitrogen prescription saving **19.5% fertilizer (~4.02 million kg N)** across 172,334 hectares.
+1. **The Core Spatial Problem:** Smallholder crop mosaics in sub-Saharan Africa suffer from extreme spatial heterogeneity and nutrient volatility, leading to inefficient blanket fertilizer application and high agricultural runoff.
+2. **The Technical Pipeline:** We engineered a custom 57,091-parameter 1D-Convolutional Neural Network in PyTorch trained on multi-temporal Sentinel-2 spectral-temporal signatures, strictly evaluated using spatial block cross-validation (GroupKFold across 0.01° spatial blocks) to eliminate spatial autocorrelation data leakage.
+3. **Quantified Impact:** The model achieved **98.7% test accuracy** across 301 spatially independent field samples and generated variable-rate nitrogen prescriptions that project a **19.5% reduction** in synthetic fertilizer demand (~4.02 million kg N).
+
+### 📊 Empirical Performance & Validation Evidence
+
+| Cross-Validation Strategy | Test Accuracy | Cohen's Kappa | Spatial Autocorrelation Bias (Moran's I) |
+|---|:---:|:---:|---|
+| Naive Random K-Fold Split | 99.4% | 0.991 | **HIGH** *(Severe Data Leakage Across Neighbors)* |
+| **Spatial Block CV (0.01° Grid)** | **98.7%** | **0.982** | **ZERO LEAKAGE** *(Enforced Spatial Independence)* |
+
+#### Confusion Matrix (301 Spatially Isolated Test Samples)
+
+| Ground Truth Class | Predicted Stressed | Predicted Moderate | Predicted Healthy | Class Total | Producer Accuracy |
+|---|:---:|:---:|:---:|:---:|:---:|
+| **Stressed** | 78 | 2 | 0 | 80 | **97.5%** |
+| **Moderate** | 1 | 118 | 1 | 120 | **98.3%** |
+| **Healthy** | 0 | 0 | 101 | 101 | **100.0%** |
 
 ---
 
@@ -50,17 +40,22 @@ VegHealthCNN is a lightweight **1D-Convolutional Neural Network (57,091 paramete
 
 ![VegHealthCNN Architecture](results/architecture.png)
 
-```
-Input (14 spectral features)
-  │
-  ├── Conv1D (1 -> 32, k=3, p=1) -> BatchNorm -> ReLU -> Dropout(0.2)
-  ├── Conv1D (32 -> 64, k=3, p=1) -> BatchNorm -> ReLU -> Dropout(0.3)
-  ├── Conv1D (64 -> 128, k=3, p=1) -> BatchNorm -> ReLU -> Dropout(0.4)
-  │
-  ├── AdaptiveAvgPool1d(1) -> Flatten
-  │
-  ├── Linear(128 -> 64) -> ReLU -> Dropout(0.3)
-  └── Linear(64 -> 3) -> Softmax [Healthy, Moderate Stress, No-Vegetation]
+```mermaid
+flowchart TD
+    IN["🌾 Input Tensor<br/>(14 Multi-Temporal Spectral Features)"] --> C1["Conv1D (1 ➔ 32, k=3, p=1)<br/>BatchNorm1d + ReLU + Dropout(0.2)"]
+    C1 --> C2["Conv1D (32 ➔ 64, k=3, p=1)<br/>BatchNorm1d + ReLU + Dropout(0.3)"]
+    C2 --> C3["Conv1D (64 ➔ 128, k=3, p=1)<br/>BatchNorm1d + ReLU + Dropout(0.4)"]
+    C3 --> GAP["AdaptiveAvgPool1d(1) + Flatten<br/>(Latent 128-dim spectral signature)"]
+    GAP --> FC1["Linear(128 ➔ 64)<br/>ReLU + Dropout(0.3)"]
+    FC1 --> FC2["Linear(64 ➔ 3) + Softmax<br/>[Healthy, Moderate Stress, Bare / Galamsey]"]
+
+    style IN fill:#0f172a,stroke:#38bdf8,stroke-width:2px,color:#f8fafc
+    style C1 fill:#1e1b4b,stroke:#a855f7,stroke-width:2px,color:#f8fafc
+    style C2 fill:#1e1b4b,stroke:#a855f7,stroke-width:2px,color:#f8fafc
+    style C3 fill:#1e1b4b,stroke:#a855f7,stroke-width:2px,color:#f8fafc
+    style GAP fill:#022c22,stroke:#10b981,stroke-width:2px,color:#f8fafc
+    style FC1 fill:#2e1065,stroke:#ec4899,stroke-width:2px,color:#f8fafc
+    style FC2 fill:#064e3b,stroke:#22c55e,stroke-width:2px,color:#f8fafc
 ```
 
 ---

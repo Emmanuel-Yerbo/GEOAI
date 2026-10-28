@@ -6,9 +6,9 @@
 [![Scikit-Learn](https://img.shields.io/badge/ML-Random%20Forest%20%2F%20GBDT-F7931E?logo=scikit-learn&logoColor=white)](https://scikit-learn.org/)
 [![License: MIT](https://img.shields.io/badge/License-MIT-yellow.svg)](../LICENSE)
 
-> **Author:** **Emmanuel Yerbo**  
-> *BSc Geography & Regional Planning (First Class Honours) — University of Cape Coast, Ghana*  
-> 🔗 [LinkedIn](https://www.linkedin.com/in/emmanuelyerbo) | 💻 [GitHub Profile](https://github.com/Emmanuel-Yerbo) | 🌐 [Interactive Portfolio](https://emmanuelyerbo.github.io/emmanuelyerbo)
+> **Lead Researcher & Engineer:** **Emmanuel Yerbo**  
+> *BSc Geography & Regional Planning (First Class Honours, GPA: 3.82/4.00, Three-Time Dean's Award Recipient) — University of Cape Coast, Ghana*  
+> 🆔 [ORCID: 0009-0008-8968-6999](https://orcid.org/0009-0008-8968-6999) | 💼 [LinkedIn](https://www.linkedin.com/in/emmanuelyerbo) | 💻 [GitHub Profile](https://github.com/Emmanuel-Yerbo) | 🌐 [Interactive Portfolio](https://emmanuelyerbo.github.io/emmanuelyerbo)
 
 ---
 
@@ -20,22 +20,33 @@ This research project develops a multi-sensor fusion pipeline coupling spaceborn
 
 ---
 
-## 🔬 Multi-Sensor Fusion Framework
+## 🔬 Multi-Sensor Fusion Framework & Architecture
 
-```
-   NASA GEDI ISS Spaceborne LiDAR              ESA Sentinel-2 L2A Multispectral
-   [Waveform Metrics: RH50, RH98, Cover]       [Bands: B2-B8A, RedEdge, NDVI, NDRE, EVI]
-                    │                                             │
-                    └──────────────────────┬──────────────────────┘
-                                           │
-                                           ▼
-                    Spatial Co-registration & Feature Concatenation
-                                           │
-                                           ▼
-                    Machine Learning Regression (Random Forest / GBDT)
-                                           │
-                                           ▼
-             Wall-to-Wall 10m Aboveground Biomass Density (AGBD) Map [Mg/ha]
+```mermaid
+flowchart TD
+    subgraph INP["1. Multi-Sensor Spaceborne Data Ingestion"]
+        G["🛰️ NASA GEDI Spaceborne LiDAR (ISS L4A)<br/>Waveform Metrics: RH50, RH98, Canopy Cover, PAI"]
+        S["🛰️ ESA Sentinel-2 MSI (10m L2A)<br/>B2–B8A, Red-Edge, NDRE, EVI, NDVI"]
+    end
+
+    subgraph FUSE["2. Spatial Co-Registration & Feature Engineering"]
+        G & S --> C["📐 25m Footprint Spatial Extraction & Buffer Alignment<br/>(Combines 3D vertical structure with 2D horizontal texture)"]
+    end
+
+    subgraph ML["3. Supervised Non-Linear Regressors"]
+        C --> M1["🌲 Spatial Random Forest Regressor (R² = 0.84)"]
+        C --> M2["⚡ Gradient Boosted Decision Trees (GBDT)"]
+    end
+
+    subgraph OUT["4. Wall-to-Wall Carbon Stock Accounting"]
+        M1 & M2 --> W["🗺️ 10m Spatially Continuous AGBD Map [Mg/ha]<br/>(Resolves optical saturation over Kakum National Forest)"]
+        W --> R["📊 REDD+ National Carbon Verification & MRV Compliance"]
+    end
+
+    style INP fill:#0f172a,stroke:#38bdf8,stroke-width:2px,color:#f8fafc
+    style FUSE fill:#1e1b4b,stroke:#a855f7,stroke-width:2px,color:#f8fafc
+    style ML fill:#022c22,stroke:#10b981,stroke-width:2px,color:#f8fafc
+    style OUT fill:#064e3b,stroke:#22c55e,stroke-width:2px,color:#f8fafc
 ```
 
 ### 1. Biophysical LiDAR Metrics (GEDI L4A)

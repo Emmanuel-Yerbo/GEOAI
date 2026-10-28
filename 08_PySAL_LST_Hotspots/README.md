@@ -1,32 +1,38 @@
 # Spatial Autocorrelation & Land Surface Temperature Hotspot Modeling
 ## Case Study: 24-Year Urban Heat Island Trajectories & District Microclimates in Ghana
 
-> ### ⚡ Executive Summary (3 Sentences)
-> 1. **Core Problem:** Uncontrolled urban expansion across the Greater Accra Metropolitan Area has converted vital vegetation and agricultural buffers into dense impervious surfaces, intensifying local microclimatic thermal stress.
-> 2. **Technical Pipeline:** We ingested 24 years (2000–2024) of multi-temporal Landsat Thermal Infrared (TIR) Collection 2 calibrated radiometry, applying Rasterio and PySAL (libpysal, ESDA) to compute global and local spatial autocorrelation metrics (Moran's I and Getis-Ord Gi* hot spot analytics).
-> 3. **Quantified Impact:** The research proved statistically significant ($p < 0.01$) outward migration of thermal hotspots toward peri-urban corridors (Adenta, Ga East), establishing an empirical scientific foundation for Accra's climate resilience and urban green-belt zoning policy.
-
-### 📊 Empirical Performance & Validation Evidence
-```text
-========================== SPATIAL AUTOCORRELATION & UHI STATISTICS ==========================
-Census Year | Mean LST (°C) | Global Moran's I (Spatial Clustering) | p-value | Significant Hotspots (Gi*)
-------------+---------------+---------------------------------------+---------+---------------------------
-2000        | 28.4°C        | 0.482                                 | < 0.001 | Industrial / Port Core
-2010        | 31.1°C        | 0.541                                 | < 0.001 | Central Accra Sprawl
-2020        | 33.6°C        | 0.618                                 | < 0.001 | Northern Peri-Urban Fringe
-2024        | 34.2°C        | 0.647                                 | < 0.001 | Corridors (Adenta, Ga East)
-
-LISA QUADRANT DISTRIBUTION:
-High-High (Hotspot): 28.4% | Low-Low (Cool Island): 18.2% | Spatial Outliers (HL/LH): 6.1%
-==============================================================================================
-```
-
----
-
-
 [![PySAL](https://img.shields.io/badge/PySAL-ESDA%20%7C%20libpysal-orange)](https://pysal.org/)
 [![Rasterio](https://img.shields.io/badge/Rasterio-Geospatial%20Rasters-blue)](https://rasterio.readthedocs.io/)
 [![Landsat](https://img.shields.io/badge/Sensor-Landsat%20TIR%20C2-green)](https://usgs.gov)
+[![License: MIT](https://img.shields.io/badge/License-MIT-yellow.svg)](../LICENSE)
+
+> **Lead Researcher & Engineer:** **Emmanuel Yerbo**  
+> *BSc Geography & Regional Planning (First Class Honours, GPA: 3.82/4.00, Three-Time Dean's Award Recipient) — University of Cape Coast, Ghana*  
+> 🆔 [ORCID: 0009-0008-8968-6999](https://orcid.org/0009-0008-8968-6999) | 💼 [LinkedIn](https://www.linkedin.com/in/emmanuelyerbo) | 💻 [GitHub Profile](https://github.com/Emmanuel-Yerbo) | 🌐 [Interactive Portfolio](https://emmanuelyerbo.github.io/emmanuelyerbo)
+
+---
+
+### ⚡ Executive Summary
+
+1. **The Core Spatial Problem:** Uncontrolled urban expansion across the Greater Accra Metropolitan Area has converted vital vegetation and agricultural buffers into dense impervious surfaces, intensifying local microclimatic thermal stress.
+2. **The Technical Pipeline:** We ingested 24 years (2000–2024) of multi-temporal Landsat Thermal Infrared (TIR) Collection 2 calibrated radiometry, applying Rasterio and PySAL (libpysal, ESDA) to compute global and local spatial autocorrelation metrics (Moran's I and Getis-Ord Gi* hot spot analytics).
+3. **Quantified Impact:** The research proved statistically significant ($p < 0.001$) outward migration of thermal hotspots toward peri-urban corridors (Adenta, Ga East), establishing an empirical scientific foundation for Accra's climate resilience and urban green-belt zoning policy.
+
+### 📊 Empirical Performance & Validation Evidence
+
+| Census Year | Mean LST (°C) | Global Moran's I (Spatial Clustering) | p-value | Significant Hotspots Location (Gi*) |
+|:---:|:---:|:---:|:---:|---|
+| **2000** | 28.4°C | 0.482 | < 0.001 | Industrial / Port of Tema Core |
+| **2010** | 31.1°C | 0.541 | < 0.001 | Central Accra Metropolitan Sprawl |
+| **2020** | 33.6°C | 0.618 | < 0.001 | Northern Peri-Urban Fringe |
+| **2024** | **34.2°C** | **0.647** | **< 0.001** | Outward Corridors (Adenta, Ga East, Pokuase) |
+
+#### Local Indicators of Spatial Association (LISA) Distribution
+- **High-High (Hotspot Clustering):** **28.4%** of urban fabric
+- **Low-Low (Cool Island Vegetation):** **18.2%**
+- **Spatial Outliers (HL / LH Margins):** **6.1%**
+
+---
 
 ### 1. Introduction: The Spatial Logic of Urban Thermal Autocorrelation
 Urban microclimates are non-random geographic phenomena governed by **spatial autocorrelation** (Tobler's First Law of Geography). High Land Surface Temperature (LST) values cluster together in areas with dense impervious surfaces, depleted canopy cover, and industrial activity.
@@ -35,10 +41,30 @@ This project implements an automated spatial data science pipeline combining mul
 
 ---
 
-### 2. Methodological Pipeline
+### 2. Methodological Pipeline & Spatial Autocorrelation Flow
+
+```mermaid
+flowchart TD
+    A["🛰️ 24-Year Landsat TIR Radiometry (2000–2024)<br/>(Landsat 7 ETM+, Landsat 8/9 TIRS Collection 2)"] --> B["🌡️ Split-Window Radiometric LST Retrieval<br/>(Atmospheric transmission + FVC Fractional Emissivity)"]
+    B --> C["📐 Spatial Weight Matrix W<br/>(k-Nearest Neighbors / Distance-Band Thresholding in PySAL)"]
+    
+    C --> D1["🌐 Global Moran's I Statistic (0.482 ➔ 0.647, p < 0.001)<br/>I = (N / S0) · Σ_i Σ_j w_ij (x_i - x̄)(x_j - x̄) / Σ_i (x_i - x̄)²"]
+    C --> D2["🔥 Local Getis-Ord Gi* & LISA Clusters (999 Permutations)<br/>Gi*(d) = Σ_j w_ij x_j - X̄ Σ_j w_ij / [s · sqrt((n Σ_j w_ij² - (Σ_j w_ij)²) / (n-1))]"]
+    
+    D1 & D2 --> E["🗺️ Spatial Trajectory & District Thermal Corridors<br/>(Proves outward migration into Adenta & Ga East peri-urban zones)"]
+    E --> F["🏛️ Evidence-Based Municipal Green-Belt Resilience Policy"]
+
+    style A fill:#0f172a,stroke:#38bdf8,stroke-width:2px,color:#f8fafc
+    style B fill:#1e1b4b,stroke:#a855f7,stroke-width:2px,color:#f8fafc
+    style C fill:#022c22,stroke:#10b981,stroke-width:2px,color:#f8fafc
+    style D1 fill:#2e1065,stroke:#ec4899,stroke-width:2px,color:#f8fafc
+    style D2 fill:#450a0a,stroke:#ef4444,stroke-width:2px,color:#f8fafc
+    style E fill:#064e3b,stroke:#22c55e,stroke-width:2px,color:#f8fafc
+    style F fill:#0f172a,stroke:#38bdf8,stroke-width:2px,color:#f8fafc
+```
 
 #### 2.1 Split-Window Radiometric LST Retrieval
-- **The Process**: Landsat 7, 8, and 9 Collection 2 Level-2 thermal bands are converted into Top-of-Atmosphere (TOA) spectral radiance and absolute surface temperature in Celsius ($^\circ	ext{C}$).
+- **The Process**: Landsat 7, 8, and 9 Collection 2 Level-2 thermal bands are converted into Top-of-Atmosphere (TOA) spectral radiance and absolute surface temperature in Celsius ($^\circ\text{C}$).
 - **The Essence**: Radiative transfer corrections account for atmospheric attenuation and fractional vegetation cover (FVC) derived from Sentinel/Landsat NDVI.
 
 #### 2.2 Spatial Autocorrelation Statistics (Getis-Ord $G_i^*$ & LISA)

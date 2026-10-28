@@ -5,8 +5,12 @@
 [![Foundation Model: VideoMAEv2](https://img.shields.io/badge/VFM-VideoMAEv2-blueviolet?logo=huggingface&logoColor=white)](https://github.com/OpenGVLab/VideoMAEv2)
 [![IEEE TGRS 2026 Paradigm](https://img.shields.io/badge/Methodology-Li_et_al._(IEEE_TGRS_2026)-success)](https://ieeexplore.ieee.org)
 [![Target: Northern Ghana](https://img.shields.io/badge/Geography-Northern_Savannah_Ghana-gold)]()
+[![License: MIT](https://img.shields.io/badge/License-MIT-yellow.svg)](../LICENSE)
 
-> **Methodological Lineage:** Adapted from the landmark framework by **Wenwen Li, Chia-Yu Hsu, and Sizhe Wang** (IEEE Transactions on Geoscience and Remote Sensing, Vol. 64, 2026): *"Adapting Video Foundation Models for Spatiotemporal Wildfire Forecasting via Cross-Modal Progressive Fine-Tuning"*.
+> **Lead Researcher & Engineer:** **Emmanuel Yerbo**  
+> *BSc Geography & Regional Planning (First Class Honours, GPA: 3.82/4.00, Three-Time Dean's Award Recipient) — University of Cape Coast, Ghana*  
+> 🆔 [ORCID: 0009-0008-8968-6999](https://orcid.org/0009-0008-8968-6999) | 💼 [LinkedIn](https://www.linkedin.com/in/emmanuelyerbo) | 💻 [GitHub Profile](https://github.com/Emmanuel-Yerbo) | 🌐 [Interactive Portfolio](https://emmanuelyerbo.github.io/emmanuelyerbo)  
+> 📖 *Methodological Lineage: Adapted from the landmark framework by Wenwen Li, Chia-Yu Hsu, and Sizhe Wang (IEEE Transactions on Geoscience and Remote Sensing, Vol. 64, 2026): "Adapting Video Foundation Models for Spatiotemporal Wildfire Forecasting via Cross-Modal Progressive Fine-Tuning".*
 
 ---
 
@@ -18,35 +22,29 @@ Conventional 2D convolutional networks and static vision transformers process sa
 
 This project implements the **Cross-Modal Progressive Fine-Tuning (CMPF)** paradigm to adapt **Video Foundation Models (VideoMAEv2 & MViTv2)** for **next-day ($t + 24\text{h}$) active fire spread forecasting** across the Northern Ghana savannah belt.
 
-```
-                      CROSS-MODAL PROGRESSIVE FINE-TUNING (CMPF)
-                      
-   +--------------------------------------------------------------------------+
-   |  STAGE 1: General Video Foundation Model (VideoMAEv2 / MViTv2)           |
-   |  Pre-trained on large-scale natural video (Kinetics-700 / YouTube).      |
-   |  Captures general 3D space-time motion, physics, and continuity.         |
-   +------------------------------------+-------------------------------------+
-                                        |
-                                        v
-   +--------------------------------------------------------------------------+
-   |  INPUT LAYER ADAPTATION: Cross-Modal Patch Embedding (E'_patch)          |
-   |  Reconstructs 3D patch projection from 3 RGB channels to M = 11          |
-   |  multimodal physical channels (VIIRS + Sentinel-2 + ERA5 + SRTM).        |
-   +------------------------------------+-------------------------------------+
-                                        |
-                                        v
-   +--------------------------------------------------------------------------+
-   |  STAGE 2: Intermediate Geospatial Domain Adaptation (Auxiliary Data)     |
-   |  Trained on regional/continental African active fire events with shared  |
-   |  bands (M_shared = 11). Bridges the natural-to-geospatial domain gap.   |
-   +------------------------------------+-------------------------------------+
-                                        |
-                                        v
-   +--------------------------------------------------------------------------+
-   |  STAGE 3: Task-Specific Spatiotemporal Fine-Tuning (Target Data)         |
-   |  Trained on Northern Ghana 5-day time series with Class-Balanced Focal   |
-   |  Loss to predict next-day active fire spread front (t + 24h).            |
-   +--------------------------------------------------------------------------+
+```mermaid
+flowchart TD
+    subgraph S1["Stage 1: General Video Foundation Model (VideoMAEv2 / MViTv2)"]
+        A["🎥 Pre-Trained on Large-Scale Natural Video<br/>(Kinetics-700 / WebVid / YouTube)<br/>Captures fundamental 3D space-time motion priors & continuity"]
+    end
+
+    subgraph ADAPT["Input Layer Adaptation: Cross-Modal Patch Projection (E'_patch)"]
+        A --> B["🧩 Expand 3-Channel RGB Conv3d to M = 11 Multimodal Bands<br/>(VIIRS I-Bands + Sentinel-2 SWIR/NIR + ERA5 Wind/Temp + SRTM Slope)"]
+    end
+
+    subgraph S2["Stage 2: Intermediate Geospatial Pre-Training (Domain Adaptation)"]
+        B --> C["🌍 Continental African Active Fire Events (Shared M_shared = 11)<br/>Bridges the domain gap between natural optical video and satellite physics"]
+    end
+
+    subgraph S3["Stage 3: Task-Specific Spatiotemporal Fine-Tuning (Northern Ghana)"]
+        C --> D["🔥 Northern Ghana 5-Day Time Series Cube (T = 5, H = 128, W = 128)<br/>Optimized with Class-Balanced Focal Loss & Spatiotemporal Masking"]
+        D --> E["🎯 Next-Day Active Fire Spread Forecasting Mask (t + 24h)<br/>Predicts front progression, rate of spread, and community risk"]
+    end
+
+    style S1 fill:#0f172a,stroke:#38bdf8,stroke-width:2px,color:#f8fafc
+    style ADAPT fill:#1e1b4b,stroke:#a855f7,stroke-width:2px,color:#f8fafc
+    style S2 fill:#022c22,stroke:#10b981,stroke-width:2px,color:#f8fafc
+    style S3 fill:#450a0a,stroke:#ef4444,stroke-width:2px,color:#f8fafc
 ```
 
 ---

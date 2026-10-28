@@ -6,9 +6,9 @@
 [![PyDeck](https://img.shields.io/badge/PyDeck-3D%20WebGL-FF6F00)](https://deckgl.readthedocs.io/)
 [![License: MIT](https://img.shields.io/badge/License-MIT-yellow.svg)](../LICENSE)
 
-> **Author:** **Emmanuel Yerbo**  
-> *BSc Geography & Regional Planning (First Class Honours) — University of Cape Coast, Ghana*  
-> 🔗 [LinkedIn](https://www.linkedin.com/in/emmanuelyerbo) | 💻 [GitHub Profile](https://github.com/Emmanuel-Yerbo) | 🌐 [Interactive Portfolio](https://emmanuelyerbo.github.io/emmanuelyerbo)
+> **Lead Researcher & Engineer:** **Emmanuel Yerbo**  
+> *BSc Geography & Regional Planning (First Class Honours, GPA: 3.82/4.00, Three-Time Dean's Award Recipient) — University of Cape Coast, Ghana*  
+> 🆔 [ORCID: 0009-0008-8968-6999](https://orcid.org/0009-0008-8968-6999) | 💼 [LinkedIn](https://www.linkedin.com/in/emmanuelyerbo) | 💻 [GitHub Profile](https://github.com/Emmanuel-Yerbo) | 🌐 [Interactive Portfolio](https://emmanuelyerbo.github.io/emmanuelyerbo)
 
 ---
 
@@ -20,17 +20,35 @@ This project implements an end-to-end **Discrete Global Grid System (DGGS)** pip
 
 ---
 
-## 🔬 Core Methodological Principles
+## 🔬 Core Methodological Principles & Architecture
 
-```
-         /\
-        /  \
-       /    \
-      |  H3  |   <-- 6 Equidistant Neighbors (d1 = d2 = ... = d6)
-      | Cell |       Uniform spatial step for machine learning kernels
-       \    /
-        \  /
-         \/
+```mermaid
+flowchart TD
+    subgraph INP["1. Continuous Geospatial Ingestion (GAMA Extent)"]
+        A["🗺️ Study Bounds: Greater Accra Metropolitan Area<br/>(Bounding Box / Boundary Polygon)"]
+        B["📍 Vector Assets: Buildings, Road Vertices, POIs<br/>(OpenStreetMap GeoJSON / Shapefile)"]
+    end
+
+    subgraph DGGS["2. Discrete Global Grid System (Uber H3 Indexing)"]
+        A --> C["🔷 geo_to_h3 Hexagonal Polyfill<br/>(Icosahedron Aperture 7 Discrete Tessellation)"]
+        B --> D["⚡ O(1) Spatial Hash Association<br/>(Assigns 64-bit integer H3 Index to each feature)"]
+        C & D --> E["⚖️ Invariant 6-Neighbor Spatial Topology<br/>(Equidistant neighbor step: d1 = d2 = ... = d6)"]
+    end
+
+    subgraph HIER["3. Hierarchical Resolution Ladder"]
+        E --> R7["Resolution 7 (~5.16 km²): Macro Municipal Profiling"]
+        E --> R8["Resolution 8 (~0.74 km²): Neighborhood Catchments"]
+        E --> R9["Resolution 9 (~0.10 km²): Micro Pedestrian Walkability"]
+    end
+
+    subgraph VIS["4. 3D WebGL Volumetric Intelligence"]
+        R7 & R8 & R9 --> F["🏙️ PyDeck / Deck.gl 3D Column Extrusion<br/>(Height proportional to building density & service index)"]
+    end
+
+    style INP fill:#0f172a,stroke:#38bdf8,stroke-width:2px,color:#f8fafc
+    style DGGS fill:#1e1b4b,stroke:#a855f7,stroke-width:2px,color:#f8fafc
+    style HIER fill:#022c22,stroke:#10b981,stroke-width:2px,color:#f8fafc
+    style VIS fill:#064e3b,stroke:#22c55e,stroke-width:2px,color:#f8fafc
 ```
 
 ### 1. Hierarchical Resolution Ladder
