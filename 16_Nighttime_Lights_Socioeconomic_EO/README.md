@@ -23,30 +23,8 @@ This project implements a complete spatial pipeline in **R** and **Google Earth 
 ## 🔬 Radiance Calibration & Transformation Pipeline
 
 ```mermaid
-flowchart TD
-    subgraph INP["1. Raw Radiance Ingestion (NASA Black Marble VIIRS)"]
-        A["🛰️ Raw Day/Night Band (DNB) Radiance [nW / cm² / sr]<br/>(VNP46A4 Annual / NOAA VCMSLCFG Composites)"]
-    end
-
-    subgraph CALIB["2. Calibration & Radiative Transfer Correction"]
-        A --> B["🌙 Lunar BRDF & Ephemeris Correction"]
-        B --> C["⚡ Stray Light Clamping & Gas Flare Masking"]
-        C --> D["📐 High-Dynamic-Range Compression: L = ln(Radiance + 1)"]
-    end
-
-    subgraph SPATIAL["3. Spatial Hexbin Tessellation & Econometrics"]
-        D --> E["🔷 Hexagonal Spatial Binning (terra / sf in R)<br/>(Extracts Regional Sum of Lights & Electrification Gini)"]
-        E --> F["🌐 Interactive Leaflet / CartoDB Dark-Sky Dashboard"]
-    end
-
-    subgraph POLICY["4. National Development & Electrification Verification"]
-        F --> G["🏛️ National Electrification Scheme (NES) Gap Analysis<br/>(Golden Triangle Axis vs. Afram Plains Rural Enclaves)"]
-    end
-
-    style INP fill:#0f172a,stroke:#38bdf8,stroke-width:2px,color:#f8fafc
-    style CALIB fill:#1e1b4b,stroke:#a855f7,stroke-width:2px,color:#f8fafc
-    style SPATIAL fill:#022c22,stroke:#10b981,stroke-width:2px,color:#f8fafc
-    style POLICY fill:#064e3b,stroke:#22c55e,stroke-width:2px,color:#f8fafc
+flowchart LR
+    A["NASA VIIRS DNB Radiance"] --> B["Log Calibration: ln(Radiance + 1)"] --> C["Hexagonal Binning (R terra / sf)"] --> D["Electrification Corridors & Inequality Gini"]
 ```
 
 ### 1. High Dynamic Range Compression

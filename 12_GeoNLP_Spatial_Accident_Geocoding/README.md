@@ -25,33 +25,19 @@ This repository contains a full 6-stage end-to-end Python pipeline designed to s
 ## 🏗️ Architecture & Pipeline Stages
 
 ```mermaid
-flowchart TD
-    subgraph S1["1. Scraping & Ingestion Engine"]
-        A["📰 Online News Scraper<br/>(CitiNewsroom, MyJoyOnline, GhanaWeb)"]
-        B["📡 Google News RSS Monitor<br/>(Real-Time Traffic Query Stream)"]
-    end
-
-    subgraph S2["2. Spatial NLP & Sentiment Mining"]
-        A & B --> C["🏷️ Spacy NER + Custom Ghana Gazetteer<br/>(Disambiguates junctions, towns, and highway landmarks)"]
-        C --> D["🧠 VADER Sentiment & Blame Classifier<br/>(Institutional failure vs. reckless driving vs. road condition)"]
-    end
-
-    subgraph S3["3. Geocoding & Spatial Clustering"]
-        D --> E["📍 Nominatim OpenStreetMap Geocoder<br/>(Negative caching & coordinate bounding box verification)"]
-        E --> F["🔥 DBSCAN Density Clustering & Getis-Ord Gi*<br/>(Isolates empirical road traffic accident blackspots)"]
-    end
-
-    subgraph S4["4. Policy Analytics & Visual Delivery"]
-        F --> G["📊 Perception-Reality Gap Index (PRGI)<br/>(News coverage intensity vs. NRSA official fatalities)"]
-        G --> H["🗺️ Interactive Leaflet GeoSentiment Dashboard (MAP.jpg)"]
-        G --> I["☁️ Categorized Driver Blame Word Clouds"]
-    end
-
-    style S1 fill:#0f172a,stroke:#38bdf8,stroke-width:2px,color:#f8fafc
-    style S2 fill:#1e1b4b,stroke:#a855f7,stroke-width:2px,color:#f8fafc
-    style S3 fill:#022c22,stroke:#10b981,stroke-width:2px,color:#f8fafc
-    style S4 fill:#064e3b,stroke:#22c55e,stroke-width:2px,color:#f8fafc
+flowchart LR
+    A["News Ingestion (Citi, Joy, Google)"] --> B["spaCy NER + Ghana Gazetteer"] --> C["Nominatim Geocoder"] --> D["DBSCAN & Getis-Ord Gi*"] --> E["GeoSentiment Dashboard"]
 ```
+
+---
+
+## 🗺️ Spatial Accident Intelligence Output
+
+<p align="center">
+  <img src="results/ghana_accident_heatmap.jpg" width="850" alt="Ghana Road Traffic Accident Heatmap">
+  <br>
+  <em>Figure 1: Geocoded Road Traffic Accident Heatmap and Spatial Blackspot Clusters Across Ghana.</em>
+</p>
 
 ---
 
@@ -97,19 +83,19 @@ pip install -r requirements.txt
 
 ### Run Full Pipeline
 ```bash
-python run_pipeline.py --pages 3
+python src/run_pipeline.py --pages 3
 ```
 
 ### Run Specific Stages
 ```bash
 # Run only Sentiment & Blame Analysis (Stage 3.5)
-python run_pipeline.py --stage 3.5
+python src/run_pipeline.py --stage 3.5
 
 # Run only Spatial Blackspot & PRGI Analysis (Stage 4.5)
-python run_pipeline.py --stage 4.5
+python src/run_pipeline.py --stage 4.5
 
 # Run only Map Builder (Stage 5)
-python run_pipeline.py --stage 5
+python src/run_pipeline.py --stage 5
 ```
 
 ---

@@ -37,25 +37,12 @@
 ---
 
 ## 🏗️ Deep Architecture
-
+ 
 ![VegHealthCNN Architecture](results/architecture.png)
 
 ```mermaid
-flowchart TD
-    IN["🌾 Input Tensor<br/>(14 Multi-Temporal Spectral Features)"] --> C1["Conv1D (1 ➔ 32, k=3, p=1)<br/>BatchNorm1d + ReLU + Dropout(0.2)"]
-    C1 --> C2["Conv1D (32 ➔ 64, k=3, p=1)<br/>BatchNorm1d + ReLU + Dropout(0.3)"]
-    C2 --> C3["Conv1D (64 ➔ 128, k=3, p=1)<br/>BatchNorm1d + ReLU + Dropout(0.4)"]
-    C3 --> GAP["AdaptiveAvgPool1d(1) + Flatten<br/>(Latent 128-dim spectral signature)"]
-    GAP --> FC1["Linear(128 ➔ 64)<br/>ReLU + Dropout(0.3)"]
-    FC1 --> FC2["Linear(64 ➔ 3) + Softmax<br/>[Healthy, Moderate Stress, Bare / Galamsey]"]
-
-    style IN fill:#0f172a,stroke:#38bdf8,stroke-width:2px,color:#f8fafc
-    style C1 fill:#1e1b4b,stroke:#a855f7,stroke-width:2px,color:#f8fafc
-    style C2 fill:#1e1b4b,stroke:#a855f7,stroke-width:2px,color:#f8fafc
-    style C3 fill:#1e1b4b,stroke:#a855f7,stroke-width:2px,color:#f8fafc
-    style GAP fill:#022c22,stroke:#10b981,stroke-width:2px,color:#f8fafc
-    style FC1 fill:#2e1065,stroke:#ec4899,stroke-width:2px,color:#f8fafc
-    style FC2 fill:#064e3b,stroke:#22c55e,stroke-width:2px,color:#f8fafc
+flowchart LR
+    IN["Input: 14 Spectral Features"] --> C1["Conv1D (32ch)"] --> C2["Conv1D (64ch)"] --> C3["Conv1D (128ch)"] --> GAP["AdaptiveAvgPool1d"] --> FC["Linear (64) + Softmax"] --> OUT["3-Class Crop Health"]
 ```
 
 ---
@@ -80,10 +67,10 @@ Standard random train/test splits severely inflate model metrics due to spatial 
 
 ## 🗺️ Dual-Axis Transferability (Space & Time)
 
-### Spatial Transfer (Akaakuma $	o$ Prestea Huni-Valley):
+### Spatial Transfer (Akaakuma $\to$ Prestea Huni-Valley):
 ![Spatial Transferability](results/model_transferability.jpg)
 
-### Temporal Dynamics (2024 $	o$ 2025 Galamsey Impact):
+### Temporal Dynamics (2024 $\to$ 2025 Galamsey Impact):
 ![Temporal Transferability](results/temporal_transferability.jpg)
 
 | Metric | 2024 Baseline | 2025 Monitoring | Net Dynamics |

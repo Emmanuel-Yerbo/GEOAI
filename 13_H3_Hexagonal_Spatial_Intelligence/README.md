@@ -23,32 +23,8 @@ This project implements an end-to-end **Discrete Global Grid System (DGGS)** pip
 ## 🔬 Core Methodological Principles & Architecture
 
 ```mermaid
-flowchart TD
-    subgraph INP["1. Continuous Geospatial Ingestion (GAMA Extent)"]
-        A["🗺️ Study Bounds: Greater Accra Metropolitan Area<br/>(Bounding Box / Boundary Polygon)"]
-        B["📍 Vector Assets: Buildings, Road Vertices, POIs<br/>(OpenStreetMap GeoJSON / Shapefile)"]
-    end
-
-    subgraph DGGS["2. Discrete Global Grid System (Uber H3 Indexing)"]
-        A --> C["🔷 geo_to_h3 Hexagonal Polyfill<br/>(Icosahedron Aperture 7 Discrete Tessellation)"]
-        B --> D["⚡ O(1) Spatial Hash Association<br/>(Assigns 64-bit integer H3 Index to each feature)"]
-        C & D --> E["⚖️ Invariant 6-Neighbor Spatial Topology<br/>(Equidistant neighbor step: d1 = d2 = ... = d6)"]
-    end
-
-    subgraph HIER["3. Hierarchical Resolution Ladder"]
-        E --> R7["Resolution 7 (~5.16 km²): Macro Municipal Profiling"]
-        E --> R8["Resolution 8 (~0.74 km²): Neighborhood Catchments"]
-        E --> R9["Resolution 9 (~0.10 km²): Micro Pedestrian Walkability"]
-    end
-
-    subgraph VIS["4. 3D WebGL Volumetric Intelligence"]
-        R7 & R8 & R9 --> F["🏙️ PyDeck / Deck.gl 3D Column Extrusion<br/>(Height proportional to building density & service index)"]
-    end
-
-    style INP fill:#0f172a,stroke:#38bdf8,stroke-width:2px,color:#f8fafc
-    style DGGS fill:#1e1b4b,stroke:#a855f7,stroke-width:2px,color:#f8fafc
-    style HIER fill:#022c22,stroke:#10b981,stroke-width:2px,color:#f8fafc
-    style VIS fill:#064e3b,stroke:#22c55e,stroke-width:2px,color:#f8fafc
+flowchart LR
+    A["GAMA Vector Assets (OSM, POIs)"] --> B["Uber H3 DGGS Polyfill"] --> C["Hierarchical Resolutions (Res 7-9)"] --> D["PyDeck 3D WebGL Columns"]
 ```
 
 ### 1. Hierarchical Resolution Ladder
@@ -71,10 +47,10 @@ Density values (e.g., healthcare accessibility index, building footprint area pe
 
 ```text
 13_H3_Hexagonal_Spatial_Intelligence/
-├── README.md                     <-- Technical documentation (You are here)
-├── requirements.txt              <-- Dependencies (h3, geopandas, pydeck, folium)
-├── chapter_08_h3_hexagons.py     <-- Modular Python pipeline
-└── Chapter_08_H3_Hexagons.ipynb  <-- Interactive Jupyter Notebook with 3D PyDeck maps
+├── README.md                      <-- Technical documentation (You are here)
+├── requirements.txt               <-- Dependencies (h3, geopandas, pydeck, folium)
+├── h3_spatial_intelligence.py     <-- Modular Python pipeline
+└── H3_Spatial_Intelligence.ipynb  <-- Interactive Jupyter Notebook with 3D PyDeck maps
 ```
 
 ---
@@ -89,5 +65,5 @@ cd 13_H3_Hexagonal_Spatial_Intelligence
 pip install -r requirements.txt
 
 # Execute pipeline
-python chapter_08_h3_hexagons.py
+python h3_spatial_intelligence.py
 ```

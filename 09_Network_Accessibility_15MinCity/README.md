@@ -37,26 +37,11 @@ In urban studies, **accessibility** is the primary metric of equity. This reposi
 
 ---
 
-### 2. Methodological Pipeline & Network Flow
+#### 2. Methodological Pipeline & Network Flow
 
 ```mermaid
-flowchart TD
-    OSM["🗺️ OpenStreetMap Pedestrian Topology (OSMnx)<br/>(18,420 Nodes, 42,110 Edges, Walk Speed = 4.5 km/h)"] --> GRAPH["🕸️ NetworkX Directed Graph Construction<br/>(Impedance: Edge Length / Human Walking Velocity 1.25 m/s)"]
-    
-    POI["🏥 Healthcare Facilities & Public Clinics (POIs)<br/>(Geocoded Spatial Origins)"] --> DIJK["⚡ Dijkstra Shortest-Path Subgraph Traversal<br/>d(v) = min_{u ∈ Pred(v)} [d(u) + w(u, v)]"]
-    
-    GRAPH & POI --> DIJK
-    DIJK --> CHULL["📐 Per-Facility Topological Convex Hull Buffering<br/>(Generates 5, 10, and 15-minute reachable node bounds)"]
-    CHULL --> UNION["🧩 Spatial Multi-Polygon Union & Deficit Masking<br/>(Identifies 41.8% peri-urban underserved desert zones)"]
-    UNION --> PYDECK["🌐 PyDeck 3D WebGL Interactive Isochrone Visualizer"]
-
-    style OSM fill:#0f172a,stroke:#38bdf8,stroke-width:2px,color:#f8fafc
-    style GRAPH fill:#1e1b4b,stroke:#a855f7,stroke-width:2px,color:#f8fafc
-    style POI fill:#1c1917,stroke:#f59e0b,stroke-width:2px,color:#f8fafc
-    style DIJK fill:#2e1065,stroke:#ec4899,stroke-width:2px,color:#f8fafc
-    style CHULL fill:#022c22,stroke:#10b981,stroke-width:2px,color:#f8fafc
-    style UNION fill:#450a0a,stroke:#ef4444,stroke-width:2px,color:#f8fafc
-    style PYDECK fill:#064e3b,stroke:#22c55e,stroke-width:2px,color:#f8fafc
+flowchart LR
+    A["OSM Pedestrian Topology"] --> B["NetworkX Graph (4.5 km/h)"] --> C["Dijkstra Traversal"] --> D["Per-Facility Isochrones"] --> E["Underserved Desert Mask"]
 ```
 
 #### 2.1 Network Modeling (OSMnx & NetworkX)
@@ -64,53 +49,51 @@ flowchart TD
 - **The Essence**: Unlike vehicular driving networks, pedestrian networks must capture informal footpaths, sidewalks, and pedestrian-only passages. We assign travel friction (time cost) to every edge based on an empirical pedestrian walking speed of **4.5 km/h (1.25 m/s)**.
 
 #### 2.2 Per-Facility Convex Hull Isochrones
-- **The Process**: For every Point of Interest (POI), we traverse the network graph using Dijkstra's shortest-path algorithm to delineate all nodes reachable within discrete time increments (5, 10, 15, 20 minutes).
-- **The Essence**: We implement a **Per-Facility Convex Hull** architecture. By computing an individual convex hull for each hospital and subsequently performing a spatial union, we preserve the organic geometry of realistic service catchments and eliminate the "global hull" error that artificially overestimates accessibility in sparse peripheral zones.
+- **The Process**: For every Point of Interest (POI), we traverse the network graph using Dijkstra's shortest-path algorithm to delineate all nodes reachable within discrete time increments (5, 10, 15, 20 minutes):
+  $$d(v) = \min_{u \in \text{Pred}(v)} [d(u) + w(u, v)]$$
+- **The Essence**: We implement a **Per-Facility Convex Hull** architecture. By computing an individual convex hull for each facility and subsequently performing a spatial union, we preserve the organic geometry of realistic service catchments and eliminate the "global hull" error that artificially overestimates accessibility in sparse peripheral zones.
 
 ---
 
-### 3. Scenario Analysis: Urban Insights
+### 3. Scenario Analysis: Urban Accessibility Insights
 
-#### Scenario 1: The Anchor Institution (Korle-Bu Spotlight)
+#### Scenario 1: Anchor Institution Reachability (Korle-Bu Teaching Hospital)
 - **Purpose**: Micro-scale pedestrian reachability audit of Ghana’s premier national teaching hospital.
-<p align="center">
-  <img width="900" alt="Korle-Bu Spotlight" src="https://github.com/user-attachments/assets/c8e3af2e-41eb-476f-9efa-886a154e0dd9" />
-</p>
-- **Insight**: Establishes the 'Gold Standard' benchmark of metropolitan healthcare reach. Multi-ring gradient isochrones reveal how dense inner-city street fabrics support rapid 5-to-10 minute pedestrian ingress, while major arterial barriers quickly truncate pedestrian access toward fringe settlements.
+- **Insight**: Multi-ring gradient isochrones reveal how dense inner-city street fabrics support rapid 5-to-10 minute pedestrian ingress, while major arterial barriers quickly truncate pedestrian access toward fringe settlements.
 
 #### Scenario 2: Facility Overlap & Clustering
 - **Purpose**: Modeling 10 random healthcare Points of Interest across central Accra.
-<p align="center">
-  <img width="900" alt="Facility Overlap" src="https://github.com/user-attachments/assets/fc7ea0cd-6ee9-4839-8c50-8ee65e069305" />
-</p>
 - **Insight**: Exposes the **co-location clustering effect**. Where isochrone envelopes heavily intersect, municipal infrastructure exhibits high service redundancy; conversely, solitary nodes represent fragile access lifelines where a single clinic failure leaves surrounding neighborhoods entirely cut off.
 
-#### Scenario 3: The 'Healthcare Desert' Identification
+#### Scenario 3: Healthcare Desert Identification
 - **Purpose**: Citywide 15-minute coverage envelope evaluated against the official Administrative District Boundary.
-<p align="center">
-  <img width="900" alt="Healthcare Deserts" src="https://github.com/user-attachments/assets/1b9c4f87-4119-4fd6-a1a2-8c2d0376e481" />
-</p>
-- **Insight**: By computing the geometric spatial `difference` ($	ext{Boundary} \setminus igcup 	ext{Isochrones}_{15	ext{min}}$), we precisely isolate and map structural **Healthcare Deserts**. These under-served polygons constitute the highest-priority target zones for future municipal capital expenditure and clinic siting.
+- **Insight**: By computing the geometric spatial difference:
+  $$\text{Desert} = \text{District Boundary} \setminus \bigcup \text{Isochrones}_{15\text{min}}$$
+  we precisely isolate and map structural **Healthcare Deserts**. These under-served polygons constitute the highest-priority target zones for future municipal capital expenditure and clinic siting.
 
-#### Scenario 4: Multi-Category Comparison (Health, Education, Commerce)
-- **Purpose**: Tri-partite side-by-side accessibility benchmarking across critical urban functions.
-<p align="center">
-  <img width="1000" alt="Multi-Category Comparison" src="https://github.com/user-attachments/assets/086cb682-e1b8-4d71-9cf5-876fd8ece600" />
-</p>
-- **Insight**: True urban livability cannot be diagnosed through healthcare alone. This multi-sectoral scenario tests whether a citizen can concurrently access all three essential urban pillars (Health, Education, Markets) within the same 15-minute walking radius, delineating the genuine 'Complete Neighborhoods' of Greater Accra.
+#### Scenario 4: Multi-Category Accessibility Comparison
+- **Purpose**: Tri-partite side-by-side accessibility benchmarking across critical urban functions (Health, Education, Markets).
+- **Insight**: True urban livability cannot be diagnosed through healthcare alone. This multi-sectoral scenario tests whether a citizen can concurrently access all three essential urban pillars within the same 15-minute walking radius, delineating the genuine 'Complete Neighborhoods' of Greater Accra.
 
-#### Scenario 5: Cumulative Accessibility Heatmap
-- **Purpose**: High-resolution topological frequency analysis of street node reachability.
-<p align="center">
-  <img width="900" alt="Cumulative Accessibility Heatmap" src="https://github.com/user-attachments/assets/7129de25-ce6b-4182-9049-e26c2c4c4514" />
-</p>
-- **Insight**: Every graph node is attributed with the total count of distinct facilities capable of reaching it within 15 minutes. This shifts spatial diagnostics from a binary query (*"is there a clinic nearby?"*) to a nuanced index of **urban choice and resilience**.
+---
 
-#### Scenario 6: Dynamic Web Visualization (Pydeck)
-- **Purpose**: GPU-accelerated interactive 3D WebGL cartography for municipal stakeholders.
-<p align="center">
-  <img width="800" alt="Pydeck Visualization" src="https://github.com/user-attachments/assets/56848348-3e17-4583-9f99-34e9cbac556c" />
-</p>
+### 4. Implementation Engine
+
+The complete reproducible engine is provided in `src/isochrone_walk_engine.py`:
+
+```python
+import osmnx as ox
+import networkx as nx
+from shapely.geometry import Polygon, MultiPolygon
+from src.isochrone_walk_engine import build_walk_network, compute_isochrone_polygons
+
+# Build walking graph (4.5 km/h walking speed)
+G = build_walk_network(place_name="Accra, Ghana", network_type="walk")
+
+# Generate 5, 10, 15-minute travel time isochrone boundaries
+isochrone_gdf = compute_isochrone_polygons(G, poi_coords=[(5.556, -0.196)], trip_times=[5, 10, 15])
+```
+```
 - **Insight**: Leveraging WebGL hardware acceleration, planners can dynamically query catchment polygons, hover over facility attributes, and zoom into micro-street bottlenecks, bridging the gap between raw spatial network science and executive municipal decision-making.
 
 ---

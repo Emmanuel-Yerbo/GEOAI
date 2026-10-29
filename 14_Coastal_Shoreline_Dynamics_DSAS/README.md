@@ -24,31 +24,8 @@
 ## 🔬 Architectural Workflow & Geomorphic Modeling
 
 ```mermaid
-flowchart TD
-    subgraph INP["1. Multi-Temporal Earth Observation Ingestion (1986–2024)"]
-        A["🛰️ Multi-Decadal Landsat 5, 7, 8 & Sentinel-2 Archives"] --> B["🏖️ High-Water Line (HWL) Proxy Extraction<br/>(MNDWI / AWEI Water Index Thresholding & Sub-Pixel Snapping)"]
-    end
-
-    subgraph DSAS["2. Orthogonal Geomorphic Transect Casting"]
-        B --> C["📏 Baseline Generation (Offshore / Onshore Reference Curve)"]
-        C --> D["📐 Cast Orthogonal Transects at 50m Regular Spacing<br/>(Intersection point coordinate extraction across epochs)"]
-    end
-
-    subgraph METRICS["3. Statistical Rate Formulations"]
-        D --> E1["NSM: Net Shoreline Movement (D_new - D_old)"]
-        D --> E2["EPR: End Point Rate (NSM / Δt [m/yr])"]
-        D --> E3["LRR: Linear Regression Rate (Least Squares Multi-Epoch)"]
-    end
-
-    subgraph OUT["4. Coastal Vulnerability & Risk Zonation"]
-        E1 & E2 & E3 --> F["🔥 Erosion Hotspot Clustering (> -3.5 m/yr Recession)"]
-        F --> G["🏛️ Coastal Protection & Sea Defense Engineering Evidence"]
-    end
-
-    style INP fill:#0f172a,stroke:#38bdf8,stroke-width:2px,color:#f8fafc
-    style DSAS fill:#1e1b4b,stroke:#a855f7,stroke-width:2px,color:#f8fafc
-    style METRICS fill:#022c22,stroke:#10b981,stroke-width:2px,color:#f8fafc
-    style OUT fill:#450a0a,stroke:#ef4444,stroke-width:2px,color:#f8fafc
+flowchart LR
+    A["Multi-Decadal Shorelines (1986–2024)"] --> B["Orthogonal Transect Engine (50m)"] --> C["Rate Statistics (EPR, NSM, LRR)"] --> D["Coastal Erosion Hotspots"]
 ```
 
 ---

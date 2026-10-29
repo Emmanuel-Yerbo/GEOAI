@@ -44,23 +44,8 @@ This project implements an automated spatial data science pipeline combining mul
 ### 2. Methodological Pipeline & Spatial Autocorrelation Flow
 
 ```mermaid
-flowchart TD
-    A["🛰️ 24-Year Landsat TIR Radiometry (2000–2024)<br/>(Landsat 7 ETM+, Landsat 8/9 TIRS Collection 2)"] --> B["🌡️ Split-Window Radiometric LST Retrieval<br/>(Atmospheric transmission + FVC Fractional Emissivity)"]
-    B --> C["📐 Spatial Weight Matrix W<br/>(k-Nearest Neighbors / Distance-Band Thresholding in PySAL)"]
-    
-    C --> D1["🌐 Global Moran's I Statistic (0.482 ➔ 0.647, p < 0.001)<br/>I = (N / S0) · Σ_i Σ_j w_ij (x_i - x̄)(x_j - x̄) / Σ_i (x_i - x̄)²"]
-    C --> D2["🔥 Local Getis-Ord Gi* & LISA Clusters (999 Permutations)<br/>Gi*(d) = Σ_j w_ij x_j - X̄ Σ_j w_ij / [s · sqrt((n Σ_j w_ij² - (Σ_j w_ij)²) / (n-1))]"]
-    
-    D1 & D2 --> E["🗺️ Spatial Trajectory & District Thermal Corridors<br/>(Proves outward migration into Adenta & Ga East peri-urban zones)"]
-    E --> F["🏛️ Evidence-Based Municipal Green-Belt Resilience Policy"]
-
-    style A fill:#0f172a,stroke:#38bdf8,stroke-width:2px,color:#f8fafc
-    style B fill:#1e1b4b,stroke:#a855f7,stroke-width:2px,color:#f8fafc
-    style C fill:#022c22,stroke:#10b981,stroke-width:2px,color:#f8fafc
-    style D1 fill:#2e1065,stroke:#ec4899,stroke-width:2px,color:#f8fafc
-    style D2 fill:#450a0a,stroke:#ef4444,stroke-width:2px,color:#f8fafc
-    style E fill:#064e3b,stroke:#22c55e,stroke-width:2px,color:#f8fafc
-    style F fill:#0f172a,stroke:#38bdf8,stroke-width:2px,color:#f8fafc
+flowchart LR
+    A["Landsat TIR (2000–2024)"] --> B["Split-Window LST Retrieval"] --> C["PySAL Spatial Weights W"] --> D["Getis-Ord Gi* & Moran's I"] --> E["Thermal Hotspot Zonation"]
 ```
 
 #### 2.1 Split-Window Radiometric LST Retrieval
@@ -73,16 +58,16 @@ flowchart TD
 
 ---
 
-### 3. Scenario Analysis: Spatial Insights
+### 3. Empirical Results & Spatial Thermal Insights
 
-#### Scenario 1: Thermal Corridor Spotlight (Afram Plains LST Retrieval)
+#### Scenario 1: Thermal Corridor Baseline (Afram Plains LST Retrieval)
 - **Purpose**: Delineating absolute baseline land surface temperature patterns across rural-urban interfaces.
 
 <p align="center">
   <img src="results/afram_smooth_lst.png" width="600" alt="Smooth LST Map">
 </p>
 
-- **Insight**: Reveals severe thermal gradient divergence. Core agricultural clearings and bare soils register temperatures $6.2^\circ	ext{C}$ to $9.5^\circ	ext{C}$ higher than adjacent riparian wetlands and forested reserves.
+- **Insight**: Reveals severe thermal gradient divergence. Core agricultural clearings and bare soils register temperatures $6.2^\circ\text{C}$ to $9.5^\circ\text{C}$ higher than adjacent riparian wetlands and forested reserves.
 
 #### Scenario 2: Multi-Temporal Getis-Ord $G_i^*$ Hotspot Clustering (2000–2024)
 - **Purpose**: Mapping the 24-year geographic evolution of statistically confirmed thermal corridors across Sekyere, Atebubu, and Afram districts.
@@ -101,17 +86,6 @@ flowchart TD
 </p>
 
 - **Insight**: Quantifies steady warming trajectories across all monitored districts, providing empirical climatological evidence of localized Anthropogenic Urban Heat Island intensification.
-
-#### Scenario 4: Hexagonal Spatial Disaggregation & Infrastructure Adequacy (Uber H3 Res 8)
-- **Purpose**: Moving beyond arbitrary administrative boundaries by indexing micro-urban infrastructure indicators into equal-area hexagonal tessellations (Uber H3 Resolution 8, ~460m aperture).
-
-<p align="center">
-  <img src="results/accra_h3_infrastructure_adequacy.png" width="850" alt="Greater Accra H3 Hexagonal Infrastructure Adequacy">
-  <br>
-  <em>Figure 4: Greater Accra H3 Res 8 Hexagonal Infrastructure Adequacy Score (2025).</em>
-</p>
-
-- **Insight**: Eliminates Modifiable Areal Unit Problem (MAUP) artifacts. Identifies high-adequacy service clusters (green/cyan) in core Accra and Tema, juxtaposed against severe infrastructure deficits (dark red/orange) along the rapidly expanding peripheral sprawl belt.
 
 #### Scenario 5: Unsupervised Spatial Urban Typologies (K-Means Clustering, $k=7$)
 - **Purpose**: Classify discrete urban spatial fabrics by jointly clustering road density, building footprint morphology, LST thermal stress, and service proximity.

@@ -41,7 +41,7 @@ Mapping and segmenting these slumps from high-resolution satellite imagery prese
 2. **Topographic Heterogeneity**: RTS initiation is physically bounded by slope angles ($5^\circ$–$25^\circ$), solar insolation, and localized surface hydrology.
 3. **Scale Variance**: Active slumps range from small initiating headwall fractures ($< 500\text{ m}^2$) to mega-slump complexes spanning hundreds of thousands of square meters.
 
-This project delivers **FrostWatch**, an end-to-end instance segmentation pipeline designed for the **2026 GeoAI Arctic Challenge (Funded by the National Science Foundation)**. By combining 13-channel geomorphological tensor engineering, deep Vision Transformer and CNN backbones, and spatial post-processing, FrostWatch secured **Rank #1 globally** on the official challenge leaderboard.
+This project delivers **FrostWatch**, an end-to-end instance segmentation pipeline designed for the **2026 GeoAI Arctic Challenge (Funded by the National Science Foundation)**. By combining 13-channel geomorphological tensor engineering, deep Vision Transformer and CNN backbones, and spatial post-processing, FrostWatch secured **Top 5 globally (16.45 AP)** on the official challenge leaderboard.
 
 ---
 

@@ -25,27 +25,8 @@ This project serves as the primary scientific **ablation baseline** for the repo
 ## 🔬 Model Architectures & Benchmark Flow
 
 ```mermaid
-flowchart TD
-    INP["🛰️ Sentinel-2 MSI Pixel Vector<br/>x = [B2 (Blue), B3 (Green), B4 (Red), B8 (NIR)]"] --> SPLIT{"Classifier Architecture"}
-    
-    subgraph MLP["1. Deep Multilayer Perceptron (PyTorch MLP)"]
-        SPLIT --> M1["Linear Layer 1: 4 ➔ 64 (BatchNorm1d + ReLU)"]
-        M1 --> M2["Linear Layer 2: 64 ➔ 32 (Dropout 0.2 + ReLU)"]
-        M2 --> M3["Linear Layer 3: 32 ➔ 4 Classes + Softmax"]
-    end
-
-    subgraph RF["2. Classical Ensemble (Scikit-Learn Random Forest)"]
-        SPLIT --> R1["200 Decision Trees (Max Depth = 15)"]
-        R1 --> R2["Gini Impurity Splitting & OOB Optimization"]
-        R2 --> R3["Majority Voting across Decision Forest"]
-    end
-
-    MLP & RF --> EVAL["📊 Baseline Ablation Evaluation<br/>(Demonstrates 89–91% pixel limit vs 96.8% SegFormer spatial patch)"]
-
-    style INP fill:#0f172a,stroke:#38bdf8,stroke-width:2px,color:#f8fafc
-    style MLP fill:#1e1b4b,stroke:#a855f7,stroke-width:2px,color:#f8fafc
-    style RF fill:#022c22,stroke:#10b981,stroke-width:2px,color:#f8fafc
-    style EVAL fill:#064e3b,stroke:#22c55e,stroke-width:2px,color:#f8fafc
+flowchart LR
+    A["Sentinel-2 Pixel Vector (4 Bands)"] --> B["Pixel Classifier (PyTorch MLP vs RF)"] --> C["Ablation Evaluation"] --> D["4-Class Land Cover"]
 ```
 
 ---

@@ -43,26 +43,8 @@ This project couples an **encoder-decoder U-Net** architecture with **Gradient-W
 ### 2. Methodological Pipeline & Gradient Attribution
 
 ```mermaid
-flowchart TD
-    A["🚁 Sub-Meter UAV Drone Orthomosaic<br/>(RGB 3-Band Inundation Imagery)"] --> B["🔻 Contracting Encoder<br/>(Double Conv + MaxPool2d: 64 ➔ 128 ➔ 256 ➔ 512)"]
-    B --> C["🧱 Bottleneck Feature Map<br/>(1024-dim Latent Geomorphometry)"]
-    C --> D["🔺 Expanding Decoder + Skip Connections<br/>(TransposeConv2d + High-Res Feature Concatenation)"]
-    D --> E["🎯 Final Convolutional Layer (Target Layer A_k)"]
-    E --> F["🌊 Binary Inundation Mask<br/>(BCE + Dice Loss Optimization)"]
-    
-    F -.->|"Backpropagate Gradients ∂y_flood / ∂A_k"| G["🧮 Global Average Pooling on Gradients<br/>α_k = (1/Z) Σ_i Σ_j (∂y_c / ∂A^k_ij)"]
-    G --> H["🔥 ReLU Rectification: Grad-CAM Heatmap<br/>L_GradCAM = ReLU(Σ_k α_k A_k)"]
-    H --> I["🗺️ Georeferenced Spatial Explainability Overlay<br/>(Proof of Specular & Absorption Focus)"]
-
-    style A fill:#0f172a,stroke:#38bdf8,stroke-width:2px,color:#f8fafc
-    style B fill:#1e1b4b,stroke:#a855f7,stroke-width:2px,color:#f8fafc
-    style C fill:#022c22,stroke:#10b981,stroke-width:2px,color:#f8fafc
-    style D fill:#1e1b4b,stroke:#a855f7,stroke-width:2px,color:#f8fafc
-    style E fill:#2e1065,stroke:#ec4899,stroke-width:2px,color:#f8fafc
-    style F fill:#064e3b,stroke:#22c55e,stroke-width:2px,color:#f8fafc
-    style G fill:#1c1917,stroke:#f59e0b,stroke-width:2px,color:#f8fafc
-    style H fill:#450a0a,stroke:#ef4444,stroke-width:2px,color:#f8fafc
-    style I fill:#064e3b,stroke:#10b981,stroke-width:2px,color:#f8fafc
+flowchart LR
+    A["UAV Drone Imagery"] --> B["U-Net Encoder-Decoder"] --> C["Target Feature Maps"] --> D["Grad-CAM Gradients"] --> E["Explainability Heatmap"]
 ```
 
 #### 2.1 Encoder-Decoder U-Net with Skip Connections
@@ -70,39 +52,22 @@ flowchart TD
 - **The Essence**: Skip connections preserve shoreline boundaries and narrow flood channels that would otherwise be blurred during progressive pooling operations.
 
 #### 2.2 Gradient-Weighted Class Activation Mapping (Grad-CAM)
-- **The Process**: We hook into the final convolutional layer of the expanding path. During backpropagation, we compute the gradients of the flood class score with respect to feature activation maps.
+- **The Process**: We hook into the final convolutional layer of the expanding path. During backpropagation, we compute the gradients of the flood class score with respect to feature activation maps:
+  $$\alpha_k = \frac{1}{Z} \sum_{i} \sum_{j} \frac{\partial y_{\text{flood}}}{\partial A^k_{ij}}, \quad L_{\text{Grad-CAM}} = \text{ReLU}\Big(\sum_k \alpha_k A_k\Big)$$
 - **The Essence**: Generates coarse 2D heatmaps highlighting the exact spatial regions that stimulated the flood classification, providing an audit trail for emergency commanders.
 
 ---
 
-### 3. Scenario Analysis: Disaster Insights
+### 3. Empirical Results & Grad-CAM Verification
 
-#### Scenario 1: Model Training Convergence & Loss Minimization
-- **Purpose**: Evaluating optimization dynamics across 50 epochs on benchmark flood imagery.
-
-<p align="center">
-  <img src="https://github.com/user-attachments/assets/a1e41021-1510-4386-932f-7758f3b13e57" width="900" alt="Training Convergence">
-</p>
-
-- **Insight**: Stable convergence achieving **87% test accuracy** and **72% Intersection-over-Union (IoU)**, with smooth loss descent demonstrating effective regularization against noisy water boundaries.
-
-#### Scenario 2: Emergency Response Deployment (Akosombo Dam Spillage)
-- **Purpose**: Zero-retraining deployment on sub-meter aerial drone imagery of the catastrophic October 2023 Akosombo Dam spillage in the lower Volta Basin.
-
-<p align="center">
-  <img src="https://github.com/user-attachments/assets/07d24c7b-013f-4850-946a-31f0789650a7" width="900" alt="Akosombo Dam Spillage Output">
-</p>
-
-- **Insight**: Validates out-of-domain generalization. The model successfully delineates submerged residential compounds and inundated road arteries in Mepe and Battor, separating turbid brown floodwaters from vegetative canopy.
-
-#### Scenario 3: Grad-CAM Decision Heatmap Verification
-- **Purpose**: Auditing convolutional feature activations to guarantee hydrologic ground-truth attribution.
+#### Grad-CAM Decision Heatmap Verification (Akosombo Dam Spillage Domain)
+- **Purpose**: Auditing convolutional feature activations to guarantee hydrologic ground-truth attribution on UAV drone imagery during the Lower Volta Basin flood event.
 
 <p align="center">
   <img src="results/gradcam_flood_prediction.png" width="900" alt="GradCAM Prediction Heatmap">
 </p>
 
-- **Insight**: Grad-CAM heatmaps confirm intense positive gradient concentration (bright red/yellow) over actual standing water bodies and saturated mud flats, while cloud edges and tree canopies produce zero activation.
+- **Empirical Insight**: Grad-CAM heatmaps confirm intense positive gradient concentration (bright red/yellow) over actual standing water bodies and saturated mud flats, while dry road surfaces and tree canopies produce zero activation, validating that model decisions are anchored in genuine hydrological absorption signatures.
 
 ---
 

@@ -38,34 +38,8 @@
 ### 🔬 Methodological Flow & Multi-Criteria Overlay
 
 ```mermaid
-flowchart TD
-    subgraph DATA["1. Cloud-Native Earth Observation Ingestion (GEE)"]
-        D1["SRTM 30m DEM & Slope Gradients"]
-        D2["MERIT Hydro 90m (HAND Index)"]
-        D3["JRC Global Surface Water (2000–2024 Recurrence)"]
-        D4["ESA WorldCover 10m (Impervious Surfaces)"]
-        D5["HydroSHEDS River Channels (Euclidean Proximity)"]
-    end
-
-    subgraph AHP["2. Multi-Criteria AHP Weighting & Normalization"]
-        D1 -->|"25% Weight"| W["Analytical Hierarchy Process (AHP)<br/>Consistency Ratio CR < 0.05"]
-        D2 -->|"30% Weight (Primary Head)"| W
-        D3 -->|"20% Weight (History)"| W
-        D4 -->|"15% Weight (Infiltration)"| W
-        D5 -->|"10% Weight (Distance)"| W
-    end
-
-    subgraph OUT["3. Spatial Zonation & Disaster Response"]
-        W --> Z["🌊 Composite Flood Susceptibility Index (FSI)<br/>FSI = Σ (w_i · C_i)"]
-        Z --> Z1["Severe / Very High Risk: 14.2% (Keta / Anloga / Mepe)"]
-        Z --> Z2["High Risk: 23.3% (Lower Volta Basin Floodplains)"]
-        Z --> Z3["Moderate & Low Risk: 62.5% (Inland Highlands)"]
-        Z1 & Z2 --> NADMO["🏛️ NADMO Disaster Management & Evacuation Routing"]
-    end
-
-    style DATA fill:#0f172a,stroke:#38bdf8,stroke-width:2px,color:#f8fafc
-    style AHP fill:#1e1b4b,stroke:#a855f7,stroke-width:2px,color:#f8fafc
-    style OUT fill:#064e3b,stroke:#10b981,stroke-width:2px,color:#f8fafc
+flowchart LR
+    A["GEE Ingestion: DEM, HAND, JRC, WorldCover"] --> B["Multi-Criteria AHP Weighting"] --> C["Composite Flood Index (FSI)"] --> D["Hazard Zonation & NADMO Evacuation"]
 ```
 
 ## 📌 Overview

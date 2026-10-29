@@ -23,30 +23,10 @@ This research project develops a multi-sensor fusion pipeline coupling spaceborn
 ## 🔬 Multi-Sensor Fusion Framework & Architecture
 
 ```mermaid
-flowchart TD
-    subgraph INP["1. Multi-Sensor Spaceborne Data Ingestion"]
-        G["🛰️ NASA GEDI Spaceborne LiDAR (ISS L4A)<br/>Waveform Metrics: RH50, RH98, Canopy Cover, PAI"]
-        S["🛰️ ESA Sentinel-2 MSI (10m L2A)<br/>B2–B8A, Red-Edge, NDRE, EVI, NDVI"]
-    end
-
-    subgraph FUSE["2. Spatial Co-Registration & Feature Engineering"]
-        G & S --> C["📐 25m Footprint Spatial Extraction & Buffer Alignment<br/>(Combines 3D vertical structure with 2D horizontal texture)"]
-    end
-
-    subgraph ML["3. Supervised Non-Linear Regressors"]
-        C --> M1["🌲 Spatial Random Forest Regressor (R² = 0.84)"]
-        C --> M2["⚡ Gradient Boosted Decision Trees (GBDT)"]
-    end
-
-    subgraph OUT["4. Wall-to-Wall Carbon Stock Accounting"]
-        M1 & M2 --> W["🗺️ 10m Spatially Continuous AGBD Map [Mg/ha]<br/>(Resolves optical saturation over Kakum National Forest)"]
-        W --> R["📊 REDD+ National Carbon Verification & MRV Compliance"]
-    end
-
-    style INP fill:#0f172a,stroke:#38bdf8,stroke-width:2px,color:#f8fafc
-    style FUSE fill:#1e1b4b,stroke:#a855f7,stroke-width:2px,color:#f8fafc
-    style ML fill:#022c22,stroke:#10b981,stroke-width:2px,color:#f8fafc
-    style OUT fill:#064e3b,stroke:#22c55e,stroke-width:2px,color:#f8fafc
+flowchart LR
+    A["NASA GEDI LiDAR (RH50, RH98)"] --> C["Spatial Co-Registration"]
+    B["Sentinel-2 MSI (NDRE, EVI)"] --> C
+    C --> D["Multi-Sensor Allometric Regressor"] --> E["Canopy Biomass Density (Mg/ha)"]
 ```
 
 ### 1. Biophysical LiDAR Metrics (GEDI L4A)

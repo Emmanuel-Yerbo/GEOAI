@@ -44,22 +44,9 @@ This project implements an **Explainable GeoAI pipeline** combining **Vision Tra
 ### 2. Methodological Pipeline & Game-Theoretic Explainability
 
 ```mermaid
-flowchart TD
-    A["🛰️ Multi-Temporal Sentinel-2 & SAR Composites<br/>(14 Spectral Bands: RGB, NIR, Red-Edge, SWIR, VV/VH)"] --> B["🧩 Phenological Temporal Stacking (2020–2026)<br/>(Captures greening, maturity, & senescence curves)"]
-    B --> C["🤖 Hierarchical Vision Transformer (Swin / SegFormer)<br/>(Shifted Window Self-Attention across Multi-Scale Tokens)"]
-    C --> D["🗺️ LULC Segmentation Map (91.3% Overall Accuracy)<br/>[Cropland, Forest, Shrubland, Bare Soil, Water]"]
-    
-    C -.->|"Model Inference Path"| E["🎲 Tree SHAP Cooperative Game Attribution<br/>φ_i = Σ (|S|!(|F|-|S|-1)! / |F|!) · [f(S ∪ {i}) - f(S)]"]
-    E --> F["📊 Feature Contribution Ranking<br/>(Red-Edge Band 5 & NDRE = 42% Marginal Gain)"]
-    E --> G["🔍 Spatial SHAP Force Plots & Reliability Heatmaps"]
-
-    style A fill:#0f172a,stroke:#38bdf8,stroke-width:2px,color:#f8fafc
-    style B fill:#1e1b4b,stroke:#a855f7,stroke-width:2px,color:#f8fafc
-    style C fill:#022c22,stroke:#10b981,stroke-width:2px,color:#f8fafc
-    style D fill:#064e3b,stroke:#22c55e,stroke-width:2px,color:#f8fafc
-    style E fill:#1c1917,stroke:#f59e0b,stroke-width:2px,color:#f8fafc
-    style F fill:#2e1065,stroke:#ec4899,stroke-width:2px,color:#f8fafc
-    style G fill:#064e3b,stroke:#10b981,stroke-width:2px,color:#f8fafc
+flowchart LR
+    A["Sentinel-2 Time Series (2020–2026)"] --> B["Phenological Feature Stack"] --> C["Vision Transformer / XGBoost"] --> D["LULC Zonation"]
+    C --> E["Tree SHAP Game Attribution"] --> F["Feature Contribution Rankings"]
 ```
 
 #### 2.1 Multi-Temporal Earth Observation Harmonization

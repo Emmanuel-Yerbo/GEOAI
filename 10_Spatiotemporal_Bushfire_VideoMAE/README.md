@@ -23,28 +23,8 @@ Conventional 2D convolutional networks and static vision transformers process sa
 This project implements the **Cross-Modal Progressive Fine-Tuning (CMPF)** paradigm to adapt **Video Foundation Models (VideoMAEv2 & MViTv2)** for **next-day ($t + 24\text{h}$) active fire spread forecasting** across the Northern Ghana savannah belt.
 
 ```mermaid
-flowchart TD
-    subgraph S1["Stage 1: General Video Foundation Model (VideoMAEv2 / MViTv2)"]
-        A["🎥 Pre-Trained on Large-Scale Natural Video<br/>(Kinetics-700 / WebVid / YouTube)<br/>Captures fundamental 3D space-time motion priors & continuity"]
-    end
-
-    subgraph ADAPT["Input Layer Adaptation: Cross-Modal Patch Projection (E'_patch)"]
-        A --> B["🧩 Expand 3-Channel RGB Conv3d to M = 11 Multimodal Bands<br/>(VIIRS I-Bands + Sentinel-2 SWIR/NIR + ERA5 Wind/Temp + SRTM Slope)"]
-    end
-
-    subgraph S2["Stage 2: Intermediate Geospatial Pre-Training (Domain Adaptation)"]
-        B --> C["🌍 Continental African Active Fire Events (Shared M_shared = 11)<br/>Bridges the domain gap between natural optical video and satellite physics"]
-    end
-
-    subgraph S3["Stage 3: Task-Specific Spatiotemporal Fine-Tuning (Northern Ghana)"]
-        C --> D["🔥 Northern Ghana 5-Day Time Series Cube (T = 5, H = 128, W = 128)<br/>Optimized with Class-Balanced Focal Loss & Spatiotemporal Masking"]
-        D --> E["🎯 Next-Day Active Fire Spread Forecasting Mask (t + 24h)<br/>Predicts front progression, rate of spread, and community risk"]
-    end
-
-    style S1 fill:#0f172a,stroke:#38bdf8,stroke-width:2px,color:#f8fafc
-    style ADAPT fill:#1e1b4b,stroke:#a855f7,stroke-width:2px,color:#f8fafc
-    style S2 fill:#022c22,stroke:#10b981,stroke-width:2px,color:#f8fafc
-    style S3 fill:#450a0a,stroke:#ef4444,stroke-width:2px,color:#f8fafc
+flowchart LR
+    A["Video Foundation Model (VideoMAEv2)"] --> B["Cross-Modal Patch Projection (11 Channels)"] --> C["Savannah Spatiotemporal Tuning"] --> D["Next-Day Fire Spread Forecast (t+24h)"]
 ```
 
 ---

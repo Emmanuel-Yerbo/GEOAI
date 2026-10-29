@@ -23,34 +23,17 @@ This project constructs an interactive **3D Urban Digital Twin** and quantitativ
 ## 🔬 Computational Methodology & Architecture
 
 ```mermaid
-flowchart TD
-    INP["🗺️ 2D Cadastral & OSM Building Polygons<br/>(OpenStreetMap / SegFormer Foundation Vectors)"] --> SPLIT{"Fork Morphological Engine"}
-    
-    subgraph VOL["1. 3D Volumetric Digital Twin (PyDeck / WebGL)"]
-        SPLIT --> V1["Floor Level Extraction & Stochastic Allometric Height<br/>Height = β0 + β1 · sqrt(Area) + ε"]
-        V1 --> V2["🏙️ 3D Column Extrusion with GPU Lighting<br/>(Pitch, bearing, and altitude camera dynamics)"]
-    end
-
-    subgraph MORPH["2. Quantitative Spatial Morphometrics (Momepy)"]
-        SPLIT --> M1["Voronoi Morphological Tessellation Cells<br/>(Partitions virtual plot domain around each dwelling)"]
-        M1 --> M2["Form Compactness: Circularity = 4π·Area / Perimeter²"]
-        M2 --> M3["🧭 Road Network Directional Polar Rose Diagrams"]
-    end
-
-    VOL & MORPH --> OUT["📊 Integrated Urban Density & Microclimate Intelligence<br/>(Provides geometric inputs for urban canyon airflow & heat modeling)"]
-
-    style INP fill:#0f172a,stroke:#38bdf8,stroke-width:2px,color:#f8fafc
-    style VOL fill:#1e1b4b,stroke:#a855f7,stroke-width:2px,color:#f8fafc
-    style MORPH fill:#022c22,stroke:#10b981,stroke-width:2px,color:#f8fafc
-    style OUT fill:#064e3b,stroke:#22c55e,stroke-width:2px,color:#f8fafc
+flowchart LR
+    A["2D Building Polygons & Roads"] --> B["PyDeck 3D WebGL Extrusion"] --> D["Urban Density & Canyon Modeling"]
+    A --> C["Momepy Morphometrics & Tessellation"] --> D
 ```
 
-### 1. Volumetric Height Modeling (`Chapter_09_3D_Buildings`)
+### 1. Volumetric Height Modeling (`building_extrusions_3d.py`)
 - Buildings with known `building:levels` or `height` tags are directly projected into 3D extrusion coordinates.
 - Unannotated building footprints receive stochastic height distributions conditioned on footprint perimeter, area, and spatial block typologies:
   $$\text{Height} = \beta_0 + \beta_1 \cdot \sqrt{\text{Area}} + \epsilon$$
 
-### 2. Quantitative Morphometrics (`Chapter_11_Morphometrics`)
+### 2. Quantitative Morphometrics (`urban_morphometrics.py`)
 - **Morphological Tessellation:** Generates contiguous polygons partitioning space around each building, capturing the "virtual plot" area available to each structure.
 - **Form Compactness & Circularity:**
   $$\text{Circularity} = \frac{4 \pi \cdot \text{Area}}{\text{Perimeter}^2}$$
@@ -64,10 +47,10 @@ flowchart TD
 17_3D_DigitalTwin_Urban_Morphometrics/
 ├── README.md                      <-- Comprehensive project documentation (You are here)
 ├── requirements.txt               <-- Python dependencies
-├── chapter_09_3d_buildings.py     <-- PyDeck 3D building extrusion pipeline
-├── Chapter_09_3D_Buildings.ipynb  <-- Interactive 3D visualization notebook
-├── chapter_11_morphometrics.py    <-- Momepy quantitative urban morphology pipeline
-└── Chapter_11_Morphometrics.ipynb <-- Tessellation & orientation rose diagram notebook
+├── building_extrusions_3d.py      <-- PyDeck 3D building extrusion pipeline
+├── Building_Extrusions_3D.ipynb   <-- Interactive 3D visualization notebook
+├── urban_morphometrics.py         <-- Momepy quantitative urban morphology pipeline
+└── Urban_Morphometrics.ipynb      <-- Tessellation & orientation rose diagram notebook
 ```
 
 ---
@@ -77,5 +60,5 @@ flowchart TD
 ```bash
 cd 17_3D_DigitalTwin_Urban_Morphometrics
 pip install -r requirements.txt
-python chapter_09_3d_buildings.py
+python building_extrusions_3d.py
 ```

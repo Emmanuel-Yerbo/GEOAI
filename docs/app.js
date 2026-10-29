@@ -209,20 +209,21 @@ Baseline 2D ConvLSTM       | ResNet-18 + ConvLSTM    | 5-Day Raster Sequence| 68
   {
     id: "11_HOT_fAIr_DINOv3_Foundation_Model",
     num: "11",
-    title: "DINOv3-S + UperNet Winning Model for African Building Footprints",
+    title: "DINOv3-S + UperNet Foundation Model for African Building Footprints",
     category: "vision",
     catLabel: "Foundation Models",
-    tech: ["DINOv3-Small", "UperNet", "LoRA Adapters", "VHR Satellite", "fAIr Winner"],
-    summary: "Official winning Geospatial Foundation Model architecture for the HOT fAIr Ghana challenge, achieving 85.6% mIoU across informal Ghanaian settlement morphologies.",
+    tech: ["DINOv3-Small", "UperNet", "Multi-Task Heads", "VHR Satellite", "ONNX Runtime"],
+    summary: "Self-supervised Geospatial Foundation Model architecture coupling DINOv3-Small with multi-scale UperNet decoder and geometric loss heads for African building footprints.",
     tier1_problem: "African informal settlements feature contiguous corrugated zinc roofs and irregular alleys where off-the-shelf CNNs suffer high merge errors and false positives on bare soil.",
-    tier2_pipeline: "Fine-tuned Meta's self-supervised DINOv3-Small Vision Transformer coupled with a multi-scale UperNet feature pyramid decoder and boundary-aware focal loss.",
-    tier3_validation: "Won top honors on the HOT fAIr Ghana challenge benchmark with 85.6% mIoU in Accra, 83.9% in Kumasi, and 80.4% in Tamale, beating U-Net baselines by +14.4% mIoU.",
-    tier4_impact: "Provides Humanitarian OpenStreetMap Team (HOT) with production-ready AI layers for rapid disaster mapping and cadastre digitization.",
-    diagram: `Model Architecture        | Encoder Backbone        | Greater Accra mIoU   | National Mean F1
---------------------------+-------------------------+----------------------+-----------------
-DINOv3-S + UperNet (Ours) | ViT-Small/14 Patch Embed| 85.6%                | 0.887 (WINNER)
-SegFormer-B2              | MiT-B2 Transformer      | 78.4%                | 0.825
-Baseline U-Net            | ResNet-34 CNN           | 71.2%                | 0.762`,
+    tier2_pipeline: "Adapted Meta's self-supervised DINOv3-Small Vision Transformer coupled with a multi-scale UperNet feature pyramid decoder and multi-task boundary and distance heads.",
+    tier3_validation: "Evaluated across three distinct Ghanaian eco-zones (Accra coastal plains, Kumasi forest belt, and Tamale Guinea savannah), exporting optimized ONNX runtime graphs for low-latency inference.",
+    tier4_impact: "Provides open-source geospatial foundation model layers for rapid municipal cadastre digitization and disaster risk management.",
+    diagram: `Module Pipeline           | Architecture Components | Function
+--------------------------+-------------------------+-----------------------------------------
+Foundation Encoder        | Meta DINOv3-ViT-S/16    | Global Earth Observation self-supervised priors
+Pyramid Decoder           | Multi-Scale UperNet     | FPN + PPM feature fusion across 4 scales
+Multi-Task Heads          | Logits, Boundary, Dist  | Eliminates contiguous roof merging errors
+Edge Inference            | ONNX Runtime Opset 17   | Quantized low-latency batch processing`,
     github_link: "https://github.com/Emmanuel-Yerbo/GEOAI/tree/main/11_HOT_fAIr_DINOv3_Foundation_Model"
   },
   {

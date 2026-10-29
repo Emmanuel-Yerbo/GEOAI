@@ -43,13 +43,8 @@ This project delivers an end-to-end GeoAI pipeline that trains and benchmarks **
 ### 2. Methodological Pipeline
 
 ```mermaid
-flowchart TD
-    A["VHR 30cm Orthomosaic (TIF)"] --> B["TorchGeo Spatial Tiling (256x256, 20% Stride)"]
-    B --> C["SegFormer-B3 Hierarchical Vision Transformer"]
-    C --> D["Continuous Activation Probability Heatmap"]
-    D --> E["Boundary Distance Transform & Thresholding"]
-    E --> F["Topological Polygon Simplification (Tolerance 1.50m)"]
-    F --> G["Cadastral GeoJSON / ESRI Shapefile Layers"]
+flowchart LR
+    A["VHR 30cm Orthomosaic"] --> B["TorchGeo Tiling"] --> C["SegFormer-B3"] --> D["Activation Heatmap"] --> E["Polygon Simplification"] --> F["Cadastral GeoJSON"]
 ```
 
 #### 2.1 Spatial Sampling & Tiling (TorchGeo)

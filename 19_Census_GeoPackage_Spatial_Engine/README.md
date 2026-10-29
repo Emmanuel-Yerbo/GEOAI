@@ -23,34 +23,8 @@ This project develops an open-source, reproducible **Spatial Demographic Databas
 ## 🔬 Database Architecture & ETL Pipeline
 
 ```mermaid
-flowchart TD
-    subgraph INP["1. Multi-Decadal Raw Census Ingestion (GSS & HDX)"]
-        A["📊 2010 Tabular Census Reports & Disjoint Shapefiles<br/>(Historical 10-Region Baseline)"]
-        B["📈 2021 Ghana Population & Housing Census<br/>(GSS StatsBank API / Modern 16-Region Framework)"]
-    end
-
-    subgraph ETL["2. Spatial ETL & Boundary Reconciliation"]
-        A & B --> C["⚙️ Automated 10 ➔ 16 Region Boundary Reconciliation"]
-        C --> D["📐 Demographic Field Normalization & Primary Key Matching"]
-        D --> E["🧩 Topological Repair & Spatial Intersection Joins"]
-    end
-
-    subgraph GPKG["3. High-Performance OGC GeoPackage (ghana_census_2021.gpkg)"]
-        E --> L0["Layer 0: adm0_country (National Extent)"]
-        E --> L1["Layer 1: adm1_regions (16 Regions + Inter-Censal Growth r)"]
-        E --> L2["Layer 2: adm2_districts (261 Municipal/District Assemblies)"]
-        L0 & L1 & L2 --> R["⚡ SQLite R*Tree Spatial Indexing for Sub-Millisecond SQL Queries"]
-    end
-
-    subgraph MAPS["4. Thematic Analytics & Programmatic Choropleths"]
-        R --> F["🗺️ Automated Matplotlib / GeoPandas Choropleth Generator"]
-        R --> G["📊 Spatial Inequality & Density Gradient Metrics"]
-    end
-
-    style INP fill:#0f172a,stroke:#38bdf8,stroke-width:2px,color:#f8fafc
-    style ETL fill:#1e1b4b,stroke:#a855f7,stroke-width:2px,color:#f8fafc
-    style GPKG fill:#022c22,stroke:#10b981,stroke-width:2px,color:#f8fafc
-    style MAPS fill:#064e3b,stroke:#22c55e,stroke-width:2px,color:#f8fafc
+flowchart LR
+    A["Raw Census (2010 vs 2021)"] --> B["Boundary Reconciliation (10 to 16 Regions)"] --> C["OGC GeoPackage + R*Tree"] --> D["Thematic Choropleth Analytics"]
 ```
 
 ### 1. Inter-Censal Growth Rate Formulation
