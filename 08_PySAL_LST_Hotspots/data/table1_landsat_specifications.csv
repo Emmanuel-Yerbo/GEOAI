@@ -1,0 +1,13 @@
+Parameter,Epoch 1 (2013),Epoch 2 (2018),Epoch 3 (2023)
+Satellite Platform,Landsat 8,Landsat 8,Landsat 8
+Sensors,OLI / TIRS,OLI / TIRS,OLI / TIRS
+Product Level,"Collection 2, Level 2 (SR/ST)","Collection 2, Level 2 (SR/ST)","Collection 2, Level 2 (SR/ST)"
+WRS-2 Path / Row,193 / 056,193 / 056,193 / 056
+Acquisition Date,2013-12-24,2018-01-02,2023-01-11
+Local Overpass Time (UTC),10:14:32,10:14:55,10:15:18
+Solar Elevation Angle (°),49.82,48.91,49.34
+Solar Azimuth Angle (°),141.26,139.84,140.52
+Optical Spatial Resolution (m),30.0,30.0,30.0
+Thermal Band 10 Wavelength (μm),10.60–11.19,10.60–11.19,10.60–11.19
+Resampled Thermal Resolution (m),30.0,30.0,30.0
+Atmospheric Correction Model,LaSRC / MODIS Water Vapor,LaSRC / MODIS Water Vapor,LaSRC / MODIS Water Vapor

@@ -34,7 +34,7 @@ Every pipeline enforces strict **spatial validation rigor** (anti-leakage spatia
 | **05** | **Vision Transformer LULC** | SegFormer & Swin Transformer + XGBoost SHAP | Sentinel-2 Multi-temporal (2020–2026) | Shifted-window attention resolving mixed agro-pastoral mosaics | [`05_Vision_Transformer_LULC/`](./05_Vision_Transformer_LULC) |
 | **06** | **SAMGeo Foundation Models** | Meta SAM (Segment Anything) + LangSAM ViT | High-resolution Aerial Orthomosaics | Zero-shot and text-prompted infrastructure extraction | [`06_SAMGeo_Infrastructure/`](./06_SAMGeo_Infrastructure) |
 | **07** | **GEE Flood Susceptibility** | Multi-Criteria Cloud Weighted Overlay Pipeline | SRTM 30m, MERIT Hydro, JRC Water, WorldCover 10m | **37.5% High Flood Risk Zonation**; validated against NADMO | [`07_GEE_Flood_Susceptibility/`](./07_GEE_Flood_Susceptibility) |
-| **08** | **PySAL LST Hotspot Modeling** | Getis-Ord $G_i^*$, Anselin LISA, Rasterio | Landsat 7/8/9 Thermal Infrared (TIR) Collection 2 | 20-year UHI hotspot trajectory ($p < 0.01$) across Accra Metro | [`08_PySAL_LST_Hotspots/`](./08_PySAL_LST_Hotspots) |
+| **08** | **PySAL LST Hotspots & Causal DiD** | Getis-Ord $G_i^*$, Global Moran's $I$, DiD Econometrics, OLS Elasticity | Landsat 8 OLI/TIRS Level-2 (2013, 2018, 2023) | **Decadal UHI in Greater Accra (3,658.88 km²)**; Moran's $I = 0.8272$; DiD net urban warming penalty $\Delta LST = +1.503^\circ\text{C}$ ($p < 0.0001$) | [`08_PySAL_LST_Hotspots/`](./08_PySAL_LST_Hotspots) |
 | **09** | **Pedestrian Accessibility (15-Min)** | OSMnx, NetworkX Dijkstra, Convex Hulls, PyDeck | OpenStreetMap Walk Network (`G_walk`), Healthcare POIs | Isochrone catchments, Healthcare Desert isolation, 3D WebGL | [`09_Network_Accessibility_15MinCity/`](./09_Network_Accessibility_15MinCity) |
 | **10** | **Bushfire Forecasting (CMPF)** | VideoMAEv2 (3D Tubelet Transformer), MViTv2 | VIIRS 375m, Sentinel-2 L2A, ERA5-Land, SRTM Slope | Spatiotemporal fire spread forecasting ($t+24\text{h}$) across savanna | [`10_Spatiotemporal_Bushfire_VideoMAE/`](./10_Spatiotemporal_Bushfire_VideoMAE) |
 | **11** | **HOT fAIr Foundation Model**| DINOv3-S + UperNet Decoder, Multi-Task Heads | VHR Optical Orthomosaics (30cm-50cm) | Multi-scale boundary isolation & distance transform regularized building footprints | [`11_HOT_fAIr_DINOv3_Foundation_Model/`](./11_HOT_fAIr_DINOv3_Foundation_Model) |
@@ -85,7 +85,7 @@ GEOAI/
 ├── 05_Vision_Transformer_LULC/                <-- SegFormer & Swin Transformer Multi-Temporal LULC
 ├── 06_SAMGeo_Infrastructure/                  <-- Segment Anything Geospatial Foundation Model
 ├── 07_GEE_Flood_Susceptibility/               <-- Google Earth Engine Multi-Criteria Weighted Overlay
-├── 08_PySAL_LST_Hotspots/                     <-- PySAL Spatial Autocorrelation & UHI Hotspots
+├── 08_PySAL_LST_Hotspots/                     <-- PySAL Spatial Autocorrelation, UHI Hotspots & Causal DiD (Thesis)
 ├── 09_Network_Accessibility_15MinCity/        <-- OSMnx Dijkstra 15-Minute City Walkability
 ├── 10_Spatiotemporal_Bushfire_VideoMAE/       <-- VideoMAEv2 CMPF Spatiotemporal Fire Spread
 ├── 11_HOT_fAIr_DINOv3_Foundation_Model/       <-- Winning DINOv3-S + UperNet Building Architecture

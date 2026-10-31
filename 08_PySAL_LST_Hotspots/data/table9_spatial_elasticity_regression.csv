@@ -1,0 +1,11 @@
+Model Specification,Pearson r,R²,Effect per +10% Shift (°C),t-Statistic,p-Value
+2013 Cross-Section: Built-Up % vs. SUHII (°C),+0.4663,0.2175,+0.228,+59.68,< 0.0001
+2013 Cross-Section: Vegetation % vs. SUHII (°C),-0.6029,0.3635,-0.226,-85.56,< 0.0001
+2018 Cross-Section: Built-Up % vs. SUHII (°C),+0.1846,0.0341,+0.091,+21.26,< 0.0001
+2018 Cross-Section: Vegetation % vs. SUHII (°C),-0.4000,0.1600,-0.188,-49.41,< 0.0001
+2023 Cross-Section: Built-Up % vs. SUHII (°C),+0.2680,0.0718,+0.164,+31.50,< 0.0001
+2023 Cross-Section: Bareland % vs. SUHII (°C),+0.3975,0.1580,+0.267,+49.04,< 0.0001
+2023 Cross-Section: Vegetation % vs. SUHII (°C),-0.4552,0.2072,-0.276,-57.88,< 0.0001
+Decadal Change (2013–2023): ΔBuilt-Up % vs. ΔUHI (°C),+0.3584,0.1285,+0.255,+43.47,< 0.0001
+Decadal Change (2013–2023): ΔVegetation % vs. ΔUHI (°C),-0.4119,0.1696,-0.279,-51.17,< 0.0001
+Decadal Change (2013–2023): ΔBareland % vs. ΔUHI (°C),+0.1816,0.0330,+0.196,+20.90,< 0.0001

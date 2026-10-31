@@ -44,8 +44,14 @@ flowchart LR
 
 ## 📊 Empirical Findings & Carbon Stocks
 
-- **Peak Biomass Core (~585.84 Mg/ha):** Concentrated in pristine, mature evergreen primary forest compartments with emergent trees exceeding 45m.
-- **Ecosystem Regrowth Zones (~19.25–120.0 Mg/ha):** Located along forest reserve boundaries and transition zones undergoing secondary succession.
+<p align="center">
+  <img src="results/kakum_biomass_density_map.jpg" width="600" alt="AGBD Estimation Map: Kakum National Forest">
+  <br>
+  <em>Figure 1: Predicted Aboveground Biomass Density (Mg/ha) for Kakum National Forest (NASA GEDI + Sentinel-2 MSI 2024 Analysis)</em>
+</p>
+
+- **Peak Biomass Core (~585.84 Mg/ha):** Concentrated in dark green areas representing healthy, mature tropical primary forest compartments with emergent trees exceeding 45m.
+- **Lower Biomass Regrowth Zones (~19.25–120.0 Mg/ha):** Found in light green or peripheral areas representing young regrowth, grassland transitions, or zones affected by historical disturbance.
 - **Cross-Validation Accuracy:** Achieved $R^2 = 0.84$ ($RMSE = 28.4\text{ Mg/ha}$), significantly outperforming purely optical models ($R^2 = 0.58$).
 
 ---

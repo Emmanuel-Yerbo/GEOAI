@@ -147,23 +147,23 @@ Proximity to Major Drainage Channels| HydroSHEDS River Network | 10% (Overflow)`
   {
     id: "08_PySAL_LST_Hotspots",
     num: "08",
-    title: "24-Year Urban Heat Island Autocorrelation & Microclimate Modeling",
+    title: "Decadal Land Cover Transitions & Surface Urban Heat Island Modeling",
     category: "urban",
     catLabel: "Urban Planning & Climate",
-    tech: ["PySAL ESDA", "libpysal", "Landsat TIR C2", "Getis-Ord Gi*", "Moran's I"],
-    summary: "Undergraduate Honors Thesis analyzing 24-year Landsat thermal trajectories, proving statistically significant (p < 0.001) outward migration of thermal hotspots into peri-urban Accra.",
-    tier1_problem: "Rapid, unregulated urban expansion across Greater Accra has converted vital agricultural and vegetative cooling corridors into dense impervious surfaces, escalating local microclimatic thermal distress.",
-    tier2_pipeline: "Ingested 24 years (2000–2024) of multi-temporal Landsat Thermal Infrared (TIR) Collection 2 calibrated radiometry, applying Rasterio and PySAL to compute global and local spatial autocorrelation metrics (Moran's I and Getis-Ord Gi* hot spot analytics).",
-    tier3_validation: "Proved statistically significant (p < 0.001) spatial clustering of thermal extremes, tracking the progression of Moran's I from 0.482 in 2000 to 0.647 in 2024.",
-    tier4_impact: "Established empirical evidence for Accra's climate resilience strategy and urban green-belt zoning policies to mitigate severe microclimatic heating.",
-    diagram: `Year | Mean LST (°C) | Moran's I (Spatial Clustering) | p-value | Hotspots (Gi*)
------+---------------+--------------------------------+---------+---------------------------
-2000 | 28.4°C        | 0.482                          | < 0.001 | Industrial / Port Core
-2010 | 31.1°C        | 0.541                          | < 0.001 | Central Accra Sprawl
-2020 | 33.6°C        | 0.618                          | < 0.001 | Northern Peri-Urban Fringe
-2024 | 34.2°C        | 0.647                          | < 0.001 | Corridors (Adenta, Ga East)
+    tech: ["PySAL ESDA", "libpysal", "Landsat 8 OLI/TIRS", "Getis-Ord Gi*", "Difference-in-Differences"],
+    summary: "Undergraduate Honors Thesis (First Class Honours, UCC) evaluating decadal UHI dynamics across Greater Accra (3,658.88 km²), proving causal DiD urban warming penalty ΔLST = +1.503°C and cooling elasticity of -0.276°C per +10% canopy.",
+    tier1_problem: "Unregulated urban expansion across Greater Accra added +696.03 km² (+80.12%) of built-up surfaces and destroyed -575.92 km² of vegetation between 2013 and 2023, exacerbating severe microclimatic heat stress.",
+    tier2_pipeline: "Ingested sensor-harmonized Landsat 8 OLI/TIRS radiometry (2013, 2018, 2023), applying Planck emissivity calibration, a 500m vector mesh (N = 12,819 units), PySAL Queen contiguity spatial weights, Global Moran's I, Getis-Ord Gi* statistics, and causal Difference-in-Differences (DiD) econometric modeling.",
+    tier3_validation: "Demonstrated strong spatial clustering with Global Moran's I rising from 0.7367 to 0.8272 (Z = 224.26, p < 0.0001). Getis-Ord Gi* 99% confidence hotspots expanded to 824.14 km² (22.52% of region). Proved DiD causal urban warming of +1.503°C (p < 0.0001).",
+    tier4_impact: "Provided empirical foundation for Accra's climate resilience and urban green-belt zoning policy, proving a -0.276°C cooling elasticity per +10% increase in tree canopy cover.",
+    diagram: `Epoch | Mean LST (°C) | Moran's I (Spatial Clustering) | Z-score  | 99% Hotspots (Gi*)
+------+---------------+--------------------------------+----------+--------------------
+2013  | 26.52 ± 1.81  | 0.7367                         | 199.74   | 800.52 km² (21.88%)
+2018  | 30.06 ± 1.94  | 0.8118                         | 220.08   | 827.32 km² (22.61%)
+2023  | 32.45 ± 2.27  | 0.8272                         | 224.26   | 824.14 km² (22.52%)
 
-LISA QUADRANTS: Hotspots (HH): 28.4% | Cool Islands (LL): 18.2% | Outliers: 6.1%`,
+CAUSAL DiD RADIATIVE FORCING: Veg -> Built (+1.503°C) | Built -> Veg (-1.056°C)
+COOLING ELASTICITY: -0.276°C per +10% canopy increase (r = -0.4552, p < 0.0001)`,
     github_link: "https://github.com/Emmanuel-Yerbo/GEOAI/tree/main/08_PySAL_LST_Hotspots"
   },
   {
