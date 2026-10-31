@@ -39,6 +39,12 @@ Aggregates continuous radiance pixels into regular hexagonal discrete tessellati
 
 ## 📊 Key Empirical Discoveries Across Ghana
 
+<p align="center">
+  <img src="results/ghana_viirs_nightlights_cartography.png" width="550" alt="Ghana VIIRS Nighttime Lights Cartography">
+  <br>
+  <em><b>Figure 1:</b> Publication-grade dark-sky cartographic visualization of nocturnal radiance across Ghana using NASA VIIRS Black Marble (DNB) composites in R (<code>terra</code> & <code>sf</code>), mapping the coastal economic belt, urban nodes, and transit corridors.</em>
+</p>
+
 1. **The Golden Triangle Economic Axis:** A dense, continuous luminescent corridor binds **Accra-Tema**, **Kumasi**, and **Sekondi-Takoradi**, accounting for $>78\%$ of national nocturnal radiant energy.
 2. **The Northern Commercial Hub:** Tamale forms a radiant nodal starburst in the Guinea Savannah, serving as the primary logistics gateway to the Sahel.
 3. **Electrification Verification:** Visualizes spatial coverage of Ghana's National Electrification Scheme (NES), revealing unlit rural enclaves in the Afram Plains and northern border corridors.

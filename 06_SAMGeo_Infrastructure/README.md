@@ -44,7 +44,37 @@ flowchart LR
 
 ---
 
-### 3. Pipeline Implementation & Execution
+### 3. Empirical Results & Spatial Visual Intelligence
+
+#### Scenario 1: Aviation Asset Localization & Segmentation (Kotoka International Airport, Accra)
+- **Objective**: Zero-shot localization and instance boundary delineation of commercial aircraft on tarmac aprons using open-vocabulary prompt engineering (`"Airplanes"`).
+
+<p align="center">
+  <img src="results/kotoka_aircraft_bounding_boxes.png" width="420" alt="Kotoka Aircraft Bounding Boxes">
+  &nbsp;&nbsp;&nbsp;&nbsp;
+  <img src="results/kotoka_aircraft_segmentation_masks.png" width="420" alt="Kotoka Aircraft Segmentation Masks">
+  <br>
+  <em><b>Figure 1:</b> LangSAM open-vocabulary aviation intelligence at Kotoka International Airport (ACC), Accra, Ghana. Left: Grounding DINO text-prompted bounding box localization. Right: SAM ViT-Huge pixel-accurate instance segmentation masks.</em>
+</p>
+
+- **Empirical Insight**: Combining Grounding DINO with SAM eliminates manual annotation bottlenecks, isolating aircraft fuselages and wing profiles with zero task-specific retraining.
+
+#### Scenario 2: Zero-Shot Campus Infrastructure Segmentation (University of Cape Coast, Ghana)
+- **Objective**: Delineating complex institutional architectural footprints (Sam Jonah Library, G-Block, and Lecture Theater complexes) at the University of Cape Coast.
+
+<p align="center">
+  <img src="results/ucc_campus_optical_raw.png" width="420" alt="UCC Campus Optical Imagery">
+  &nbsp;&nbsp;&nbsp;&nbsp;
+  <img src="results/ucc_campus_samgeo_segmented.png" width="420" alt="UCC Campus SAMGeo Segmented">
+  <br>
+  <em><b>Figure 2:</b> Zero-shot institutional infrastructure extraction at the University of Cape Coast (UCC), Ghana. Left: High-resolution optical aerial orthomosaic. Right: SAMGeo Vision Transformer semantic segmentation delineating the Sam Jonah Library, G-Block, and Lecture Theater.</em>
+</p>
+
+- **Empirical Insight**: Vision Transformer self-attention heads separate intricate institutional rooflines and academic buildings from adjoining tropical canopy buffers without boundary blurring.
+
+---
+
+### 4. Pipeline Implementation & Execution
 
 The complete reproducible engine is implemented in `src/samgeo_langsam_engine.py`:
 

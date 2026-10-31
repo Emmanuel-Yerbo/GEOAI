@@ -31,12 +31,18 @@ flowchart LR
 
 ---
 
-## 🗺️ Spatial Accident Intelligence Output
+## 🗺️ Spatial Accident Intelligence Outputs
 
 <p align="center">
   <img src="results/ghana_accident_heatmap.jpg" width="850" alt="Ghana Road Traffic Accident Heatmap">
   <br>
-  <em>Figure 1: Geocoded Road Traffic Accident Heatmap and Spatial Blackspot Clusters Across Ghana.</em>
+  <em><b>Figure 1:</b> Geocoded Road Traffic Accident Heatmap and Spatial Blackspot Clusters Across Ghana.</em>
+</p>
+
+<p align="center">
+  <img src="results/network_graph_plot.png" width="850" alt="Ghana Accident Spatial Network Graph">
+  <br>
+  <em><b>Figure 2:</b> Topological road network connectivity graph and inter-corridor accident centrality across Ghanaian transit arteries.</em>
 </p>
 
 ---

@@ -60,11 +60,22 @@ flowchart LR
 
 ### 3. Empirical Results & Grad-CAM Verification
 
-#### Grad-CAM Decision Heatmap Verification (Akosombo Dam Spillage Domain)
+#### 1. U-Net Convergence & Test Evaluation
+- **Purpose**: Validating model training stability, loss minimization (30%), test pixel accuracy (87.4%), and Intersection over Union (IoU = 72.1%).
+
+<p align="center">
+  <img src="results/unet_model_training_evaluation.png" width="850" alt="U-Net Model Training Evaluation">
+  <br>
+  <em><b>Figure 1:</b> Encoder-Decoder U-Net model training evaluation on the Kaggle flood segmentation benchmark dataset, demonstrating loss convergence and binary IoU metrics.</em>
+</p>
+
+#### 2. Grad-CAM Decision Heatmap Verification (Akosombo Dam Spillage Domain)
 - **Purpose**: Auditing convolutional feature activations to guarantee hydrologic ground-truth attribution on UAV drone imagery during the Lower Volta Basin flood event.
 
 <p align="center">
   <img src="results/gradcam_flood_prediction.png" width="900" alt="GradCAM Prediction Heatmap">
+  <br>
+  <em><b>Figure 2:</b> Grad-CAM explainability heatmaps on UAV aerial flood imagery from the 2023 Akosombo Dam spillage. Red/yellow regions highlight pixels driving the convolutional flood classification.</em>
 </p>
 
 - **Empirical Insight**: Grad-CAM heatmaps confirm intense positive gradient concentration (bright red/yellow) over actual standing water bodies and saturated mud flats, while dry road surfaces and tree canopies produce zero activation, validating that model decisions are anchored in genuine hydrological absorption signatures.
