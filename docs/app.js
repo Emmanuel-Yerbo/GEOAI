@@ -3,25 +3,26 @@ const PROJECTS_DATA = [
   {
     id: "01_VegHealthCNN",
     num: "01",
-    title: "VegHealthCNN: Spectral-Temporal 1D-CNN for Precision Agriculture",
+    title: "VegHealthCNN: 1D-CNN for Variable-Rate Nitrogen Prioritization",
     category: "agri",
     catLabel: "Precision Agriculture",
-    tech: ["PyTorch", "Sentinel-2 L2A", "Spatial Block CV", "GroupKFold"],
-    summary: "57k-parameter 1D-CNN achieving 98.7% test accuracy across 301 spatially isolated field samples, projecting a 19.5% reduction in synthetic nitrogen demand.",
-    tier1_problem: "Smallholder crop mosaics in sub-Saharan Africa suffer from extreme spatial heterogeneity and nutrient volatility, leading to inefficient blanket fertilizer application and high agricultural runoff.",
-    tier2_pipeline: "We engineered a custom 57,091-parameter 1D-Convolutional Neural Network in PyTorch trained on multi-temporal Sentinel-2 spectral-temporal signatures, strictly evaluated using spatial block cross-validation (GroupKFold across 0.01° spatial blocks) to eliminate spatial autocorrelation data leakage.",
-    tier3_validation: "Achieved 98.7% test accuracy across 301 spatially independent samples (vs 99.4% in naive random split with severe spatial autocorrelation leakage). Confusion matrix proves 97.5% producer accuracy on stressed crops.",
-    tier4_impact: "Formulated variable-rate nitrogen prescriptions that project a 19.5% reduction in synthetic fertilizer demand (~4.02 million kg N), safeguarding peri-urban agrarian catchments from runoff.",
-    diagram: `Cross-Validation Strategy   | Test Accuracy | Cohen's Kappa | Spatial Autocorrelation Bias
-----------------------------+---------------+---------------+------------------------------
-Naive Random K-Fold Split   | 99.4%         | 0.991         | HIGH (Severe Data Leakage)
-Spatial Block CV (0.01° Grid)| 98.7%         | 0.982         | ZERO LEAKAGE (Independent)
+    tech: ["PyTorch", "Sentinel-2 L2A", "Spatial Block CV (55 Blocks)", "Area of Applicability", "RNDI"],
+    summary: "Lightweight 39.9k-parameter 1D-CNN achieving statistical parity with a 500-tree Random Forest under 55-block spatial CV, driving continuous NDRE-derived nitrogen prioritization across 171,376 ha.",
+    tier1_problem: "Smallholder crop mosaics in sub-Saharan Africa face acute soil nutrient depletion compounded by blanket fertilizer broadcasting, driving agricultural runoff and severe economic waste.",
+    tier2_pipeline: "Engineered a 39,939-parameter 1D-CNN in PyTorch on an anti-circular 14-feature Sentinel-2 tensor (strictly devoid of NDVI/SAVI), evaluated under 5-fold Spatial Block Cross-Validation across 55 independent blocks (~1.1 km) to eliminate spatial autocorrelation data leakage.",
+    tier3_validation: "Achieved 0.9540 ± 0.013 accuracy and 0.9309 ± 0.019 Cohen's Kappa across 55 independent spatial blocks (n = 1,500). Confirmed exact McNemar statistical parity with 500-tree Random Forest (χ² = 2.0167, p = 0.1550). Extrapolated across 18,100,073 municipal pixels with AoA filtering (DI threshold = 1.1968).",
+    tier4_impact: "Formulated a continuous Relative Nitrogen Demand Index (RNDI) across 171,376 ha of smallholder farmland, identifying a 47.2% relative nitrogen demand reduction while tracking +14.98 km² of artisanal galamsey gold mining expansion.",
+    diagram: `Spatial Block CV (55 Blocks)| Val Loss | Overall Accuracy | Cohen's Kappa | Macro-F1
+----------------------------+----------+------------------+---------------+---------
+Fold 1 (10 Test Blocks)     | 0.0838   | 0.9600           | 0.9398        | 0.9585
+Fold 2 (11 Test Blocks)     | 0.1352   | 0.9468           | 0.9201        | 0.9451
+Fold 3 (12 Test Blocks)     | 0.0610   | 0.9733           | 0.9600        | 0.9731
+Fold 4 (11 Test Blocks)     | 0.1794   | 0.9400           | 0.9100        | 0.9408
+Fold 5 (11 Test Blocks)     | 0.0506   | 0.9498           | 0.9245        | 0.9519
+Mean ± SD Across 55 Blocks  | 0.102    | 0.9540 ± 0.013   | 0.9309 ± 0.019| 0.9539
 
-CONFUSION MATRIX (301 Spatially Isolated Samples):
-                 Predicted Stressed  Predicted Moderate  Predicted Healthy
-Actual Stressed:        78                   2                   0
-Actual Moderate:         1                  118                  1
-Actual Healthy:          0                   0                  101`,
+MCNEMAR PARITY vs 500-Tree RF: χ² = 2.0167, p = 0.1550 (Parity Confirmed)
+AOA FILTERING: 86.1% valid farmland retention (DI threshold = 1.1968)`,
     github_link: "https://github.com/Emmanuel-Yerbo/GEOAI/tree/main/01_VegHealthCNN"
   },
   {

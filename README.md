@@ -27,7 +27,7 @@ Every pipeline enforces strict **spatial validation rigor** (anti-leakage spatia
 
 | # | Project Name | Primary Backbones & Architectures | Data Modalities & Sensors | Core Empirical Metrics / Results | Subfolder |
 |---|---|---|---|---|:---:|
-| **01** | **VegHealthCNN** | Custom 1D-CNN (57k params), Cosine Annealing, AdamW | Sentinel-2 L2A (14-band spectral index tensor) | **98.7% Test Acc** (Spatial Block CV); 19.5% N reduction | [`01_VegHealthCNN/`](./01_VegHealthCNN) |
+| **01** | **VegHealthCNN** | Lightweight 1D-CNN (39.9k weights), Anti-Circular 14-ch Tensor | Sentinel-2 L2A (18.1M pixels, PHMA) | **0.9540 Acc** (55-Block Spatial CV); Parity with 500-Tree RF; 47.2% N Reduction | [`01_VegHealthCNN/`](./01_VegHealthCNN) |
 | **02** | **FrostWatch Arctic** | 3-Arm Ensemble: UNet++ (SE-ResNeXt50) + DeepLabV3+ + MAnet | Arctic VHR Multispectral (13-ch geomorphometric tensor) | **Top 5 Globally (16.45 AP)** on Cyber2A Challenge | [`02_FrostWatch_Arctic/`](./02_FrostWatch_Arctic) |
 | **03** | **Building Footprint Extraction** | SegFormer-B3, DINOv3, U-Net, TorchGeo | 30cm Very High Resolution (VHR) Aerial / Satellite | Multi-region footprint extraction; ONNX runtime benchmarks | [`03_Building_Extraction/`](./03_Building_Extraction) |
 | **04** | **XAI Flood Inundation** | Custom U-Net + Grad-CAM Interpretability | Sub-meter UAV Aerial Drone Imagery | **87% Acc / 72% IoU**; validated on Akosombo Dam spillage | [`04_XAI_Flood_GradCAM/`](./04_XAI_Flood_GradCAM) |
