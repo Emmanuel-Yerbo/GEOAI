@@ -4,7 +4,7 @@
 [![PyTorch 2.4](https://img.shields.io/badge/PyTorch-2.4-EE4C2C?logo=pytorch&logoColor=white)](https://pytorch.org/)
 [![Google Earth Engine](https://img.shields.io/badge/Google%20Earth%20Engine-API-34A853?logo=google-earth&logoColor=white)](https://earthengine.google.com/)
 [![TorchGeo](https://img.shields.io/badge/TorchGeo-0.5+-green?logo=python&logoColor=white)](https://github.com/microsoft/torchgeo)
-[![Cyber2A Arctic](https://img.shields.io/badge/Cyber2A%20Challenge-Rank%20%235%20Global%20(16.45%20AP)-20BEFF?logo=kaggle&logoColor=white)](https://huggingface.co/spaces/cyber2a/2026GeoAIArcticChallenge)
+[![Cyber2A Arctic](https://img.shields.io/badge/Cyber2A%20Challenge-Active%20Entry%20(16.45%20Val%20AP)-20BEFF?logo=kaggle&logoColor=white)](https://huggingface.co/spaces/cyber2a/2026GeoAIArcticChallenge)
 [![ORCID](https://img.shields.io/badge/ORCID-0009--0008--8968--6999-A6CE39?logo=orcid&logoColor=white)](https://orcid.org/0009-0008-8968-6999)
 [![Status: Production Suite](https://img.shields.io/badge/Status-20%20Projects%20Live-brightgreen?logo=git&logoColor=white)](https://github.com/Emmanuel-Yerbo/GEOAI)
 [![License: MIT](https://img.shields.io/badge/License-MIT-yellow.svg)](LICENSE)
@@ -79,7 +79,7 @@ GEOAI/
 ├── .gitignore                                 <-- Optimized Python / Geospatial Git exclusions
 │
 ├── 01_VegHealthCNN/                           <-- Precision Agriculture 1D-CNN (GeoAI4SD 2026)
-├── 02_FrostWatch_Arctic/                      <-- Cyber2A Top 5 Global Permafrost Thaw Slump Ensemble
+├── 02_FrostWatch_Arctic/                      <-- Cyber2A Arctic Permafrost Thaw Slump 3-Arm Ensemble (Active Entry)
 ├── 03_Building_Extraction/                    <-- SegFormer-B3 & Foundation Models (TorchGeo)
 ├── 04_XAI_Flood_GradCAM/                      <-- Explainable AI U-Net on Akosombo Dam Drone Spillage
 ├── 05_Vision_Transformer_LULC/                <-- SegFormer & Swin Transformer Multi-Temporal LULC
