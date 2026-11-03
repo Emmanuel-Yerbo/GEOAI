@@ -31,7 +31,7 @@ Every pipeline enforces strict **spatial validation rigor** (anti-leakage spatia
 | **02** | **FrostWatch Arctic** | 3-Arm Ensemble: UNet++ (SE-ResNeXt50) + DeepLabV3+ + MAnet | Arctic VHR Multispectral (13-ch geomorphometric tensor) | **16.45 Validation AP**; NSF Cyber2A Arctic Challenge Active Entry | [`02_FrostWatch_Arctic/`](./02_FrostWatch_Arctic) |
 | **03** | **Building Footprint Extraction** | SegFormer-B3, DINOv3, U-Net, TorchGeo | 30cm Very High Resolution (VHR) Aerial / Satellite | Multi-region footprint extraction; ONNX runtime benchmarks | [`03_Building_Extraction/`](./03_Building_Extraction) |
 | **04** | **XAI Flood Inundation** | Custom U-Net + Grad-CAM Interpretability | Sub-meter UAV Aerial Drone Imagery | **87% Acc / 72% IoU**; validated on Akosombo Dam spillage | [`04_XAI_Flood_GradCAM/`](./04_XAI_Flood_GradCAM) |
-| **05** | **Vision Transformer LULC** | SegFormer & Swin Transformer + XGBoost SHAP | Sentinel-2 Multi-temporal (2020–2026) | Shifted-window attention resolving mixed agro-pastoral mosaics | [`05_Vision_Transformer_LULC/`](./05_Vision_Transformer_LULC) |
+| **05** | **Explainable LULC (Accra/GAMA)** | XGBoost, Random Forest, SVM + Tree SHAP Game Theory | Sentinel-2 Multi-temporal (2020–2024), SRTM | Multi-temporal urban sprawl (+31.4% built-up); exact game-theoretic Shapley feature attributions | [`05_Vision_Transformer_LULC/`](./05_Vision_Transformer_LULC) |
 | **06** | **SAMGeo Foundation Models** | Meta SAM (Segment Anything) + LangSAM ViT | High-resolution Aerial Orthomosaics | Zero-shot and text-prompted infrastructure extraction | [`06_SAMGeo_Infrastructure/`](./06_SAMGeo_Infrastructure) |
 | **07** | **GEE Flood Susceptibility** | Multi-Criteria Cloud Weighted Overlay Pipeline | SRTM 30m, MERIT Hydro, JRC Water, WorldCover 10m | **37.5% High Flood Risk Zonation**; validated against NADMO | [`07_GEE_Flood_Susceptibility/`](./07_GEE_Flood_Susceptibility) |
 | **08** | **PySAL LST Hotspots & Causal DiD** | Getis-Ord $G_i^*$, Global Moran's $I$, DiD Econometrics, OLS Elasticity | Landsat 8 OLI/TIRS Level-2 (2013, 2018, 2023) | **Decadal UHI in Greater Accra (3,658.88 km²)**; Moran's $I = 0.8272$; DiD net urban warming penalty $\Delta LST = +1.503^\circ\text{C}$ ($p < 0.0001$) | [`08_PySAL_LST_Hotspots/`](./08_PySAL_LST_Hotspots) |
@@ -82,7 +82,7 @@ GEOAI/
 ├── 02_FrostWatch_Arctic/                      <-- Cyber2A Arctic Permafrost Thaw Slump 3-Arm Ensemble (Active Entry)
 ├── 03_Building_Extraction/                    <-- SegFormer-B3 & Foundation Models (TorchGeo)
 ├── 04_XAI_Flood_GradCAM/                      <-- Explainable AI U-Net on Akosombo Dam Drone Spillage
-├── 05_Vision_Transformer_LULC/                <-- SegFormer & Swin Transformer Multi-Temporal LULC
+├── 05_Vision_Transformer_LULC/                <-- Explainable AI (XAI) Multi-Temporal LULC for Greater Accra (Tree SHAP)
 ├── 06_SAMGeo_Infrastructure/                  <-- Segment Anything Geospatial Foundation Model
 ├── 07_GEE_Flood_Susceptibility/               <-- Google Earth Engine Multi-Criteria Weighted Overlay
 ├── 08_PySAL_LST_Hotspots/                     <-- PySAL Spatial Autocorrelation, UHI Hotspots & Causal DiD (Thesis)

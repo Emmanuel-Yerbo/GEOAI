@@ -19,7 +19,7 @@ Before transitioning to spatial patch architectures (e.g., Convolutional Neural 
 
 This project implements the foundational **Pixel-Based Deep Learning & Machine Learning Baseline** across Ghanaian landscapes. It benchmarks a deep **Artificial Neural Network (Multilayer Perceptron / MLP)** against an ensemble **Random Forest (RF)** classifier to categorize land cover into four canonical classes: **Water Bodies**, **Bare Soil**, **Vegetation**, and **Built-Up Fabric**.
 
-Serving as the definitive scientific **ablation baseline** for the entire GeoAI research suite, this project empirically isolates the boundaries of pure radiometric classification—demonstrating why spectral overlap between bare soil and urban infrastructure creates an intractable bottleneck that necessitates the contextual spatial inductive biases developed in [Project 01 (VegHealthCNN)](../01_VegHealthCNN), [Project 03 (Building Extraction)](../03_Building_Extraction), and [Project 05 (Vision Transformer LULC)](../05_Vision_Transformer_LULC).
+Serving as the definitive scientific **ablation baseline** for the entire GeoAI research suite, this project empirically isolates the boundaries of pure radiometric classification—demonstrating why spectral overlap between bare soil and urban infrastructure creates an intractable bottleneck that necessitates the contextual spatial inductive biases, multi-sensor GLCM textures, and foundation models developed in [Project 01 (VegHealthCNN)](../01_VegHealthCNN), [Project 03 (Building Extraction)](../03_Building_Extraction), [Project 05 (Explainable LULC GAMA)](../05_Vision_Transformer_LULC), and [Project 11 (HOT fAIr DINOv3)](../11_HOT_fAIr_DINOv3_Foundation_Model).
 
 ---
 
@@ -82,7 +82,7 @@ with $C_{ij}$ representing the contingency matrix count of ground-truth class $i
 | **Built-Up Fabric** | 0.9585 | 0.9893 | 0.9737 | 187 | Flat, moderate reflectance across VNIR; spectrally confused with compacted laterite |
 
 > [!NOTE]
-> **The Spectral Overlap Dilemma:** In pure pixel-based classification, Water and Dense Vegetation achieve perfect separation ($1.0000$ F1) due to non-overlapping radiometric boundaries. However, Bare Soil and Built-Up areas exhibit mutual confusion ($8$ bare soil pixels misclassified as built-up; $2$ built-up misclassified as bare). Unpaved roads, dry laterite soils, and concrete/asphalt have nearly identical VNIR spectral reflectance profiles, proving why spatial convolutions and transformer attention (Projects 01, 03, and 05) are mandatory to resolve complex urban settlements.
+> **The Spectral Overlap Dilemma:** In pure pixel-based classification, Water and Dense Vegetation achieve perfect separation ($1.0000$ F1) due to non-overlapping radiometric boundaries. However, Bare Soil and Built-Up areas exhibit mutual confusion ($8$ bare soil pixels misclassified as built-up; $2$ built-up misclassified as bare). Unpaved roads, dry laterite soils, and concrete/asphalt have nearly identical VNIR spectral reflectance profiles, proving why spatial convolutions, multi-sensor GLCM textures, and foundation models (Projects 01, 03, 05, and 11) are mandatory to resolve complex urban settlements.
 
 ---
 
@@ -179,4 +179,4 @@ This repository concludes the 20-project **GEOAI** research sequence, establishi
 
 1. **Pixel-Based Baseline (Project 20):** Relies solely on $\mathbf{x} \in \mathbb{R}^C$. High accuracy on distinct biomes, but fails on fine-grained topological boundaries due to spectral confusion.
 2. **Convolutional Inductive Biases (Projects 01, 04, 07):** Replaces isolated pixel vectors with spatial kernels ($3 \times 3, 7 \times 7$), learning texture, contextual gradients, and spatial edges.
-3. **Patch-Based Vision Transformers & Foundation Models (Projects 03, 05, 11):** Deploys global self-attention across image tokens, resolving multi-scale structural dependencies and setting the frontier for Earth observation intelligence.
+3. **Patch-Based Vision Transformers & Foundation Models (Projects 03, 11):** Deploys global self-attention across image tokens, resolving multi-scale structural dependencies and setting the frontier for Earth observation intelligence.
