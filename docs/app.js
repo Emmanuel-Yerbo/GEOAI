@@ -32,15 +32,15 @@ AOA FILTERING: 86.1% valid farmland retention (DI threshold = 1.1968)`,
     category: "disaster",
     catLabel: "Climate & Cryosphere",
     tech: ["UNet++", "DeepLabV3+", "MAnet", "13-Ch Tensor", "Area Loss"],
-    summary: "Three-arm semantic ensemble with 13-channel geomorphometric input tensors, placing Top 5 Globally (16.45 AP) in the 2026 Cyber2A Arctic Challenge.",
+    summary: "Three-arm semantic ensemble with 13-channel geomorphometric input tensors, achieving 16.45 validation AP in the 2026 NSF Cyber2A Arctic Challenge.",
     tier1_problem: "Accelerating Arctic warming triggers catastrophic retrogressive thaw slumps, threatening critical circumpolar infrastructure with non-linear terrain collapse.",
     tier2_pipeline: "Engineered a three-arm mean-fusion semantic ensemble combining UNet++ (SE-ResNeXt50), DeepLabV3+ (EfficientNet-B5), and MAnet (MiT-B5) fed with 13-channel geomorphometric tensors (optical bands + Sobel slope + Laplacian curvature + elevation) and size-weighted area-attenuated loss.",
-    tier3_validation: "Placed 5th internationally (16.45 AP) among 15 international research institutions in the 2026 GeoAI Arctic Challenge (Cyber2A), improving boundary recall on small thaw slumps (<500 m²) by +24.3%.",
+    tier3_validation: "Active competitive entry in the 2026 GeoAI Arctic Challenge (Cyber2A / NSF), achieving 16.45 validation AP with an AP75 boundary precision moat of 9.65 and improving boundary recall on small thaw slumps (<500 m²) by +24.3%.",
     tier4_impact: "Delivers an operational geomorphological risk mapping model for northern circumpolar civil engineering, identifying active slope failure zones prior to catastrophic collapse.",
-    diagram: `Ensemble Model Architecture        | Encoders                  | Channels | COCO AP Score
+    diagram: `Ensemble Model Architecture        | Encoders                  | Channels | Validation AP
 -----------------------------------+---------------------------+----------+--------------
-UNet++ + DeepLabV3+ + MAnet        | SE-ResNeXt50/EffNet/MiT   | 13 Bands | 16.45 (TOP 5)
-Single Model UNet++                | SE-ResNeXt50              | 13 Bands | 14.12 AP
+UNet++ + DeepLabV3+ + MAnet (V5E)  | SE-ResNeXt50/EffNet/MiT   | 13 Bands | 16.45 AP
+Single Model UNet++ (V5C)          | SE-ResNeXt50              | 13 Bands | 14.12 AP
 Baseline DeepLabV3+                | ResNet-50                 | 3 Bands  | 11.20 AP`,
     github_link: "https://github.com/Emmanuel-Yerbo/GEOAI/tree/main/02_FrostWatch_Arctic"
   },

@@ -1,32 +1,26 @@
 # ❄️ FrostWatch Arctic: 3-Arm Vision Ensemble with 13-Channel Geomorphometric Tensors for Permafrost Thaw Slump Instance Segmentation
 
-[![Cyber2A Leaderboard](https://img.shields.io/badge/Cyber2A%20Challenge-Rank%20%231%20Worldwide-gold?logo=kaggle&logoColor=white)](https://huggingface.co/spaces/cyber2a/2026GeoAIArcticChallenge)
-[![COCO AP](https://img.shields.io/badge/COCO%20AP-16.45%20(Winning%20Score)-brightgreen)](https://huggingface.co/spaces/cyber2a/2026GeoAIArcticChallenge)
-[![AP75 Moat](https://img.shields.io/badge/AP75%20Boundary%20Moat-9.65-blue)]()
+[![Competition: 2026 GeoAI Arctic Challenge](https://img.shields.io/badge/Challenge-2026%20GeoAI%20Arctic%20Challenge%20(NSF)-blue?logo=kaggle&logoColor=white)](https://huggingface.co/spaces/cyber2a/2026GeoAIArcticChallenge)
 [![PyTorch 2.x](https://img.shields.io/badge/PyTorch-2.x-EE4C2C?logo=pytorch&logoColor=white)](https://pytorch.org/)
+[![Status: Active Entry](https://img.shields.io/badge/Status-Active%20Competitive%20Entry-orange)]()
 [![Modality](https://img.shields.io/badge/Input%20Tensor-13--Channel%20Geomorphometry-blueviolet)]()
+[![Backbone](https://img.shields.io/badge/Architecture-3--Arm%20Ensemble%20(CNN%20%2B%20ViT)-brightgreen)]()
 [![License: MIT](https://img.shields.io/badge/License-MIT-yellow.svg)](../LICENSE)
 
 > **Lead Author & Research Engineer:** **Emmanuel Yerbo**  
 > *Team: The-Yerbo — Department of Geography and Regional Planning, University of Cape Coast, Ghana*  
 > *BSc Geography & Regional Planning (First Class Honours, GPA: 3.82/4.00, Three-Time Dean's Award Recipient)*  
 > 🔬 [ORCID: 0009-0008-8968-6999](https://orcid.org/0009-0008-8968-6999) | 💼 [LinkedIn](https://www.linkedin.com/in/emmanuelyerbo) | 💻 [GitHub Profile](https://github.com/Emmanuel-Yerbo) | 🌐 [Interactive Portfolio](https://emmanuelyerbo.github.io/emmanuelyerbo)  
-> *Competition: 2026 GeoAI Arctic Challenge (Funded by the National Science Foundation & Cyber2A)*
+> *Competition Track: 2026 GeoAI Arctic Challenge (Funded by the National Science Foundation & Cyber2A)*
 
 ---
 
-## 🗺️ Multi-Modal Input Intelligence & Global Leaderboard Standing
+## 🗺️ Multi-Modal Cryosphere Input Intelligence
 
 <p align="center">
   <img src="results/frostwatch_rts_chip_visual_audit.png" width="900" alt="FrostWatch Multi-Modal Visual Audit">
   <br>
   <em><b>Figure 1:</b> Multi-modal cryosphere tensor verification across audit chips: PlanetScope/Maxar optical composites registered with ArcticDEM relative elevation and high-gradient slope contours (yellow outlines) aligning with ground-truth thaw slump headwalls.</em>
-</p>
-
-<p align="center">
-  <img src="results/cyber2a_rank1_leaderboard.png" width="850" alt="Cyber2A Leaderboard Standing">
-  <br>
-  <em><b>Figure 2:</b> Official 2026 GeoAI Arctic Challenge (Cyber2A) Global Leaderboard: <b>Rank #1 Worldwide</b> achieved by Emmanuel Yerbo (The-Yerbo), establishing a dominant AP75 boundary precision moat (9.65 vs. 1.95 competitor baseline) and 35.21 AP on large retrogressive thaw slumps.</em>
 </p>
 
 ---
@@ -35,7 +29,7 @@
 
 1. **The Cryospheric Threat:** Accelerating circumpolar warming triggers abrupt permafrost collapse in the form of **Retrogressive Thaw Slumps (RTS)**. These catastrophic thermo-erosional slope failures retreat up to 30 meters per season, mobilizing millions of tons of carbon-rich sediment into Arctic river systems and threatening vital infrastructure (roads, airstrips, pipelines) with irreversible subsidence.
 2. **The 13-Channel Geomorphological Tensor Innovation:** Standard RGB sensors suffer catastrophic false positives because bare tundra mud flats and gravel riverbars share identical multispectral signatures with active thaw slumps. We engineer a **13-channel geomorphometric input tensor** coupling 8 optical reflectance bands with ArcticDEM-derived spatial derivatives: Sobel directional slope ($\nabla_{\text{elev}}$), Laplacian topographic curvature ($\nabla^2_{\text{elev}}$), Iron Oxide Ratio (IOR), and vegetation-slope interaction terms. This provides structural proof of active retreating headwalls ($5^\circ$–$25^\circ$).
-3. **Global Victory & Benchmark Parity:** Our 3-arm mean-fusion ensemble—combining **UNet++ (SE-ResNeXt50)**, **DeepLabV3+ (EfficientNet-B5)**, and **MAnet (MiT-B4)** with an area-attenuated Focal+Dice loss—secured **Rank #1 Worldwide (16.45 COCO AP)** in the blind 2026 GeoAI Arctic Challenge. The pipeline achieved an unbreachable **$AP_{75}$ scarp boundary moat of 9.65** and an **$AP_{\text{large}}$ of 35.21**, more than doubling the accuracy of international baseline competitors.
+3. **The Multi-Model Semantic Ensemble:** Our architecture implements a 3-arm mean-fusion ensemble—combining **UNet++ (SE-ResNeXt50)**, **DeepLabV3+ (EfficientNet-B5)**, and **MAnet (MiT-B4)**—optimized with an area-attenuated Focal+Dice loss. The pipeline establishes sharp boundary delineation on small initiating fractures ($<500\text{ m}^2$) while reliably segmenting massive multi-hectare permafrost disturbance complexes.
 
 ---
 
@@ -77,22 +71,22 @@
 <p align="center">
   <img src="results/frostwatch_retrained_pipeline_audit.jpg" width="900" alt="FrostWatch Retrained Pipeline Audit">
   <br>
-  <em><b>Figure 3:</b> Prediction audit across 5 representative validation chips: Model activation heatmaps (Column 3) isolating retreating headwalls; single-model contours in cyan (Column 4); and unified 3-arm ensemble consensus in yellow (Column 5).</em>
+  <em><b>Figure 2:</b> Prediction audit across 5 representative validation chips: Model activation heatmaps (Column 3) isolating retreating headwalls; single-model contours in cyan (Column 4); and unified 3-arm ensemble consensus in yellow (Column 5).</em>
 </p>
 
-### Leaderboard Benchmark Performance
+### Model Architecture Ablation (Offline Validation Set)
 
-| Architecture Configuration | Input Representation | Loss Strategy | COCO AP | $AP_{50}$ | $AP_{75}$ (Scarp Moat) | $AP_{\text{large}}$ | Status |
-|---|---|---|:---:|:---:|:---:|:---:|:---:|
-| **Baseline DeepLabV3+** | 3 Bands (RGB) | Naive BCE Loss | 11.20 | 22.40 | 1.95 | 10.91 | Official Baseline |
-| **Solo UNet++ (SE-ResNeXt50)** | 13 Bands (Optical + DEM) | Focal + Dice | 14.12 | 26.80 | 7.82 | 28.40 | Single Arm (V5C) |
-| **Solo MAnet (MiT-B4)** | 13 Bands (Optical + DEM) | Area-Attenuated ($8\times$) | 13.88 | 25.10 | 8.40 | 31.05 | Small-Object Arm (V5S) |
-| **FrostWatch 3-Arm Ensemble** | **13-Channel Multi-Modal** | **Area-Attenuated Composite** | **16.45** | **31.20** | **9.65** | **35.21** | 🏆 **RANK #1 GLOBAL** |
+| Architecture Configuration | Input Modality | Loss Function Strategy | Validation AP | $AP_{50}$ | $AP_{75}$ (Boundary Precision) | $AP_{\text{large}}$ |
+|---|---|---|:---:|:---:|:---:|:---:|
+| **Baseline DeepLabV3+** | 3 Bands (RGB Only) | Standard BCE Loss | 11.20 | 22.40 | 1.95 | 10.91 |
+| **Solo UNet++ (SE-ResNeXt50)** | 13 Bands (Optical + DEM) | Focal + Dice Composite | 14.12 | 26.80 | 7.82 | 28.40 |
+| **Solo MAnet (MiT-B4)** | 13 Bands (Optical + DEM) | Area-Attenuated ($8\times$ Weight) | 13.88 | 25.10 | 8.40 | 31.05 |
+| **FrostWatch 3-Arm Ensemble** | **13-Channel Geomorphometric** | **Area-Attenuated Composite** | **16.45** | **31.20** | **9.65** | **35.21** |
 
 <p align="center">
   <img src="results/frostwatch_top5_ensemble_verification.jpg" width="900" alt="Ensemble Verification vs Baseline">
   <br>
-  <em><b>Figure 4:</b> Edge-case validation verification: In challenging lakeshore chips, single-model predictions (cyan) exhibit boundary noise on non-slumping scree slopes. The 3-Arm Ensemble (yellow) suppresses false positives via consensus noise-averaging while locking onto genuine active degradation scarps.</em>
+  <em><b>Figure 3:</b> Edge-case validation verification: In challenging lakeshore chips, single-model predictions (cyan) exhibit boundary noise on non-slumping scree slopes. The 3-Arm Ensemble (yellow) suppresses false positives via consensus noise-averaging while locking onto genuine active degradation scarps.</em>
 </p>
 
 > [!NOTE]
@@ -106,7 +100,7 @@
 ## 🌍 Geotechnical & Climate Science Implications
 
 1. **Circumpolar Infrastructure Early-Warning:** Linear Arctic infrastructure (highways, pipelines, foundation pilings) fails abruptly when adjacent thaw slumps retrogress. FrostWatch's sub-pixel headwall detection enables municipal and geotechnical monitoring months before structural shear limits are breached.
-2. **Quantifying Permafrost Carbon Volatilization:** RTS collapses expose ancient Pleistocene organic carbon (buried for $>30,000$ years) directly to solar radiation and aerobic microbial decomposition. FrostWatch's high $AP_{\text{large}}$ ($35.21$) enables scientists to calculate volumetric headwall displacement and quantify atmospheric carbon flux dynamically from orbit.
+2. **Quantifying Permafrost Carbon Volatilization:** RTS collapses expose ancient Pleistocene organic carbon (buried for $>30,000$ years) directly to solar radiation and aerobic microbial decomposition. FrostWatch's high $AP_{\text{large}}$ enables scientists to calculate volumetric headwall displacement and quantify atmospheric carbon flux dynamically from orbit.
 
 ---
 
@@ -141,8 +135,7 @@ print(f"Extracted {len(polygons)} active thaw slump instances with sub-pixel sca
 02_FrostWatch_Arctic/
 ├── README.md                      # Publication-grade technical documentation
 ├── requirements.txt               # PyTorch 2.x, segmentation_models_pytorch, Rasterio
-├── results/                       # Optimized visual benchmarks (<1.6 MB total)
-│   ├── cyber2a_rank1_leaderboard.png         # Official NSF Cyber2A Leaderboard verification
+├── results/                       # High-resolution visual benchmarks (<1.1 MB total)
 │   ├── frostwatch_rts_chip_visual_audit.png  # Multi-modal input tensor & ArcticDEM audit
 │   ├── frostwatch_retrained_pipeline_audit.jpg# Activation heatmaps & boundary contours
 │   └── frostwatch_top5_ensemble_verification.jpg# Multi-model consensus ablation
