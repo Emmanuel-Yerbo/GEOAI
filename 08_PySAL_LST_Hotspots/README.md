@@ -26,10 +26,39 @@
 
 ---
 
+### 🔬 End-to-End Methodological Architecture
+
+```
+[ Landsat 8 OLI/TIRS SR/ST ] ──> [ Band 10 Planck Inversion (TB, ε) ] ──> [ 30m Calibrated LST ]
+                                                                                   │
+[ 500m x 500m Vector Mesh ]  <─────────────────────────────────────────────────────┘
+         │
+         ├──> [ Queen 1st-Order Contiguity (W) ] ──> [ Global Moran's I (0.7367 -> 0.8272) ]
+         │
+         ├──> [ Getis-Ord Gi* Statistics ] ──> [ 99% Hotspots (824.14 km², Built 41%, Bare 43%) ]
+         │
+         ├──> [ Decadal Transition Matrix ] ──> [ Quasi-Experimental DiD (+1.503°C Causal Penalty) ]
+         │
+         └──> [ Spatial Elasticity Regressions ] ──> [ -0.276°C Cooling per +10% Canopy ]
+```
+
+#### Stage-by-Stage Engineering Matrix
+
+| Stage | Pipeline Phase | Core Engine & Mathematical Formulation | Scientific & Microclimatic Role | Output Artifact / Tensor |
+| :---: | :--- | :--- | :--- | :--- |
+| **Stage 1** | **Satellite Radiometry & Planck Inversion** | Radiative Transfer Model & Inverted Planck Equation: $$T_B = \frac{K_2}{\ln\left(\frac{K_1}{L_\lambda} + 1\right)},\quad LST = \frac{T_B}{1 + \left(\frac{\lambda T_B}{\rho}\right) \ln \epsilon}$$ with dynamic land cover emissivities ($\epsilon_{built}=0.970, \epsilon_{veg}=0.985, \epsilon_{water}=0.990, \epsilon_{bare}=0.965$). | Harmonizes multi-temporal Landsat 8 TIRS Band 10 acquisitions across the dry Harmattan window (2013, 2018, 2023), eliminating sensor drift and atmospheric attenuation. | Calibrated 30 m LST rasters & Surface Temperature arrays |
+| **Stage 2** | **Continuous Regular Spatial Discretization** | Regular Vector Mesh Partitioning: $$\mathcal{M} = \{u_i \mid i \in [1, 12,819],\, \text{Area}(u_i) = 0.25\text{ km}^2\}$$ Zonal cross-tabulation: $\bar{T}_{i,t} = \frac{1}{|u_i|}\sum_{p \in u_i} LST(p, t)$, fractional class shares $S_{i,c} = \frac{|p \in u_i \cap \text{Class } c|}{|u_i|}$. | Eliminates pixel-level spatial noise, border artifacts, and spurious variance deflation; establishes balanced areal spatial units across $3,658.88\text{ km}^2$. | $N = 12,819$ GeoPandas regular polygonal lattice with zonal attributes |
+| **Stage 3** | **Spatial Weights & Global Spatial Dependence** | Queen 1st-Order Contiguity Matrix ($W_{queen}$): $$w_{ij} = 1 \iff \partial u_i \cap \partial u_j \neq \emptyset;\quad w^*_{ij} = \frac{w_{ij}}{\sum_j w_{ij}}$$ Global Moran's $I$: $$I = \frac{N}{S_0} \frac{\sum_i \sum_j w_{ij}(z_i - \bar{z})(z_j - \bar{z})}{\sum_i (z_i - \bar{z})^2}$$ | Diagnoses the regional progression of thermal spatial autocorrelation over a decadal baseline, confirming non-random macro-scale spatial structuring. | PySAL spatial weights matrix, standardized Moran scatterplots ($I \in [0.7367, 0.8272]$) |
+| **Stage 4** | **Local Autocorrelation & Hotspot Regimes** | Ord-Getis Local $G_i^*$ Statistics: $$G_i^*(d) = \frac{\sum_{j=1}^N w_{ij}(d)x_j - \bar{X}\sum_{j=1}^N w_{ij}(d)}{S \sqrt{\frac{N\sum_{j=1}^N w_{ij}^2(d) - \left(\sum_{j=1}^N w_{ij}(d)\right)^2}{N - 1}}}$$ Two-tailed Gaussian thresholds at $90\%$ ($|Z| \ge 1.65$), $95\%$ ($|Z| \ge 1.96$), and $99\%$ ($|Z| \ge 2.58$) confidence. | Delineates persistent, emerging, and coalescing severe heat island hazard zones; quantifies the microclimatic liability of bareland and built fabric. | Tri-temporal $G_i^*$ classification maps & regime attribute distributions ($824.14\text{ km}^2$ 99% Hotspots) |
+| **Stage 5** | **Quasi-Experimental Difference-in-Differences** | Post-Classification Matrix & Counterfactual DiD Estimator: $$\Delta LST_{DiD} = (LST_{2023, k} - LST_{2013, k}) - (LST_{2023, veg} - LST_{2013, veg})$$ One-Way ANOVA ($F = 3,468.39, p < 0.0001$) across 16 explicit conversion pathways. | Eliminates regional secular inter-annual warming trends, isolating true causal radiative forcing of specific anthropogenic land cover conversions. | Alluvial Sankey dynamics, $4 \times 4$ conversion matrix, DiD forest plot ($\Delta LST_{DiD} = +1.503^\circ\text{C}$ for Veg $\to$ Built) |
+| **Stage 6** | **Urban Gradient & Spatial Cooling Elasticity** | Concentric Coastal-to-Inland Buffering ($0 \le d \le 25\text{ km}$) & Cross-Sectional / Decadal OLS Regressions: $$\Delta UHI_i = \beta_0 + \beta_1 \Delta \text{Built}_i + \beta_2 \Delta \text{Veg}_i + \varepsilon_i$$ | Maps maritime buffer penetration and delivers actionable urban forestry planning parameters ($-0.276^\circ\text{C}$ cooling per $+10\%$ canopy restoration). | Gradient transect profiles, elasticity regression coefficients & urban design guidelines |
+
+---
+
 ### 🗺️ Study Domain & Regional Setting
 
 <p align="center">
-  <img src="results/fig1_greater_accra_study_area.png" width="950" alt="Figure 1: Greater Accra Study Domain">
+  <img src="results/fig1_greater_accra_study_area.jpg" width="950" alt="Figure 1: Greater Accra Study Domain">
   <br>
   <em><b>Figure 1:</b> Geographic location and administrative domain of the Greater Accra Region along the Gulf of Guinea, Ghana: (a) national locator map, and (b) regional map showing road infrastructure, major settlement centers, coastal wetlands, and the regional capital (Footprint: 3,658.88 km²; Latitudes: 5.45°N–6.11°N, Longitudes: 0.55°W–0.35°E).</em>
 </p>
@@ -78,7 +107,7 @@ Land cover across Greater Accra was categorized into four mutually exclusive, st
 | **Bareland** | 4 | Unpaved dirt roads, vacant construction parcels, open agricultural fallows, quarry excavation pits, and exposed sandy soils. |
 
 <p align="center">
-  <img src="results/fig2_spatiotemporal_lulc_2013_2023.png" width="950" alt="Figure 2: Spatiotemporal LULC 2013–2023">
+  <img src="results/fig2_spatiotemporal_lulc_2013_2023.jpg" width="950" alt="Figure 2: Spatiotemporal LULC 2013–2023">
   <br>
   <em><b>Figure 2:</b> Spatiotemporal land use and land cover (LULC) classification across Greater Accra in 2013, 2018, and 2023, showing the decadal outward expansion of Built-Up surfaces and the contraction of Vegetated and Bareland covers.</em>
 </p>
@@ -98,7 +127,7 @@ $$\text{UEII} = \frac{A_{t2} - A_{t1}}{A_{total} \times \Delta t} \times 100$$
 Built-up expansion was heavily front-loaded: adding $+604.14\text{ km}^2$ between 2013 and 2018 ($\text{UEII} = +3.302$), followed by $+91.89\text{ km}^2$ of infill consolidation between 2018 and 2023 ($\text{UEII} = +0.502$).
 
 <p align="center">
-  <img src="results/chart1_lulc_dynamics_reflectance_ueii.png" width="950" alt="Chart 1: LULC Dynamics & Reflectance">
+  <img src="results/chart1_lulc_dynamics_reflectance_ueii.jpg" width="950" alt="Chart 1: LULC Dynamics & Reflectance">
   <br>
   <em><b>Chart 1:</b> Spatiotemporal land use and land cover dynamics across Greater Accra (2013–2023): (a) tri-temporal area distribution (km² and %), (b) annualized conversion velocity (%/yr), (c) multi-epoch surface reflectance envelopes across Landsat 8 OLI Bands 1–7 (ρBlue to ρSWIR2) with ±1σ variance bounds, and (d) decadal net area shifts paired with UEII.</em>
 </p>
@@ -134,7 +163,7 @@ $$LST = \frac{T_B}{1 + \left(\frac{\lambda T_B}{\rho}\right) \ln \epsilon}$$
 where $\lambda = 10.895\,\mu\text{m}$, $\rho = 1.438 \times 10^{-2}\,\text{m}\cdot\text{K}$, and surface emissivity $\epsilon$ is dynamically coupled to the LULC classification: $\epsilon_{built} = 0.970$, $\epsilon_{veg} = 0.985$, $\epsilon_{water} = 0.990$, $\epsilon_{bare} = 0.965$.
 
 <p align="center">
-  <img src="results/fig3_calibrated_lst_distributions_magma.png" width="950" alt="Figure 3: Calibrated LST Magma Maps">
+  <img src="results/fig3_calibrated_lst_distributions_magma.jpg" width="950" alt="Figure 3: Calibrated LST Magma Maps">
   <br>
   <em><b>Figure 3:</b> Multi-temporal calibrated Landsat Land Surface Temperature (LST, °C) distributions across Greater Accra for 2013 (20.12–36.55 °C), 2018 (20.40–38.17 °C), and 2023 (21.36–41.08 °C), rendered using the sequential Magma colormap.</em>
 </p>
@@ -162,7 +191,7 @@ where $\lambda = 10.895\,\mu\text{m}$, $\rho = 1.438 \times 10^{-2}\,\text{m}\cd
 Surface Urban Heat Island Intensity ($\text{SUHII} = \text{LST}_{class} - \text{LST}_{veg}$) and the Urban Thermal Field Variance Index ($\text{UTFVI} = (\text{LST} - \text{LST}_{mean}) / \text{LST}$) prove that **bare laterite soils ($33.68^\circ\text{C}$, $\text{UTFVI} = +0.0380$)** and **built-up infrastructure ($33.00^\circ\text{C}$, $\text{UTFVI} = +0.0170$)** act as powerful regional heat sources. Natural vegetation ($\text{UTFVI} = -0.0404$) and water bodies ($\text{UTFVI} = -0.1574$) serve as critical microclimatic heat sinks.
 
 <p align="center">
-  <img src="results/chart2_zonal_lst_violins_thermal_contribution.png" width="950" alt="Chart 2: Zonal LST Violins">
+  <img src="results/chart2_zonal_lst_violins_thermal_contribution.jpg" width="950" alt="Chart 2: Zonal LST Violins">
   <br>
   <em><b>Chart 2:</b> Zonal Land Surface Temperature distributions and thermal source-sink dynamics across Greater Accra (2013, 2018, and 2023): (a) zonal LST split violin plots and embedded interquartile boxplots across Built-Up, Bareland, Vegetation, and Water, and (b) signed Thermal Contribution Ratio (CR, %) isolating regional thermal heat sources from mitigating sinks.</em>
 </p>
@@ -174,7 +203,7 @@ Surface Urban Heat Island Intensity ($\text{SUHII} = \text{LST}_{class} - \text{
 Greater Accra exhibits a profound geographical departure from textbook monocentric urban heat island structures. Concentric radial transects extending from the shoreline (0 km) inland to the rural interior (25 km) reveal a **maritime thermal buffer inversion**:
 
 <p align="center">
-  <img src="results/chart6_coastal_inland_urban_gradient.png" width="950" alt="Chart 6: Coastal-to-Inland Urban Gradient">
+  <img src="results/chart6_coastal_inland_urban_gradient.jpg" width="950" alt="Chart 6: Coastal-to-Inland Urban Gradient">
   <br>
   <em><b>Chart 6:</b> Coastal-to-inland urban gradient profiles across Greater Accra (2013–2023): (a) multi-epoch mean LST along concentric radial bands from the Gulf of Guinea shoreline (0 km) to the rural interior (25 km), (b) land cover density (%) and mean LST along the transect in 2023, and (c) decadal warming velocity (ΔLST) and built-up expansion (ΔBuilt-Up).</em>
 </p>
@@ -189,7 +218,7 @@ Greater Accra exhibits a profound geographical departure from textbook monocentr
 To evaluate spatial dependence rigorously without variance deflation, the study area was tessellated into **$N = 12,819$ contiguous 500 m × 500 m vector polygons**.
 
 <p align="center">
-  <img src="results/fig4_getis_ord_hotspots_2013_2023.png" width="950" alt="Figure 4: Getis-Ord Hotspots 2013–2023">
+  <img src="results/fig4_getis_ord_hotspots_2013_2023.jpg" width="950" alt="Figure 4: Getis-Ord Hotspots 2013–2023">
   <br>
   <em><b>Figure 4:</b> Spatial clustering and morphological evolution of local thermal regimes across Greater Accra based on Getis-Ord Gᵢ* statistics (N = 12,819 units) in 2013, 2018, and 2023, illustrating the outward migration and coalescence of severe 99% confidence urban heat island hotspots.</em>
 </p>
@@ -223,7 +252,7 @@ To evaluate spatial dependence rigorously without variance deflation, the study 
 Global Moran's $I$ expanded from $0.7367$ to $0.8272$ ($Z = 224.26, p < 0.0001$), confirming that thermal anomalies have transitioned into highly organized regional corridors. Getis-Ord $G_i^*$ 99% confidence hotspots cover **824.14 km²**, composed almost exclusively of built-up surfaces (40.96%) and bare laterite soil (42.61%).
 
 <p align="center">
-  <img src="results/chart3_moran_scatterplots_hotspot_evolution.png" width="950" alt="Chart 3: Moran's I Scatterplots">
+  <img src="results/chart3_moran_scatterplots_hotspot_evolution.jpg" width="950" alt="Chart 3: Moran's I Scatterplots">
   <br>
   <em><b>Chart 3:</b> Spatial autocorrelation diagnostics and Getis-Ord Gᵢ* hotspot regime evolution across the 500 m × 500 m vector mesh (N = 12,819): (a, b, c) Anselin Global Moran's I standardized scatterplots for 2013, 2018, and 2023 with Queen spatial lag W·Z, (d) multi-temporal spatial extent evolution of Gᵢ* clusters across confidence tiers, and (e) land cover composition inside each Gᵢ* tier in 2023.</em>
 </p>
@@ -233,7 +262,7 @@ Global Moran's $I$ expanded from $0.7367$ to $0.8272$ ($Z = 224.26, p < 0.0001$)
 ### 🔄 Decadal Transition Matrix & Causal Difference-in-Differences (DiD)
 
 <p align="center">
-  <img src="results/fig5_decadal_transition_pathways_map.png" width="950" alt="Figure 5: Decadal Transition Pathways Map">
+  <img src="results/fig5_decadal_transition_pathways_map.jpg" width="950" alt="Figure 5: Decadal Transition Pathways Map">
   <br>
   <em><b>Figure 5:</b> Decadal land use and land cover transition dynamics across Greater Accra: spatial distribution of major land conversion pathways for (a) 2013–2018 (rapid outward expansion) and (b) 2018–2023 (infill consolidation).</em>
 </p>
@@ -276,7 +305,7 @@ $$\Delta LST_{DiD} = (LST_{2023, k} - LST_{2013, k}) - (LST_{2023, veg} - LST_{2
 One-Way ANOVA across all 16 transition pathways confirmed statistically significant thermal divergence ($F = 3,468.39, p < 0.0001$; Kruskal-Wallis $H = 32,020.89, p < 0.0001$). Converting natural vegetation to built-up surfaces creates a net causal warming penalty of **$+1.503^\circ\text{C}$** and drives a **$+30.07\text{ percentage point}$ surge** into severe 99% Getis-Ord hotspots.
 
 <p align="center">
-  <img src="results/chart4_alluvial_sankey_did_matrix_heatmap.png" width="950" alt="Chart 4: Alluvial Sankey & DiD Heatmap">
+  <img src="results/chart4_alluvial_sankey_did_matrix_heatmap.jpg" width="950" alt="Chart 4: Alluvial Sankey & DiD Heatmap">
   <br>
   <em><b>Chart 4:</b> Land cover transition flows and biophysical thermal attribution across Greater Accra (2013–2023): (a) multi-epoch Alluvial Sankey flow diagram tracing conversion volumes (2013 → 2018 → 2023), and (b) 4 × 4 transition matrix heatmap reporting net biophysical DiD radiative forcing (ΔLST(DiD), °C) alongside conversion land areas (km²).</em>
 </p>
@@ -286,7 +315,7 @@ One-Way ANOVA across all 16 transition pathways confirmed statistically signific
 ### 📉 Spatial Elasticity Regression Models
 
 <p align="center">
-  <img src="results/chart5_did_forest_plot_cooling_elasticity.png" width="950" alt="Chart 5: DiD Forest Plot & Spatial Elasticity">
+  <img src="results/chart5_did_forest_plot_cooling_elasticity.jpg" width="950" alt="Chart 5: DiD Forest Plot & Spatial Elasticity">
   <br>
   <em><b>Chart 5:</b> Biophysical thermal impact, extreme hotspot displacement, and spatial elasticity regression models across Greater Accra (2013–2023): (a) diverging forest plot of net biophysical heating versus cooling across all 16 transition pathways with One-Way ANOVA (F = 3,468.39, p < 0.0001), (b) transition pathway impact on extreme 99% Getis-Ord hotspot share, (c) cross-sectional bivariate spatial regression of Built-Up and Vegetation shares versus SUHII in 2023, and (d) dynamic decadal elasticity regressions of ΔBuilt-Up and ΔVegetation versus ΔUHI.</em>
 </p>
@@ -324,17 +353,17 @@ One-Way ANOVA across all 16 transition pathways confirmed statistically signific
 │   ├── table9_spatial_elasticity_regression.csv    # Cross-sectional and decadal OLS elasticity models
 │   └── thesis_empirical_tables_2013_2023.xlsx      # Master workbook with all 9 empirical tables
 ├── results/
-│   ├── fig1_greater_accra_study_area.png           # Figure 1: Geographic setting & road network
-│   ├── fig2_spatiotemporal_lulc_2013_2023.png      # Figure 2: Tri-temporal LULC maps (2013, 2018, 2023)
-│   ├── chart1_lulc_dynamics_reflectance_ueii.png   # Chart 1: LULC dynamics & surface reflectance profiles
-│   ├── fig3_calibrated_lst_distributions_magma.png # Figure 3: Landsat calibrated LST maps (Magma)
-│   ├── chart2_zonal_lst_violins_thermal_contribution.png # Chart 2: Zonal LST violins & source-sink CR %
-│   ├── chart6_coastal_inland_urban_gradient.png    # Chart 6: 0-25 km coastal-to-inland transects
-│   ├── fig4_getis_ord_hotspots_2013_2023.png       # Figure 4: Getis-Ord Gi* hot spot maps (N = 12,819)
-│   ├── chart3_moran_scatterplots_hotspot_evolution.png # Chart 3: Moran's I scatterplots & Gi* regimes
-│   ├── fig5_decadal_transition_pathways_map.png    # Figure 5: Spatial distribution of conversion pathways
-│   ├── chart4_alluvial_sankey_did_matrix_heatmap.png # Chart 4: Alluvial Sankey flow & DiD matrix heatmap
-│   └── chart5_did_forest_plot_cooling_elasticity.png # Chart 5: DiD diverging forest plot & elasticity
+│   ├── fig1_greater_accra_study_area.jpg           # Figure 1: Geographic setting & road network
+│   ├── fig2_spatiotemporal_lulc_2013_2023.jpg      # Figure 2: Tri-temporal LULC maps (2013, 2018, 2023)
+│   ├── chart1_lulc_dynamics_reflectance_ueii.jpg   # Chart 1: LULC dynamics & surface reflectance profiles
+│   ├── fig3_calibrated_lst_distributions_magma.jpg # Figure 3: Landsat calibrated LST maps (Magma)
+│   ├── chart2_zonal_lst_violins_thermal_contribution.jpg # Chart 2: Zonal LST violins & source-sink CR %
+│   ├── chart6_coastal_inland_urban_gradient.jpg    # Chart 6: 0-25 km coastal-to-inland transects
+│   ├── fig4_getis_ord_hotspots_2013_2023.jpg       # Figure 4: Getis-Ord Gi* hot spot maps (N = 12,819)
+│   ├── chart3_moran_scatterplots_hotspot_evolution.jpg # Chart 3: Moran's I scatterplots & Gi* regimes
+│   ├── fig5_decadal_transition_pathways_map.jpg    # Figure 5: Spatial distribution of conversion pathways
+│   ├── chart4_alluvial_sankey_did_matrix_heatmap.jpg # Chart 4: Alluvial Sankey flow & DiD matrix heatmap
+│   └── chart5_did_forest_plot_cooling_elasticity.jpg # Chart 5: DiD diverging forest plot & elasticity
 ├── scripts/
 │   └── pysal_hotspot_pipeline.py                   # Production Python pipeline replicating all models
 └── README.md                                       # Comprehensive research documentation
